@@ -148,10 +148,11 @@
         </section>
         <section id="slotHours" class="col-sm-10 m-auto text-center containerBrown">
            
-            <div class="form-group d-flex align-items-center ">
-                <button class="ButtonGreen" @click="addDay">+</button>
+            <div class="form-group row justify-content-center col-md-8  h-10 m-auto row align-items-center ">
+               
+                <button  class="ButtonGreen" @click="substract">-</button>
                 <p class="align-items-center p-3">
-                    {{jour}}
+                    {{jour}} <br> 
                
                     {{today.getDate()}}
              
@@ -159,8 +160,9 @@
                
                     {{today.getFullYear()}}
                 </p>
-                <button  class="ButtonGreen" @click="substract">-</button>
-            </div>   
+                <button class="ButtonGreen" @click="addDay">+</button>
+            </div>  
+
             
           
             <button @click="times">Voir les horaires</button>
@@ -271,12 +273,14 @@
             console.log(this.autocomplete)
         },
         methods: {
+            // initialisation de la carte
             mapShow() {
                 this.map = new google.maps.Map(document.getElementById("mymap"), {
                     center: { lat: this.coords.lat, lng: this.coords.lng },
                     zoom: 13
                 })
             },
+            // geolocalisation
             getLocated() {
                 console.log("ok")
                 if (navigator.geolocation) {
@@ -314,6 +318,7 @@
                     console.log("pas supporter")
                 }
             },
+            // distance a vol d'oiseau entre deux coordonnées 
             distance() {
                 let mk1 = new google.maps.Marker({ position: this.coords, map: this.map });
                 let mk2 = new google.maps.Marker({ position: this.shopCoords, map: this.map });
@@ -327,6 +332,7 @@
                 console.log(d)
                 return d;
             },
+            // dessin  d'un cercle sur la carte selon la zone suggéré
             circleDraw() {
                 var cityCircle = new google.maps.Circle({
                     strokeColor: '#FF0000',
@@ -376,6 +382,8 @@
                     }
                 )
             },
+            
+            ////////////////fonction des slots de reservation
             addDay() {
                 this.now = this.now + 86400000;
                 this.today = new Date(this.now)
