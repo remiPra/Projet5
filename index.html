@@ -779,6 +779,9 @@
                     console.log(this.carts);
                     //on reinitialise le dupliateCart en false
                     this.duplicateCart = false;
+                    localStorage.setItem("carts",JSON.stringify(this.carts));
+                    let storage = JSON.parse(localStorage.getItem("carts"));
+                    console.log(storage);
                 },
                 substractCart(cart){
                     // verification que le produit est present
@@ -795,6 +798,9 @@
                             element.totalPriceProduct = element.quantity * element.price 
                         }
                     })
+                    localStorage.setItem("carts",JSON.stringify(this.carts));
+                    let storage = JSON.parse(localStorage.getItem("carts"));
+                    console.log(storage);
                 },
                 modal(){
                     this.main=false;
@@ -808,6 +814,18 @@
                     console.log(this.showModal)
                 },
                 
+            },
+            mounted(){
+                if(localStorage.getItem("carts") != null){
+                    //recuperation du local storage
+                    let storageInit = JSON.parse(localStorage.getItem("carts"));
+                    this.carts = storageInit;
+                    console.log(this.carts);
+                    this.modal()
+                }
+                else {
+                    this.carts = []
+                }
             },
             computed: {
                 numbersOfproducts() {
