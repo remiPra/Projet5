@@ -61,7 +61,7 @@
                     </ul>
                 </div>
                 <div id="togglecontainer">
-                    <button class="navbar-toggler navbar-light" type="button" data-toggle="collapse"
+                    <button class="navbar-toggler navbar-light toggleMenu" type="button" data-toggle="collapse"
                         data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                         <span class="navbar-toggler-icon text-light"></span>
                     </button>
@@ -82,12 +82,13 @@
                     </div>
                 </div>
                 <div>
-                    <button @click="modal()">
-                        <i class="fas fa-shopping-cart">{{numbersOfproducts}} {{totalPriceCart}}</i>
+                    <button id="btnCart" @click="modal()">
+                        <i class="fas fa-shopping-cart">{{numbersOfproducts}}</i>
                     </button>
                 </div>
             </nav>
         </header>
+        <div v-if="main">
         <!-- section principale de presentation du shop -->
         <section id="main">
             <picture id="imageParrallax">
@@ -127,12 +128,16 @@
         <section id="productsList">
             <shop-products-details :elements="products" @onaddcart="addCart"></shop-products-details>
         </section>
+        </div>
+        <transition name="fade">
         <section id="overlay" v-if="showModal">
-            <div>
-                <button @click="closeModal">fermer</button>
+            <div >
+                <button id="closeModal" @click="closeModal">fermer</button>
             </div>
             <cart-product :carts="carts" :showModal="showModal" @onaddcart="addCart" @onsubstractcart="substractCart"></cart-product>
         </section>
+        </transition>
+            
 
 
         <footer>
@@ -243,8 +248,8 @@
                     </div>
                 </div>
                 <div class="buttoncontainer">
-                    <button v-on:click="previous()"> Previous </button>
-                    <button v-on:click="next()"> Next </button>
+                    <button v-on:click="previous()"><i class="fas fa-chevron-circle-left"></i>News</button>
+                    <button v-on:click="next()"><i class="fas fa-chevron-circle-right"></i>News</button>
                 </div>
             </div>`,
             methods: {
@@ -299,8 +304,8 @@
                     </div>
                 </div>
                 <div class="buttoncontainer">
-                    <button v-on:click="previous()"> Previous </button>
-                    <button v-on:click="next()"> Next </button>
+                    <button v-on:click="previous()"><i class="fas fa-chevron-circle-left"></i>News</button>
+                    <button v-on:click="next()"><i class="fas fa-chevron-circle-right"></i>News</button>
                 </div>
             </div>`,
             methods: {
@@ -598,8 +603,18 @@
         Vue.component('cart-product', {
             template:
          `
-    
+    <div>     
+        <div>
+            <div class="form-group">
+                <h3>Votre Panier </h3>
+            </div>
+        </div>
         <form id="cart" class="col-md-8 text-light"  method="POST">
+        <div>
+            <div class="form-group">
+                <h3>Votre Panier </h3>
+            </div>
+        </div>
             <template v-if='this.carts==""''>
             <div class="d-flex" >
                 <div id="formCart" class="form-group">
@@ -607,21 +622,23 @@
                 </div>
             </div>    
             </template>
+        <div id="containerCart">
         <div class="form-group" v-for="(cart,index) in carts">
-            <div class="d-flex" >
-                <div id="formCart" class="form-group">
+            <div class="row align-items-center" >
+                <div id="formCart" class="form-group col-md-3">
                     <label for="productQuantity">
-                    </label>
+                    
                     <button type="button" @click="onAddCart(cart)">+</button>
                     <input type="text" :value="cart.quantity" name="productQuantity" id="productQuantity">
                     <button type="button" @click="onSubstractQuantity(cart)">-</button>
+                </label>
                 </div>
-                <div class="form-group">
+                <div class="form-group col-md-6">
                     <label for="productName">
                     <input type="text" :value="cart.title"  name="productName" id="productName">
                     </label>
                 </div>
-                <div class="form-group">
+                <div class="form-group col-md-3">
                     <label for="priceProduct">
                     <input type="text" :value="cart.totalPriceProduct"  name="totalPriceProduct" id="totalPriceProduct">
                     </label>
@@ -629,12 +646,26 @@
 
             </div>    
         </div>    
+        </div>
         <div class="form-group">
-            <input class="formButton" type="submit" value="Envoyer" name="btnContact">
+            <input class="formButton" @click="confirmationShow" type="button" value="Passez la commande" name="btnContact">
+        </div>
+        <div id="confirmationModal" v-if="confirmationModal">
+            <div class="form-group">
+                <h3>Voulez vous confirmez votre choix?</h3>
+                <button>Oui</button>  
+                <button @click="confirmationModal=false">Non</button>  
+            </div>
         </div>
         </form>
+    </div>
     `,
             props: ['carts'],
+            data() {
+                return {
+                    confirmationModal: false
+                }
+            },
             methods:{
                 onAddCart(cart){
                     console.log(cart);
@@ -642,6 +673,10 @@
                 },
                 onSubstractQuantity(cart){
                     this.$emit('onsubstractcart',cart)
+                },
+                confirmationShow(){
+                    this.confirmationModal = true;
+                    console.log(this.confirmationModal)
                 }
             }
         })
@@ -655,6 +690,9 @@
         new Vue({
             el: "#app",
             data: {
+                main:true,
+                //confirmation du cart
+                
                 showModal:false,
                 duplicateCart: false,
                 products: [
@@ -759,13 +797,17 @@
                     })
                 },
                 modal(){
+                    this.main=false;
                     this.showModal = true;
-                    console.log("true")
+                    console.log("true");
+                    window.scrollTo(0, 0);
                 },
                 closeModal(){
                     this.showModal = false;
+                    this.main=true;
                     console.log(this.showModal)
-                }
+                },
+                
             },
             computed: {
                 numbersOfproducts() {
