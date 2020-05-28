@@ -5,6 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-messaging.js"></script>
+    <!-- For an optimal experience using Cloud Messaging, also add the Firebase SDK for Analytics. -->
+    <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-analytics.js"></script>
     <!-- polices -->
     <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
 
@@ -29,173 +33,176 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <!-- integration de font-awesome -->
     <script src="https://kit.fontawesome.com/5a70a7892a.js"></script>
+    <link rel="manifest" href="./manifest.json">
     <title>Ma ferme Bio</title>
 </head>
 
 <body>
     <div id="app">
         <template>
-        <!-- section de l'header comprenant le logo et menu -->
-        <header class="d-flex fixed-top justify-content-between">
-            <a id="logo" class="pl-4 ">
-                Ma Ferme bio
-            </a>
-            <nav class="d-flex navbar navbar-light pr-2">
-                <div id="navLargeScreen">
-                    <ul class="navbar-nav d-flex flex-row">
-                        <li class="nav-items">
-                            <a class="nav-link" href="index.html">Accueil</a>
-                        </li>
-                        <li class="nav-items">
-                            <a class="nav-link" href="contact.html">Contact</a>
-                        </li>
-                        <li class="nav-items">
-                            <a class="nav-link" href="sommaireArticle.html">Actualités</a>
-                        </li>
-                        <li class="nav-items">
-                            <a class="nav-link" href="connexion.html">Connexion</a>
-                        </li>
-                        <li class="nav-items">
-                            <a class="nav-link" href="administrationConnexion.html">Administration</a>
-                        </li>
-                    </ul>
-                </div>
-                <div id="togglecontainer">
-                    <button class="navbar-toggler navbar-light toggleMenu" type="button" data-toggle="collapse"
-                        data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                        <span class="navbar-toggler-icon text-light"></span>
-                    </button>
-                    <div id="collapseExample" class="collapse">
-                        <div>
-
-                            <a class="nav-link" href="index.html">Accueil</a>
-
-                            <a class="nav-link" href="contact.html">Contact</a>
-
-                            <a class="nav-link" href="sommaireArticle.html">Actualités</a>
-
-                            <a class="nav-link" href="connexion.html">Connexion</a>
-
-                            <a class="nav-link" href="administrationConnexion.html">Administration</a>
-
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <button id="btnCart" @click="modal()">
-                        <i class="fas fa-shopping-cart">{{numbersOfproducts}}</i>
-                    </button>
-                </div>
-            </nav>
-        </header>
-        <div v-if="main">
-        <!-- section principale de presentation du shop -->
-        <section id="main">
-            <picture id="imageParrallax">
-                <source srcset="assets/images/basket-for-apple-picking-in-fruit-orchard.mobile.jpg"
-                    media="(max-width: 480px)">
-                <source srcset="assets/images/basket-for-apple-picking-in-fruit-orchard.Ipad.jpg"
-                    media="(max-width: 700px)">
-                <img src="assets/images/basket-for-apple-picking-in-fruit-orchard.jpg"
-                    alt="panier en osier se situant sur la gauche dans un champ vert ">
-            </picture>
-            <div id="containerMain" class="row">
-                <main-container></main-container>
-                <slider-news></slider-news>
-            </div>
-        </section>
-        <!-- section de la partie slider pour la version mobile -->
-        <section>
-            <slider-new-mobile></slider-new-mobile>
-        </section>
-        <!-- section de la partie des infos du magasin -->
-        <section class="row">
-           <text-shop></text-shop>
-        </section>
-        <!-- separation -->
-        <section class="separation">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-                <path fill="#26802e" fill-opacity="1"
-                    d="M0,224L48,240C96,256,192,288,288,261.3C384,235,480,149,576,112C672,75,768,85,864,101.3C960,117,1056,139,1152,138.7C1248,139,1344,117,1392,106.7L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z">
-                </path>
-            </svg>
-        </section>
-        <!-- section de la partie de la categorie des produits -->
-        <section id="products">
-            <shop-products></shop-products>
-        </section>
-        <!-- details des différents produits -->
-        <section id="productsList">
-            <shop-products-details :elements="products" @onaddcart="addCart"></shop-products-details>
-        </section>
-        </div>
-        <transition name="fade">
-        <section id="overlay" v-if="showModal">
-            <div >
-                <button id="closeModal" @click="closeModal">fermer</button>
-            </div>
-            <cart-product :carts="carts" :showModal="showModal" @onaddcart="addCart" @onsubstractcart="substractCart"></cart-product>
-        </section>
-        </transition>
-            
-
-
-        <footer>
-            <div class="row introduction">
-                <div class="col-md-4">
-                    <h3 class="text-center ">Contactez-Nous</h3>
-                    <div>
-                        <div>
-                            <div>
-                                <i class="fas fa-home"></i>
-                            </div>
-                            <p>
-                                La ferme Bio <br>
-
-                                17 rue Alphonse Daudet <br>
-                                82100 OOOOO
-                            </p>
-                        </div>
-                        <i class="fas fa-phone"></i>
-                    </div>
-                    <p>
-                        00000000000
-                    </p>
-                    <div>
-                        <i class="fas fa-phone"></i>
-                    </div>
-                    <p>
-                        xxxxxxxxx@gmail.com
-                    </p>
-
-                </div>
-                <div class="col-md-4">
-                    <h3>Horaires d'ouverture</h3>
-                    <div>
-                        <ul>
-                            <li>Lundi: 9h à 18h </li>
-                            <li>Mardi: 9h à 18h</li>
-                            <li>Mercredi: 9h à 18h</li>
-                            <li>Jeudi: 9h à 18h</li>
-                            <li>Vendredi: 9h à 18h</li>
-                            <li>Samedi: 9h à 18h</li>
+            <!-- section de l'header comprenant le logo et menu -->
+            <header class="d-flex fixed-top justify-content-between">
+                <a id="logo" class="pl-4 ">
+                    Ma Ferme bio
+                </a>
+                <nav class="d-flex navbar navbar-light pr-2">
+                    <div id="navLargeScreen">
+                        <ul class="navbar-nav d-flex flex-row">
+                            <li class="nav-items">
+                                <a class="nav-link" href="index.html">Accueil</a>
+                            </li>
+                            <li class="nav-items">
+                                <a class="nav-link" href="contact.html">Contact</a>
+                            </li>
+                            <li class="nav-items">
+                                <a class="nav-link" href="sommaireArticle.html">Actualités</a>
+                            </li>
+                            <li class="nav-items">
+                                <a class="nav-link" href="connexion.html">Connexion</a>
+                            </li>
+                            <li class="nav-items">
+                                <a class="nav-link" href="administrationConnexion.html">Administration</a>
+                            </li>
                         </ul>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <h3>Réseaux Sociaux</h3>
-                    <div>
-                        <a href=""><i class="fab fa-facebook"></i></a>
-                        <a href=""><i class="fab fa-instagram"></i></a>
-                        <a href=""><i class="fab fa-pinterest"></i></a>
+                    <div id="togglecontainer">
+                        <button class="navbar-toggler navbar-light toggleMenu" type="button" data-toggle="collapse"
+                            data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                            <span class="navbar-toggler-icon text-light"></span>
+                        </button>
+                        <div id="collapseExample" class="collapse">
+                            <div>
+
+                                <a class="nav-link" href="index.html">Accueil</a>
+
+                                <a class="nav-link" href="contact.html">Contact</a>
+
+                                <a class="nav-link" href="sommaireArticle.html">Actualités</a>
+
+                                <a class="nav-link" href="connexion.html">Connexion</a>
+
+                                <a class="nav-link" href="administrationConnexion.html">Administration</a>
+
+                            </div>
+                        </div>
                     </div>
-                </div>
-
-
+                    <div>
+                        <button id="btnCart" @click="modal()">
+                            <i class="fas fa-shopping-cart">{{numbersOfproducts}}</i>
+                        </button>
+                    </div>
+                </nav>
+            </header>
+            <div v-if="main">
+                <!-- section principale de presentation du shop -->
+                <section id="main">
+                    <picture id="imageParrallax">
+                        <source srcset="assets/images/basket-for-apple-picking-in-fruit-orchard.mobile.jpg"
+                            media="(max-width: 480px)">
+                        <source srcset="assets/images/basket-for-apple-picking-in-fruit-orchard.Ipad.jpg"
+                            media="(max-width: 700px)">
+                        <img src="assets/images/basket-for-apple-picking-in-fruit-orchard.jpg"
+                            alt="panier en osier se situant sur la gauche dans un champ vert ">
+                    </picture>
+                    <div id="containerMain" class="row">
+                        <main-container></main-container>
+                        <slider-news></slider-news>
+                    </div>
+                </section>
+                <!-- section de la partie slider pour la version mobile -->
+                <section>
+                    <slider-new-mobile></slider-new-mobile>
+                </section>
+                <!-- section de la partie des infos du magasin -->
+                <section class="row">
+                    <text-shop></text-shop>
+                </section>
+                <!-- separation -->
+                <section class="separation">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                        <path fill="#26802e" fill-opacity="1"
+                            d="M0,224L48,240C96,256,192,288,288,261.3C384,235,480,149,576,112C672,75,768,85,864,101.3C960,117,1056,139,1152,138.7C1248,139,1344,117,1392,106.7L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z">
+                        </path>
+                    </svg>
+                </section>
+                <!-- section de la partie de la categorie des produits -->
+                <section id="products">
+                    <shop-products></shop-products>
+                </section>
+                <!-- details des différents produits -->
+                <section id="productsList">
+                    <shop-products-details :elements="products" @onsubstractcart="substractCart" @onaddcart="addCart">
+                    </shop-products-details>
+                </section>
             </div>
-        </footer>
-    
-    </template>
+            <transition name="fade">
+                <section id="overlay" v-if="showModal">
+                    <div>
+                        <button id="closeModal" @click="closeModal">fermer</button>
+                    </div>
+                    <cart-product :carts="carts" :showModal="showModal" @onaddcart="addCart"
+                        @onsubstractcart="substractCart"></cart-product>
+                </section>
+            </transition>
+
+
+
+            <footer>
+                <div class="row introduction">
+                    <div class="col-md-4">
+                        <h3 class="text-center ">Contactez-Nous</h3>
+                        <div>
+                            <div>
+                                <div>
+                                    <i class="fas fa-home"></i>
+                                </div>
+                                <p>
+                                    La ferme Bio <br>
+
+                                    17 rue Alphonse Daudet <br>
+                                    82100 OOOOO
+                                </p>
+                            </div>
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <p>
+                            00000000000
+                        </p>
+                        <div>
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <p>
+                            xxxxxxxxx@gmail.com
+                        </p>
+
+                    </div>
+                    <div class="col-md-4">
+                        <h3>Horaires d'ouverture</h3>
+                        <div>
+                            <ul>
+                                <li>Lundi: 9h à 18h </li>
+                                <li>Mardi: 9h à 18h</li>
+                                <li>Mercredi: 9h à 18h</li>
+                                <li>Jeudi: 9h à 18h</li>
+                                <li>Vendredi: 9h à 18h</li>
+                                <li>Samedi: 9h à 18h</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <h3>Réseaux Sociaux</h3>
+                        <div>
+                            <a href=""><i class="fab fa-facebook"></i></a>
+                            <a href=""><i class="fab fa-instagram"></i></a>
+                            <a href=""><i class="fab fa-pinterest"></i></a>
+                        </div>
+                    </div>
+
+
+                </div>
+            </footer>
+
+        </template>
     </div>
     <script>
         // etablissement de composant local
@@ -206,9 +213,19 @@
                     header: {
                         h1: "Bienvenue chez ma ferme Bio",
                         h2: "Votre magasin de fruits et legumes avec la possibilité de commander en ligne",
-                        
+
                     },
                 }
+            },
+            methods:{
+                scrolling(element) {
+                    document.getElementById(element).scrollIntoView(
+                        {
+                            block: 'start',
+                            behavior: 'smooth',
+                        }
+                    )
+                },
             },
             template: `
             <div class="col-sm-6 container text-center" id="presentationShop">
@@ -216,7 +233,7 @@
                     <h1 class="text-light">{{header.h1}}</h1>
                     <h2>{{header.h2}} </h2>
                     
-                    <button>Commencez vos courses</button>
+                    <button @click="scrolling('goShop')">Commencez vos courses</button>
                 </div>
             </div>`
         })
@@ -446,8 +463,7 @@
                 <div class="content">
                     <h2>Title</h2>
                     <p class="cardColor">Cliquez ici</p>
-                    <p class="contentShow">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                        tempor incididunt ut labore et dolore magna aliqua.</p>
+                    <p class="contentShow">Cliquez sur le bouton pour pouvoir decouvrir nos différents produits disponible en magasin</p>
                     <button href="#">Read More</button>
                     
                 </div>
@@ -457,35 +473,17 @@
                     <img src="assets/images/category/vertical-citrus-fruit-pile.jpg">
                 </div>
                 <div class="content">
-                    <h2>Title</h2>
+                    <h2>Panier garni</h2>
                     <p class="cardColor">Cliquez ici</p>
-                    <p class="contentShow">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                        tempor incididunt ut labore et dolore magna aliqua.</p>
+                    <p class="contentShow">Votre magasin vous propose une selection de produits choisis dans ce panier garni.</p>
                     <button href="#">Read More</button>
                 </div>
             </div>
-
-
-
-            <div class="box">
-                <div class="imgBx">
-                    <img src="assets/images/category/lemonade-on-white-woodgrain-table.jpg">
-                </div>
-                <div class="content">
-                    <h2>Title</h2>
-                    <p class="cardColor">Cliquez ici</p>
-                    <p class="contentShow">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                        tempor incididunt ut labore et dolore magna aliqua.</p>
-                    <button href="#">Read More</button>
-                </div>
-            </div>
-
-
         </div>
     </div>`        })
 
-        
-         // vue composant des differents produits 
+
+        // vue composant des differents produits 
         Vue.component('shop-products-details', {
             props: {
                 elements: {
@@ -498,17 +496,20 @@
                     text: "Retouvez la selection de nos plus beaux légumes disponible dans notre magasin",
                     searchProduct: "",
                     productsListShow: true,
-                    liveSlideProduct:0                    
-                   
-                    }
+                    liveSlideProduct: 0
+
+                }
             },
             template: `
-        <div>
+        <div id="goShop">
         <div class="introduction col-lg-8 col-xm-10 text-center m-auto">
             <h2 class="p-2">{{h2}}</h2>
             <h3>{{text}}</h3>
-            <p>{{elements[liveSlideProduct].title}}</p>
-            <input class="col-lg-8 m-auto" type="text" v-model="searchProduct" @keyup="search">
+            <div>{{slide.category}}</div>
+            <div class="d-flex m-auto containerInput">
+            <input  type="text" v-model="searchProduct" @keyup="search">
+            <div><i class="fas fa-search"></i></div>
+            </div>
         </div>
         <div class="justify-content-flex-start flex-wrap categoryContainer productListGrid">
             <div class="ProductImage text-center box" v-for="(product,index) in elements" :key="product.name"
@@ -518,9 +519,16 @@
                 </div>
                 <div class="content">
                     <h3>{{product.title}}</h3>
-                    <p class="contentShow">Lorem{{index}} ipsum dolor sit amet, consectetur adipisicing elit, .</p>
-                    <button @click="onAddCart(product)" id="buttonAdd">ajouter</button>
-                    <p class="cardColor">Cliquez pour ajouter</p>
+                    <p class="contentShow"> {{product.typeOfQuantity}} <br>{{product.priceDetail}}</p>
+                    
+                    <p class=" cardColor"> cliquez pour selectionner</p>
+                      
+                    <div class="d-flex m-auto buttonShop">
+                            <button   @click="onAddCart(product)" id="buttonAdd">+</button>
+                            <p class="contentShow" id="contentQuantity">{{product.quantityCartProduct}}</p>
+                            <button  @click="onSubstractCart(product)" id="buttonAdd">-</button>
+                    </div>
+                    <p class="contentShow">{{product.quantityCart}}</p>
                     <p id="messageShowAddProduct">{{product.title}} ajouté</p>
                 </div>
             </div>
@@ -537,10 +545,16 @@
                 </div>
                 <div class="content">
                     <h3>{{elements[liveSlideProduct].title}}</h3>
-                    <p class="contentShow">Lorem ipsum dolor sit amet, consectetur adipisicing elit, .</p>
-                    <button @click="onAddCart(elements[liveSlideProduct])" id="buttonAdd">ajouter</button>
+                    <p class="contentShow"> {{elements[liveSlideProduct].typeOfQuantity}} <br>{{elements[liveSlideProduct].priceDetail}}</p>
+                    <div class="d-flex m-auto buttonShop">
+                            <button   @click="onAddCart(elements[liveSlideProduct])" id="buttonAdd">+</button>
+                            <p class="contentShow" id="contentQuantity">{{elements[liveSlideProduct].quantityCartProduct}}</p>
+                            <button  @click="onSubstractCart(elements[liveSlideProduct])" id="buttonAdd">-</button>
+                    </div>
+                    <p class="contentShow">{{elements[liveSlideProduct].quantityCart}}</p>
                     <p class="cardColor">Cliquez pour ajouter</p>
                     <p id="messageShowAddProduct">{{elements[liveSlideProduct].title}} ajouté</p>
+                    
                 </div>
             </div>
               
@@ -583,26 +597,32 @@
                     this.$emit("onaddcart", product);
                     console.log(product)
                 },
-                nextProduct(){
-                    if(this.liveSlideProduct == this.elements.length -1){
-                        this.liveSlideProduct = 0
-                    } else{
-                    this.liveSlideProduct++}
+                onSubstractCart(product) {
+                    this.$emit('onsubstractcart', product)
                 },
-                previousProduct(){
-                    if(this.liveSlideProduct == 0){
+
+                nextProduct() {
+                    if (this.liveSlideProduct == this.elements.length - 1) {
+                        this.liveSlideProduct = 0
+                    } else {
+                        this.liveSlideProduct++
+                    }
+                },
+                previousProduct() {
+                    if (this.liveSlideProduct == 0) {
                         this.liveSlideProduct = this.elements.length - 1
-                    } else{
-                    this.liveSlideProduct--};
+                    } else {
+                        this.liveSlideProduct--
+                    };
                     console.log(this.liveSlideProduct)
                 }
             }
         })
 
-     
+
         Vue.component('cart-product', {
             template:
-         `
+                `
     <div>     
         <div>
             <div class="form-group">
@@ -623,25 +643,32 @@
             </div>    
             </template>
         <div id="containerCart">
+        <div class="from-group">
+            
+        </div>
         <div class="form-group" v-for="(cart,index) in carts">
-            <div class="row align-items-center" >
-                <div id="formCart" class="form-group col-md-3">
-                    <label for="productQuantity">
-                    
-                    <button type="button" @click="onAddCart(cart)">+</button>
-                    <input type="text" :value="cart.quantity" name="productQuantity" id="productQuantity">
-                    <button type="button" @click="onSubstractQuantity(cart)">-</button>
-                </label>
-                </div>
-                <div class="form-group col-md-6">
+            <div class="align-items-center" >
+                <div class="form-group">
                     <label for="productName">
                     <input type="text" :value="cart.title"  name="productName" id="productName">
                     </label>
                 </div>
-                <div class="form-group col-md-3">
+                <div id="formCart" class="form-group">
+
+                    <label for="productQuantity">
+                    <button type="button" @click="onAddCart(cart)">+</button>
+                    <input type="text" :value="cart.quantity" name="productQuantity" id="productQuantity">
+                    <button type="button" @click="onSubstractQuantity(cart)">-</button>
+                    </label>
+
                     <label for="priceProduct">
                     <input type="text" :value="cart.totalPriceProduct"  name="totalPriceProduct" id="totalPriceProduct">
                     </label>
+                    
+                </div>
+               
+                <div class="form-group">
+                    
                 </div>
 
             </div>    
@@ -653,7 +680,7 @@
         <div id="confirmationModal" v-if="confirmationModal">
             <div class="form-group">
                 <h3>Voulez vous confirmez votre choix?</h3>
-                <button>Oui</button>  
+                <button><a href="etape.html">Oui</a></button>  
                 <button @click="confirmationModal=false">Non</button>  
             </div>
         </div>
@@ -666,22 +693,22 @@
                     confirmationModal: false
                 }
             },
-            methods:{
-                onAddCart(cart){
+            methods: {
+                onAddCart(cart) {
                     console.log(cart);
-                    this.$emit('onaddcart',cart)
+                    this.$emit('onaddcart', cart)
                 },
-                onSubstractQuantity(cart){
-                    this.$emit('onsubstractcart',cart)
+                onSubstractQuantity(cart) {
+                    this.$emit('onsubstractcart', cart)
                 },
-                confirmationShow(){
+                confirmationShow() {
                     this.confirmationModal = true;
                     console.log(this.confirmationModal)
                 }
             }
         })
 
-        
+
 
 
 
@@ -690,136 +717,208 @@
         new Vue({
             el: "#app",
             data: {
-                main:true,
+                main: true,
                 //confirmation du cart
-                
-                showModal:false,
+                productsSelected:[],
+                showModal: false,
                 duplicateCart: false,
                 products: [
                     {
                         title: "abricot",
                         src: "./assets/images/fruitsEtLegumes/abricotFormat.png",
                         quantity: 1,
-                        price:32,
-                        totalPriceProduct:32
+                        quantityCartProduct: 0,
+                        typeOfQuantity: "barquette de 600g",
+                        priceDetail: "13.92kg",
+                        price: 32,
+                        totalPriceProduct: 32,
+                        // booleen
+                        addButton: 1,
+                        addNumberQuantityButton: 0,
+                        category:"fruits"
                     },
                     {
                         title: "prune",
                         src: "./assets/images/fruitsEtLegumes/pruneFormat.png",
                         quantity: 1,
-                        price:32,
-                        totalPriceProduct:32
+                        quantityCartProduct: 0,
+                        typeOfQuantity: "barquette de 600g",
+                        priceDetail: "13.92kg",
+                        price: 32,
+                        totalPriceProduct: 32,
+                        addButton: 1,
+                        addNumberQuantityButton: 0,
+                        category:"fruits"
                     },
                     {
                         title: "melon",
                         src: "./assets/images/fruitsEtLegumes/melonFormat.png",
                         quantity: 1,
-                        price:32,
-                        totalPriceProduct:32
+                        quantityCartProduct: 0,
+                        typeOfQuantity: "barquette de 600g",
+                        priceDetail: "13.92kg",
+                        price: 32,
+                        totalPriceProduct: 32,
+                        addButton: 1,
+                        addNumberQuantityButton: 0,
+                        category:"fruits"
 
                     },
                     {
                         title: "cerise",
                         src: "./assets/images/fruitsEtLegumes/ceriseFormat.png",
                         quantity: 1,
-                        price:32,
-                        totalPriceProduct:32
+                        quantityCartProduct: 0,
+                        typeOfQuantity: "barquette de 600g",
+                        priceDetail: "13.92kg/Kilogramme",
+                        price: 32,
+                        totalPriceProduct: 32,
+                        addButton: 1,
+                        addNumberQuantityButton: 0,
+                        category:"fruits"
 
                     },
                     {
                         title: "haricots",
                         src: "./assets/images/fruitsEtLegumes/haricotsFormat.png",
                         quantity: 1,
-                        price:32,
-                        totalPriceProduct:32
-
+                        quantityCartProduct: 0,
+                        typeOfQuantity: "barquette de 600g",
+                        priceDetail: "13.92kg",
+                        price: 32,
+                        totalPriceProduct: 32,
+                        addButton: 1,
+                        addNumberQuantityButton: 0,
+                        category:"legumes"
                     },
                     {
                         title: "framboise",
                         src: "./assets/images/fruitsEtLegumes/framboiseFormat.png",
                         quantity: 1,
-                        price:32,
-                        totalPriceProduct:32
+                        quantityCartProduct: 0,
+                        typeOfQuantity: "barquette de 600g",
+                        priceDetail: "13.92kg",
+                        price: 32,
+                        totalPriceProduct: 32,
+                        addButton: 1,
+                        addNumberQuantityButton: 0,
+                        category:"fruits"
 
                     },
                     {
                         title: "aubergine",
                         src: "./assets/images/fruitsEtLegumes/aubergineFormat.png",
                         quantity: 1,
-                        price:32,
-                        totalPriceProduct:32
-
+                        quantityCartProduct: 0,
+                        typeOfQuantity: "barquette de 600g",
+                        priceDetail: "13.92kg",
+                        price: 32,
+                        totalPriceProduct: 32,
+                        addButton: 1,
+                        addNumberQuantityButton: 0,
+                        category:"legumes"
                     },
                     {
                         title: "peche",
                         src: "./assets/images/fruitsEtLegumes/pecheFormat.png",
                         quantity: 1,
-                        price:32,
-                        totalPriceProduct:32
-
+                        quantityCartProduct: 0,
+                        typeOfQuantity: "barquette de 600g",
+                        priceDetail: "13.92kg",
+                        price: 32,
+                        totalPriceProduct: 32,
+                        addButton: 1,
+                        addNumberQuantityButton: 0,
+                        category:"fruits"
                     }
                 ],
                 carts: [],
                 quantityCart: ""
             },
             methods: {
+               
                 addCart(cart) {
                     //verification si le produit existe deja
                     this.carts.forEach(element => {
                         if (element.title == cart.title) {
                             element.quantity++;
-                            element.totalPriceProduct = element.quantity * element.price 
+                            this.products.forEach(product => {
+                                if (product.title == element.title) {
+                                    product.quantityCartProduct = element.quantity
+                                }
+                            })
+                            element.totalPriceProduct = element.quantity * element.price
                             this.duplicateCart = true
                         }
                     })
                     //si il est deja present on ne le rajoute pas
                     if (!this.duplicateCart) {
+                        this.products.forEach(product => {
+                            if (product.title == cart.title) {
+                                product.quantityCartProduct = 1
+                            }
+                        })
                         this.carts.push(cart)
+
                     }
                     console.log(this.carts);
                     //on reinitialise le dupliateCart en false
                     this.duplicateCart = false;
-                    localStorage.setItem("carts",JSON.stringify(this.carts));
+                    localStorage.setItem("carts", JSON.stringify(this.carts));
                     let storage = JSON.parse(localStorage.getItem("carts"));
                     console.log(storage);
                 },
-                substractCart(cart){
+                substractCart(cart) {
                     // verification que le produit est present
                     this.carts.forEach(element => {
                         if (element.title == cart.title) {
                             element.quantity--;
+                            this.products.forEach(product => {
+                                if (product.title == element.title) {
+                                    product.quantityCartProduct = element.quantity
+                                    console.log(product.quantityCartProduct)
+                                }
+                            })
                             //si quantity 0
-                            if(element.quantity == 0){
+                            if (element.quantity == 0) {
                                 const deleteCart = this.carts.indexOf(element);
-                                this.carts.splice(deleteCart,1);
+                                this.carts.splice(deleteCart, 1);
                                 console.log(this.carts);
                                 return;
                             }
-                            element.totalPriceProduct = element.quantity * element.price 
+                            element.totalPriceProduct = element.quantity * element.price
                         }
                     })
-                    localStorage.setItem("carts",JSON.stringify(this.carts));
+                    localStorage.setItem("carts", JSON.stringify(this.carts));
                     let storage = JSON.parse(localStorage.getItem("carts"));
                     console.log(storage);
                 },
-                modal(){
-                    this.main=false;
+                modal() {
+                    this.main = false;
                     this.showModal = true;
                     console.log("true");
                     window.scrollTo(0, 0);
                 },
-                closeModal(){
+                closeModal() {
                     this.showModal = false;
-                    this.main=true;
+                    this.main = true;
                     console.log(this.showModal)
                 },
-                
+
             },
-            mounted(){
-                if(localStorage.getItem("carts") != null){
+            mounted() {
+                if (localStorage.getItem("carts") != null) {
                     //recuperation du local storage
                     let storageInit = JSON.parse(localStorage.getItem("carts"));
                     this.carts = storageInit;
+                    this.carts.forEach(cart => {
+                        this.products.forEach(product => {
+                            if (product.title == cart.title) {
+                                product.quantityCartProduct = cart.quantity
+                            }
+                        })
+                    })
+                    this.productsSelected = this.products
                     console.log(this.carts);
                     this.modal()
                 }
@@ -835,19 +934,69 @@
                     }, 0);
                     return numberArticles;
                 },
-                totalPriceCart(){
+                totalPriceCart() {
                     const totalPrice = this.carts.reduce((acc, curr) => {
                         return acc + curr.totalPriceProduct;
                     }, 0);
                     console.log(totalPrice)
                     return totalPrice;
-                }    
+                }
             }
         })
+
+        //firebase config
+        var config = {
+            apiKey: "AIzaSyACBEl4RcIkJB7oy5X-zrOAcECPDvTH4hw",
+            authDomain: "simply-notify-68b52.firebaseapp.com",
+            databaseURL: "https://simply-notify-68b52.firebaseio.com",
+            projectId: "simply-notify-68b52",
+            storageBucket: "simply-notify-68b52.appspot.com",
+            messagingSenderId: "838544611655",
+            appId: "1:838544611655:web:ac89b5c2177b35eb8b1462",
+            measurementId: "G-X58YBQG1EB"
+        };
+        firebase.initializeApp(config);
+
+        const messaging = firebase.messaging();
+        messaging
+            .requestPermission()
+            .then(function () {
+                // MsgElem.innerHTML = "Notification permission granted."
+                console.log("Notification permission granted.");
+
+                // get the token in the form of promise
+                return messaging.getToken()
+            })
+            .then(function (token) {
+                // TokenElem.innerHTML = "token is : " + token
+                console.log(token)
+            })
+            .catch(function (err) {
+                //ErrElem.innerHTML = ErrElem.innerHTML + "; " + err
+                console.log("Unable to get permission to notify.", err);
+            });
+        console.log(navigator)
+        messaging.onMessage(function (payload) {
+            console.log("Message received. ", payload);
+            const { title, ...options } = payload.notification;
+            let titleR = payload.notification.title;
+            let optionsR = {
+                body: payload.notification.body,
+
+            }
+            new Notification(titleR, optionsR)
+
+            navigator.serviceWorker.ready.then(registration => {
+                console.log(registration)
+                return registration.showNotification(title, options);
+            });
+
+        });
 
 
 
     </script>
+
 </body>
 
 
