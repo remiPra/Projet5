@@ -131,7 +131,9 @@
                 </section>
                 <!-- details des différents produits -->
                 <section id="productsList">
-                    <shop-products-details :elements="products" @onsubstractcart="substractCart" @onaddcart="addCart">
+                    <shop-products-details :elements="productsSelected" @onsubstractcart="substractCart"
+                        @onaddcart="addCart" @onselectedcategory="selectedCategory"
+                        @onchageproductselected="changeProductSelected">
                     </shop-products-details>
                 </section>
             </div>
@@ -217,7 +219,7 @@
                     },
                 }
             },
-            methods:{
+            methods: {
                 scrolling(element) {
                     document.getElementById(element).scrollIntoView(
                         {
@@ -492,22 +494,30 @@
             },
             data() {
                 return {
+                    category: [{ name: "all" }, { name: "legumes" }, { name: "fruits" }],
                     h2: "Nos légumes",
                     text: "Retouvez la selection de nos plus beaux légumes disponible dans notre magasin",
                     searchProduct: "",
                     productsListShow: true,
-                    liveSlideProduct: 0
-
+                    liveSlideProduct: 0,
+                    liveCategory: 0,
+                    error:""
                 }
             },
             template: `
         <div id="goShop">
         <div class="introduction col-lg-8 col-xm-10 text-center m-auto">
             <h2 class="p-2">{{h2}}</h2>
-            <h3>{{text}}</h3>
-            <div>{{slide.category}}</div>
-            <div class="d-flex m-auto containerInput">
-            <input  type="text" v-model="searchProduct" @keyup="search">
+            <h3>{{text}}</h3>              
+            <p>Parourez les categories</p>    
+           <div class="pb-3">
+                <button @click="liveCategoryPrevious"><i class="fas fa-chevron-circle-left"></i></button>            
+                <button class="buttonBrown w-50" @click="onSelectedCategory(category[liveCategory].name)">{{category[liveCategory].name}}</button>
+                <button @click="liveCategoryNext"><i class="fas fa-chevron-circle-right"></i></button>
+            </div>
+            <p>{{error}}</p>
+            <div class="d-flex m-auto containerInput" id="search">
+            <input  id="searchInput" type="text" v-model="searchProduct" @keyup="search">
             <div><i class="fas fa-search"></i></div>
             </div>
         </div>
@@ -582,15 +592,41 @@
                         // si la chaine inclut un des mots
                         if (element.includes(word)) {
                             console.log(sentence.indexOf(element))
-                            document.getElementById(element).style.display = "block";
+                            //document.getElementById(element).style.display = "block";
+                            this.$emit("onChangeProductSelected",element)
                             this.liveSlideProduct = sentence.indexOf(element);
                             console.log(this.liveSlideProduct)
                             console.log("succes")
                         } else {
-                            document.getElementById(element).style.display = "none";
+                            //document.getElementById(element).style.display = "none";
                             console.log("alert")
                         }
                     })
+                },
+                liveCategoryPrevious() {
+                    this.searchProduct = "";
+                    if (this.liveCategory == 0) {
+                        this.liveCategory = this.category.length - 1
+                    } else {
+                        this.liveCategory--
+                    }
+                    console.log(this.liveCategory)
+                },
+                liveCategoryNext() {
+                    this.searchProduct = ""
+                    if (this.liveCategory == this.category.length - 1) {
+                        this.liveCategory = 0
+                    } else {
+                        this.liveCategory++
+                    }
+                    console.log(this.liveCategory)
+                },
+
+                onSelectedCategory(category) {
+                    this.searchProduct = "";
+                    console.log(this.category[this.liveCategory].name)
+                    this.$emit("onselectedcategory", category);
+                    console.log(category)
                 },
                 onAddCart(product) {
                     //document.getElementById('messageShowAddProduct').style.animation = "showMessage 4s"
@@ -615,7 +651,8 @@
                         this.liveSlideProduct--
                     };
                     console.log(this.liveSlideProduct)
-                }
+                },
+
             }
         })
 
@@ -719,7 +756,6 @@
             data: {
                 main: true,
                 //confirmation du cart
-                productsSelected:[],
                 showModal: false,
                 duplicateCart: false,
                 products: [
@@ -735,7 +771,7 @@
                         // booleen
                         addButton: 1,
                         addNumberQuantityButton: 0,
-                        category:"fruits"
+                        category: "fruits"
                     },
                     {
                         title: "prune",
@@ -748,7 +784,7 @@
                         totalPriceProduct: 32,
                         addButton: 1,
                         addNumberQuantityButton: 0,
-                        category:"fruits"
+                        category: "fruits"
                     },
                     {
                         title: "melon",
@@ -761,7 +797,7 @@
                         totalPriceProduct: 32,
                         addButton: 1,
                         addNumberQuantityButton: 0,
-                        category:"fruits"
+                        category: "fruits"
 
                     },
                     {
@@ -775,7 +811,7 @@
                         totalPriceProduct: 32,
                         addButton: 1,
                         addNumberQuantityButton: 0,
-                        category:"fruits"
+                        category: "fruits"
 
                     },
                     {
@@ -789,7 +825,7 @@
                         totalPriceProduct: 32,
                         addButton: 1,
                         addNumberQuantityButton: 0,
-                        category:"legumes"
+                        category: "legumes"
                     },
                     {
                         title: "framboise",
@@ -802,7 +838,7 @@
                         totalPriceProduct: 32,
                         addButton: 1,
                         addNumberQuantityButton: 0,
-                        category:"fruits"
+                        category: "fruits"
 
                     },
                     {
@@ -816,7 +852,7 @@
                         totalPriceProduct: 32,
                         addButton: 1,
                         addNumberQuantityButton: 0,
-                        category:"legumes"
+                        category: "legumes"
                     },
                     {
                         title: "peche",
@@ -829,14 +865,16 @@
                         totalPriceProduct: 32,
                         addButton: 1,
                         addNumberQuantityButton: 0,
-                        category:"fruits"
+                        category: "fruits"
                     }
                 ],
+                productsSelected: this.products,
+
                 carts: [],
                 quantityCart: ""
             },
             methods: {
-               
+
                 addCart(cart) {
                     //verification si le produit existe deja
                     this.carts.forEach(element => {
@@ -899,15 +937,37 @@
                     console.log("true");
                     window.scrollTo(0, 0);
                 },
+                changeProductSelected(data){
+                    this.productsSelected = data
+                },
                 closeModal() {
                     this.showModal = false;
                     this.main = true;
                     console.log(this.showModal)
                 },
+                //fonction pour les categories
+                selectedCategory(data) {
+                    console.log(data)
+                    this.productsSelected = this.products;
+                    // console.log(this.productsSelected);
+                    if (data == "all") {
+                        this.productsSelected = this.products
+                    } else {
+                        let category = []
+                        this.products.forEach(element => {
+                            if (element.category == data) {
+                                category.push(element)
+                                console.log(element)
+                            }
+                            this.productsSelected = category
+                            console.log(this.productsSelected)
+                        })
+                    }
+                }
 
             },
             mounted() {
-                if (localStorage.getItem("carts") != null) {
+                if (localStorage.getItem("carts").length != null) {
                     //recuperation du local storage
                     let storageInit = JSON.parse(localStorage.getItem("carts"));
                     this.carts = storageInit;
@@ -919,10 +979,12 @@
                         })
                     })
                     this.productsSelected = this.products
+                    console.log(this.productsSelected)
                     console.log(this.carts);
                     this.modal()
                 }
                 else {
+                    this.productsSelected = this.products
                     this.carts = []
                 }
             },
