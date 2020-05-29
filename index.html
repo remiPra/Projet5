@@ -133,7 +133,7 @@
                 <section id="productsList">
                     <shop-products-details :elements="productsSelected" @onsubstractcart="substractCart"
                         @onaddcart="addCart" @onselectedcategory="selectedCategory"
-                        @onchageproductselected="changeProductSelected">
+                        @onsearchproductchange="changeProductSelected">
                     </shop-products-details>
                 </section>
             </div>
@@ -584,6 +584,7 @@
                     products.forEach(element => {
                         sentence.push(element.title)
                     });
+
                     console.log(sentence);
                     let Word = this.searchProduct
                     //passage en minuscule
@@ -592,38 +593,50 @@
                         // si la chaine inclut un des mots
                         if (element.includes(word)) {
                             console.log(sentence.indexOf(element))
-                            //document.getElementById(element).style.display = "block";
-                            this.$emit("onChangeProductSelected",element)
+                            document.getElementById(element).style.display = "block";
+                            console.log(element)
+                            //this.$emit("onsearchproductchange",element)
                             this.liveSlideProduct = sentence.indexOf(element);
                             console.log(this.liveSlideProduct)
                             console.log("succes")
                         } else {
-                            //document.getElementById(element).style.display = "none";
+                            document.getElementById(element).style.display = "none";
                             console.log("alert")
                         }
                     })
                 },
                 liveCategoryPrevious() {
                     this.searchProduct = "";
+                    this.elements.forEach(element => {
+                        document.getElementById(element.title).style.display = "block"
+                    })
                     if (this.liveCategory == 0) {
                         this.liveCategory = this.category.length - 1
                     } else {
                         this.liveCategory--
                     }
                     console.log(this.liveCategory)
+                    this.onSelectedCategory(this.category[this.liveCategory].name)
                 },
                 liveCategoryNext() {
                     this.searchProduct = ""
+                    this.elements.forEach(element => {
+                        document.getElementById(element.title).style.display = "block"
+                    })
                     if (this.liveCategory == this.category.length - 1) {
                         this.liveCategory = 0
                     } else {
                         this.liveCategory++
                     }
                     console.log(this.liveCategory)
+                    this.onSelectedCategory(this.category[this.liveCategory].name)
                 },
 
                 onSelectedCategory(category) {
                     this.searchProduct = "";
+                    this.elements.forEach(element => {
+                        document.getElementById(element.title).style.display = "block"
+                    })
                     console.log(this.category[this.liveCategory].name)
                     this.$emit("onselectedcategory", category);
                     console.log(category)
@@ -938,7 +951,9 @@
                     window.scrollTo(0, 0);
                 },
                 changeProductSelected(data){
+                    console.log(data)
                     this.productsSelected = data
+                    console.log(this.productsSelected)
                 },
                 closeModal() {
                     this.showModal = false;
@@ -949,7 +964,7 @@
                 selectedCategory(data) {
                     console.log(data)
                     this.productsSelected = this.products;
-                    // console.log(this.productsSelected);
+                    console.log(this.products);
                     if (data == "all") {
                         this.productsSelected = this.products
                     } else {
