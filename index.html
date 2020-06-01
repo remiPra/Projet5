@@ -15,6 +15,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
 
     <!-- integration de la librairie axios -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script>
+    <!-- librairie aos -->
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.0/dist/aos.css">
     <script src="https://unpkg.com/aos@2.3.0/dist/aos.js"></script>
     <!-- bootstrap -->
@@ -100,7 +102,7 @@
                         <source srcset="assets/images/basket-for-apple-picking-in-fruit-orchard.mobile.jpg"
                             media="(max-width: 480px)">
                         <source srcset="assets/images/basket-for-apple-picking-in-fruit-orchard.Ipad.jpg"
-                            media="(max-width: 700px)">
+                            media="(max-width: 800px)">
                         <img src="assets/images/basket-for-apple-picking-in-fruit-orchard.jpg"
                             alt="panier en osier se situant sur la gauche dans un champ vert ">
                     </picture>
@@ -131,7 +133,11 @@
                 </section>
                 <!-- details des différents produits -->
                 <section id="productsList">
-                    <shop-products-details :elements="productsSelected" @onsubstractcart="substractCart"
+                    <shop-products-details 
+                    
+                        @liveslidenextproduct="liveSlideProductItemNext"
+                        @liveslidepreviousproduct="liveSlideProductItemPrevious" @searchproduct="searchProduct"
+                        @resetproduct="resetProduct" :elements="productsSelected" @onsubstractcart="substractCart"
                         @onaddcart="addCart" @onselectedcategory="selectedCategory"
                         @onsearchproductchange="changeProductSelected">
                     </shop-products-details>
@@ -235,7 +241,7 @@
                     <h1 class="text-light">{{header.h1}}</h1>
                     <h2>{{header.h2}} </h2>
                     
-                    <button @click="scrolling('goShop')">Commencez vos courses</button>
+                    <button id="headerButton" @click="scrolling('goShop')">Commencez vos courses</button>
                 </div>
             </div>`
         })
@@ -487,11 +493,7 @@
 
         // vue composant des differents produits 
         Vue.component('shop-products-details', {
-            props: {
-                elements: {
-                    type: Array
-                }
-            },
+            props: ["elements"],
             data() {
                 return {
                     category: [{ name: "all" }, { name: "legumes" }, { name: "fruits" }],
@@ -499,31 +501,32 @@
                     text: "Retouvez la selection de nos plus beaux légumes disponible dans notre magasin",
                     searchProduct: "",
                     productsListShow: true,
-                    liveSlideProduct: 0,
                     liveCategory: 0,
-                    error:""
+                    error: "",
+                    //on garde le total du depart
+                    searchClass: "displayFlex"
                 }
             },
             template: `
         <div id="goShop">
         <div class="introduction col-lg-8 col-xm-10 text-center m-auto">
             <h2 class="p-2">{{h2}}</h2>
-            <h3>{{text}}</h3>              
+            <h3>{{text}}</h3>   
             <p>Parourez les categories</p>    
            <div class="pb-3">
                 <button @click="liveCategoryPrevious"><i class="fas fa-chevron-circle-left"></i></button>            
-                <button class="buttonBrown w-50" @click="onSelectedCategory(category[liveCategory].name)">{{category[liveCategory].name}}</button>
+                <button class="buttonBrown w-50" >{{category[liveCategory].name}}</button>
                 <button @click="liveCategoryNext"><i class="fas fa-chevron-circle-right"></i></button>
             </div>
-            <p>{{error}}</p>
-            <div class="d-flex m-auto containerInput" id="search">
+            
+            <div class="m-auto containerInput" :class="searchClass" >
             <input  id="searchInput" type="text" v-model="searchProduct" @keyup="search">
             <div><i class="fas fa-search"></i></div>
             </div>
         </div>
         <div class="justify-content-flex-start flex-wrap categoryContainer productListGrid">
-            <div class="ProductImage text-center box" v-for="(product,index) in elements" :key="product.name"
-                :id="product.title">
+            <div class="ProductImage text-center box" v-for="(product,index) in elements.productList" :key="product.name"
+                :id="product.title" :class="product.visible">
                 <div class="imgBx">
                     <img :src="product.src">
                 </div>
@@ -538,103 +541,100 @@
                             <p class="contentShow" id="contentQuantity">{{product.quantityCartProduct}}</p>
                             <button  @click="onSubstractCart(product)" id="buttonAdd">-</button>
                     </div>
-                    <p class="contentShow">{{product.quantityCart}}</p>
-                    <p id="messageShowAddProduct">{{product.title}} ajouté</p>
-                </div>
-            </div>
-        </div>
-        <div class="justify-content-flex-start flex-wrap categoryContainer cartSlider"> 
-            
-            <div id="previousProduct">
-                <button @click="previousProduct"><i class="fas fa-chevron-circle-left"></i> </button>
-            </div>
-
-            <div class="ProductImage text-center box" :id="elements[liveSlideProduct].title">
-                <div class="imgBx">
-                    <img :src="elements[liveSlideProduct].src">
-                </div>
-                <div class="content">
-                    <h3>{{elements[liveSlideProduct].title}}</h3>
-                    <p class="contentShow"> {{elements[liveSlideProduct].typeOfQuantity}} <br>{{elements[liveSlideProduct].priceDetail}}</p>
-                    <div class="d-flex m-auto buttonShop">
-                            <button   @click="onAddCart(elements[liveSlideProduct])" id="buttonAdd">+</button>
-                            <p class="contentShow" id="contentQuantity">{{elements[liveSlideProduct].quantityCartProduct}}</p>
-                            <button  @click="onSubstractCart(elements[liveSlideProduct])" id="buttonAdd">-</button>
-                    </div>
-                    <p class="contentShow">{{elements[liveSlideProduct].quantityCart}}</p>
-                    <p class="cardColor">Cliquez pour ajouter</p>
-                    <p id="messageShowAddProduct">{{elements[liveSlideProduct].title}} ajouté</p>
+                    
                     
                 </div>
-            </div>
-              
-          
-            <div id="nextProduct">
-                <button @click="nextProduct"><i class="fas fa-chevron-circle-right"></i></button>
-            </div>
-        </div>   
-            
+            </div>    
         </div>
+        
+            <div class="justify-content-flex-start flex-wrap categoryContainer cartSlider">
+                <div id="previousProduct">
+                    <button @click="previousProduct"><i class="fas fa-chevron-circle-left"></i> </button>
+                </div>
+
+                <div class="ProductImage text-center box" :class="elements.productList[elements.liveSlideProductItem].visible"
+                    :id="elements.productList[elements.liveSlideProductItem].title">
+                    <div class="imgBx">
+                        <img :src="elements.productList[elements.liveSlideProductItem].src">
+                    </div>
+                    <div class="content">
+                        <h3>{{elements.productList[elements.liveSlideProductItem].title}}</h3>
+                        <p class="contentShow"> {{elements.productList[elements.liveSlideProductItem].typeOfQuantity}}
+                            <br>{{elements.productList[elements.liveSlideProductItem].priceDetail}}</p>
+                        <div class="d-flex m-auto buttonShop">
+                            <button @click="onAddCart(elements.productList[elements.liveSlideProductItem])" id="buttonAdd">+</button>
+                            <p class="contentShow" id="contentQuantity">{{elements.productList[elements.liveSlideProductItem].quantityCartProduct}}</p>
+                            <button @click="onSubstractCart(elements.productList[elements.liveSlideProductItem])" id="buttonAdd">-</button>
+                        </div>
+                        <p class="contentShow">{{elements.productList[elements.liveSlideProductItem].quantityCart}}</p>
+                        <p class="cardColor">Cliquez pour ajouter</p>
+                        <p id="messageShowAddProduct">{{elements.productList[elements.liveSlideProductItem].title}} ajouté</p>
+
+                    </div>
+                </div>
+
+
+                <div id="nextProduct">
+                    <button @click="nextProduct"><i class="fas fa-chevron-circle-right"></i></button>
+                </div>
+            </div>
+        </div>
+
+        
+           
+            
+        
         </div>`,
             methods: {
                 search() {
-                    let sentence = [];
-                    // on cré un tableau avec tous les noms des produits
-                    let products = this.elements;
-                    products.forEach(element => {
-                        sentence.push(element.title)
-                    });
-
-                    console.log(sentence);
-                    let Word = this.searchProduct
-                    //passage en minuscule
-                    let word = Word.toLowerCase()
-                    sentence.forEach(element => {
-                        // si la chaine inclut un des mots
-                        if (element.includes(word)) {
-                            console.log(sentence.indexOf(element))
-                            document.getElementById(element).style.display = "block";
-                            console.log(element)
-                            //this.$emit("onsearchproductchange",element)
-                            this.liveSlideProduct = sentence.indexOf(element);
-                            console.log(this.liveSlideProduct)
-                            console.log("succes")
-                        } else {
-                            document.getElementById(element).style.display = "none";
-                            console.log("alert")
-                        }
-                    })
+                    console.log(this.searchProduct)
+                    this.$emit("searchproduct", this.searchProduct)
                 },
                 liveCategoryPrevious() {
+                    this.$emit("resetproduct")
+                    
                     this.searchProduct = "";
-                    this.elements.forEach(element => {
-                        document.getElementById(element.title).style.display = "block"
-                    })
+                    console.log(this.elements)
                     if (this.liveCategory == 0) {
                         this.liveCategory = this.category.length - 1
                     } else {
                         this.liveCategory--
                     }
                     console.log(this.liveCategory)
+                    // if(this.category[this.liveCategory].name =="all") {
+                    //     this.searchClass ="displayFlex"
+                    // } else {
+                    // this.searchClass = "displayNone"
+                    // }
                     this.onSelectedCategory(this.category[this.liveCategory].name)
+
                 },
                 liveCategoryNext() {
+                    this.$emit("resetproduct")
                     this.searchProduct = ""
-                    this.elements.forEach(element => {
-                        document.getElementById(element.title).style.display = "block"
-                    })
+                    console.log(this.elements)
+                    // this.fullElements.forEach(element => {
+                    //     document.getElementById(element.title).style.display = "block"
+                    // })
                     if (this.liveCategory == this.category.length - 1) {
                         this.liveCategory = 0
                     } else {
                         this.liveCategory++
                     }
                     console.log(this.liveCategory)
+
+                    // if(this.category[this.liveCategory].name =="all") {
+                    //     this.searchClass ="displayFlex"
+                    // } else {
+                    // this.searchClass = "displayNone"
+                    // }
                     this.onSelectedCategory(this.category[this.liveCategory].name)
                 },
+                //evenment de selection de category vers parent
 
                 onSelectedCategory(category) {
                     this.searchProduct = "";
-                    this.elements.forEach(element => {
+                    this.elements.productList.forEach(element => {
                         document.getElementById(element.title).style.display = "block"
                     })
                     console.log(this.category[this.liveCategory].name)
@@ -651,19 +651,11 @@
                 },
 
                 nextProduct() {
-                    if (this.liveSlideProduct == this.elements.length - 1) {
-                        this.liveSlideProduct = 0
-                    } else {
-                        this.liveSlideProduct++
-                    }
+                    this.$emit("liveslidenextproduct")
                 },
                 previousProduct() {
-                    if (this.liveSlideProduct == 0) {
-                        this.liveSlideProduct = this.elements.length - 1
-                    } else {
-                        this.liveSlideProduct--
-                    };
-                    console.log(this.liveSlideProduct)
+                    this.$emit("liveslidepreviousproduct")
+
                 },
 
             }
@@ -764,136 +756,101 @@
 
 
         // vue principale 
-        new Vue({
+        let app = new Vue({
             el: "#app",
             data: {
                 main: true,
                 //confirmation du cart
                 showModal: false,
                 duplicateCart: false,
-                products: [
-                    {
-                        title: "abricot",
-                        src: "./assets/images/fruitsEtLegumes/abricotFormat.png",
-                        quantity: 1,
-                        quantityCartProduct: 0,
-                        typeOfQuantity: "barquette de 600g",
-                        priceDetail: "13.92kg",
-                        price: 32,
-                        totalPriceProduct: 32,
-                        // booleen
-                        addButton: 1,
-                        addNumberQuantityButton: 0,
-                        category: "fruits"
-                    },
-                    {
-                        title: "prune",
-                        src: "./assets/images/fruitsEtLegumes/pruneFormat.png",
-                        quantity: 1,
-                        quantityCartProduct: 0,
-                        typeOfQuantity: "barquette de 600g",
-                        priceDetail: "13.92kg",
-                        price: 32,
-                        totalPriceProduct: 32,
-                        addButton: 1,
-                        addNumberQuantityButton: 0,
-                        category: "fruits"
-                    },
-                    {
-                        title: "melon",
-                        src: "./assets/images/fruitsEtLegumes/melonFormat.png",
-                        quantity: 1,
-                        quantityCartProduct: 0,
-                        typeOfQuantity: "barquette de 600g",
-                        priceDetail: "13.92kg",
-                        price: 32,
-                        totalPriceProduct: 32,
-                        addButton: 1,
-                        addNumberQuantityButton: 0,
-                        category: "fruits"
-
-                    },
-                    {
-                        title: "cerise",
-                        src: "./assets/images/fruitsEtLegumes/ceriseFormat.png",
-                        quantity: 1,
-                        quantityCartProduct: 0,
-                        typeOfQuantity: "barquette de 600g",
-                        priceDetail: "13.92kg/Kilogramme",
-                        price: 32,
-                        totalPriceProduct: 32,
-                        addButton: 1,
-                        addNumberQuantityButton: 0,
-                        category: "fruits"
-
-                    },
-                    {
-                        title: "haricots",
-                        src: "./assets/images/fruitsEtLegumes/haricotsFormat.png",
-                        quantity: 1,
-                        quantityCartProduct: 0,
-                        typeOfQuantity: "barquette de 600g",
-                        priceDetail: "13.92kg",
-                        price: 32,
-                        totalPriceProduct: 32,
-                        addButton: 1,
-                        addNumberQuantityButton: 0,
-                        category: "legumes"
-                    },
-                    {
-                        title: "framboise",
-                        src: "./assets/images/fruitsEtLegumes/framboiseFormat.png",
-                        quantity: 1,
-                        quantityCartProduct: 0,
-                        typeOfQuantity: "barquette de 600g",
-                        priceDetail: "13.92kg",
-                        price: 32,
-                        totalPriceProduct: 32,
-                        addButton: 1,
-                        addNumberQuantityButton: 0,
-                        category: "fruits"
-
-                    },
-                    {
-                        title: "aubergine",
-                        src: "./assets/images/fruitsEtLegumes/aubergineFormat.png",
-                        quantity: 1,
-                        quantityCartProduct: 0,
-                        typeOfQuantity: "barquette de 600g",
-                        priceDetail: "13.92kg",
-                        price: 32,
-                        totalPriceProduct: 32,
-                        addButton: 1,
-                        addNumberQuantityButton: 0,
-                        category: "legumes"
-                    },
-                    {
-                        title: "peche",
-                        src: "./assets/images/fruitsEtLegumes/pecheFormat.png",
-                        quantity: 1,
-                        quantityCartProduct: 0,
-                        typeOfQuantity: "barquette de 600g",
-                        priceDetail: "13.92kg",
-                        price: 32,
-                        totalPriceProduct: 32,
-                        addButton: 1,
-                        addNumberQuantityButton: 0,
-                        category: "fruits"
-                    }
-                ],
-                productsSelected: this.products,
-
+                products:{
+                    productList:[],
+                    liveSlideProductItem: "0"
+                },
+                productsSelected: {},
+                memory:[],
                 carts: [],
                 quantityCart: ""
             },
-            methods: {
+            mounted:function(){
+                this.getAllProducts()
+               
 
+                this.products.liveSlideProductItem = 0
+                this.productsSelected = this.products
+                if (JSON.parse(localStorage.getItem("carts")).length != 0) {
+                    //recuperation du local storage
+                    console.log(localStorage.getItem("carts").length)
+                    let storageInit = JSON.parse(localStorage.getItem("carts"));
+                    this.carts = storageInit;
+                    this.carts.forEach(cart => {
+                        this.products.productList.forEach(product => {
+                            if (product.title == cart.title) {
+                                product.quantityCartProduct = cart.quantity
+                            }
+                        })
+                    })
+                    this.productsSelected = this.products
+                    console.log(this.productsSelected)
+                    console.log(this.carts);
+                    this.modal()
+                }
+                else {
+                    this.productsSelected = this.products
+                    this.carts = []
+                }
+            },
+            methods: {
+                //methode pour recuperer les produits
+                getAllProducts() {
+                    console.log("users")
+                    axios.get("proceed.php?action=getAllProducts").then(function (response) {
+                        if (response.data.error) {
+                            app.errorMsg = response.data.message;
+                            console.log(app.errorMsg)
+                        }
+                        else {
+                            console.log(response.data);
+                            app.products.productList=response.data
+                            app.memory=response.data
+                            console.log(app.products)
+                            console.log("success");
+                        }
+                    });
+                },
+                searchProduct(data) {
+
+                    // on cré un tableau avec tous les noms des produits
+                    let products = this.products.productList;
+                    // products.forEach(element => {
+                    //     sentence.push(element.title)
+                    // });
+
+
+                    let Word = data
+                    //passage en minuscule
+                    let word = Word.toLowerCase()
+                    this.productsSelected.productList.forEach(element => {
+                        // si la chaine inclut un des mots
+                        if (element.title.includes(word)) {
+                            element.visible = "displayFlex"
+                            console.log(element)
+                            //this.$emit("onsearchproductchange",element)
+                            this.productsSelected.liveSlideProductItem = this.productsSelected.productList.indexOf(element);
+                            console.log(this.products.liveSlideProductItem)
+                            console.log("succes")
+                        } else {
+                            element.visible = "displayNone"
+                            console.log("alert")
+                        }
+                    })
+                },
                 addCart(cart) {
                     //verification si le produit existe deja
                     this.carts.forEach(element => {
                         if (element.title == cart.title) {
                             element.quantity++;
-                            this.products.forEach(product => {
+                            this.products.productList.forEach(product => {
                                 if (product.title == element.title) {
                                     product.quantityCartProduct = element.quantity
                                 }
@@ -904,7 +861,7 @@
                     })
                     //si il est deja present on ne le rajoute pas
                     if (!this.duplicateCart) {
-                        this.products.forEach(product => {
+                        this.products.productList.forEach(product => {
                             if (product.title == cart.title) {
                                 product.quantityCartProduct = 1
                             }
@@ -917,14 +874,14 @@
                     this.duplicateCart = false;
                     localStorage.setItem("carts", JSON.stringify(this.carts));
                     let storage = JSON.parse(localStorage.getItem("carts"));
-                    console.log(storage);
+                    console.log(storage.length);
                 },
                 substractCart(cart) {
                     // verification que le produit est present
                     this.carts.forEach(element => {
                         if (element.title == cart.title) {
                             element.quantity--;
-                            this.products.forEach(product => {
+                            this.products.productList.forEach(product => {
                                 if (product.title == element.title) {
                                     product.quantityCartProduct = element.quantity
                                     console.log(product.quantityCartProduct)
@@ -950,9 +907,43 @@
                     console.log("true");
                     window.scrollTo(0, 0);
                 },
-                changeProductSelected(data){
+                liveSlideProductItemNext() {
+                    let numberOfFrames = 0
+                    this.productsSelected.productList.forEach(
+                        element => {if(element.visible == "displayFlex"){
+                            numberOfFrames++
+                            }
+                        }
+                    )
+                    console.log(numberOfFrames)
+                    if (this.productsSelected.liveSlideProductItem ==numberOfFrames - 1) {
+                        this.productsSelected.liveSlideProductItem = 0
+                    } else {
+                        this.productsSelected.liveSlideProductItem++
+                    }
+
+                },
+                liveSlideProductItemPrevious() {
+                    if (this.productsSelected.liveSlideProductItem == 0) {
+                        this.productsSelected.liveSlideProductItem = this.productsSelected.productList.length - 1
+                    } else {
+                        this.productsSelected.liveSlideProductItem--
+                    };
+                    console.log(this.productsSelected.liveSlideProductItem)
+                },
+                resetProduct() {
+                    console.log("resetproducts")
+                    this.productsSelected.productList = this.products.productList
+                    console.log(this.products.productList)
+                    this.productsSelected.productList.forEach(element =>
+                        element.visible = "displayFlex"
+                    )
+                    this.productsSelected.liveSlideProductItem = 0
+                    console.log("resetproduct")
+                },
+                changeProductSelected(data) {
                     console.log(data)
-                    this.productsSelected = data
+                    this.productsSelected.productList = data
                     console.log(this.productsSelected)
                 },
                 closeModal() {
@@ -963,49 +954,30 @@
                 //fonction pour les categories
                 selectedCategory(data) {
                     console.log(data)
-                    this.productsSelected = this.products;
-                    console.log(this.products);
+                    this.productsSelected.productList = [...this.products.productList];
+                    console.log(this.productsSelected.productList);
+                    console.log(this.products.productList);
                     if (data == "all") {
-                        this.productsSelected = this.products
+                        this.productsSelected.productList = this.memory
                     } else {
                         let category = []
-                        this.products.forEach(element => {
+                        this.memory.forEach(element => {
                             if (element.category == data) {
                                 category.push(element)
                                 console.log(element)
                             }
-                            this.productsSelected = category
-                            console.log(this.productsSelected)
                         })
+                            console.log(category)
+                            this.productsSelected.productList = category
+                            console.log(this.products.productList)
+                            //this.productsSelected.productList = category
                     }
                 }
 
             },
-            mounted() {
-                if (localStorage.getItem("carts").length != null) {
-                    //recuperation du local storage
-                    let storageInit = JSON.parse(localStorage.getItem("carts"));
-                    this.carts = storageInit;
-                    this.carts.forEach(cart => {
-                        this.products.forEach(product => {
-                            if (product.title == cart.title) {
-                                product.quantityCartProduct = cart.quantity
-                            }
-                        })
-                    })
-                    this.productsSelected = this.products
-                    console.log(this.productsSelected)
-                    console.log(this.carts);
-                    this.modal()
-                }
-                else {
-                    this.productsSelected = this.products
-                    this.carts = []
-                }
-            },
             computed: {
                 numbersOfproducts() {
-                    if (this.carts == null) return 0;
+                    if (this.carts == null) { return 0 };
                     const numberArticles = this.carts.reduce((acc, curr) => {
                         return acc + curr.quantity;
                     }, 0);
