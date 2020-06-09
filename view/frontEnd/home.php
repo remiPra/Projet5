@@ -63,11 +63,13 @@
                             </li>
                             <li class="nav-items">
                                 <a class="nav-link" <?php if (isset($_SESSION['name'])) {
-                                                        echo 'href="index.php?action=deconnexion">Deconnexion';
+                                                        echo 'href="index.php?action=deconnexion"><i class="fas fa-sign-out-alt"></i>';
                                                     } else {
                                                         echo 'href="index.php?action=connexion">Connexion';
                                                     }
-                                                    ?> </a> </li> <li class="nav-items">
+                                                    ?> </a> 
+                            </li> 
+                            <li class="nav-items">
                                     <a class="nav-link" href="administrationConnexion.html">Administration</a>
                             </li>
                         </ul>
@@ -79,14 +81,14 @@
                         <div id="collapseExample" class="collapse">
                             <div>
 
-                                <a class="nav-link" href="index.php?action=index">Accueil</a>
-
-                                <a class="nav-link" href="index.php?action=contact">Contact</a>
+                            <a class="nav-link" href="index.php?action=index">Accueil</a>
+                                
+                            <a class="nav-link" href="index.php?action=contact">Contact</a>
 
                                 <a class="nav-link" href="index.php?action=blog">Actualités</a>
 
                                 <a class="nav-link" <?php if (isset($_SESSION['name'])) {
-                                                        echo 'href="index.php?action=deconnexion">Deconnexion';
+                                                        echo 'href="index.php?action=deconnexion"><i class="fas fa-sign-out-alt"></i>';
                                                     } else {
                                                         echo 'href="index.php?action=connexion">Connexion';
                                                     }
@@ -242,88 +244,10 @@
     <script src="./components/frontEnd/home/cart-product.js"></script>
     <!-- vue composant du detail d'un produit -->
     <script src="./components/frontEnd/home/product-detail.js"></script>
+    <!-- vue composant des différents produits en version mobiles  -->
+    <script src="./components/frontEnd/home/product-list-mobile.js"></script>
 
-
-    <script>
-        Vue.component('shop-products-details-mobile', {
-            props: ['elements'],
-            data() {
-                return {
-
-                    error: "",
-                    classButton: "buttonAdd",
-                }
-            },
-            template: `
-            <div class="justify-content-flex-start flex-wrap categoryContainer cartSlider">
-        <div id="previousProduct">
-            <button class="buttonAdd" @click="previousProduct"><i class="fas fa-chevron-circle-left"></i> </button>
-        </div>
-
-        <div class="ProductImage text-center box" :class="elements.productList[elements.liveSlideProductItem].visible"
-            :id="elements.productList[elements.liveSlideProductItem].title">
-            <div class="imgBx">
-                <img :src="elements.productList[elements.liveSlideProductItem].src">
-            </div>
-            <div class="content">
-                <h3>{{elements.productList[elements.liveSlideProductItem].title}}</h3>
-                <p class="contentShow"> {{elements.productList[elements.liveSlideProductItem].typeOfQuantity}}
-                    <br>{{elements.productList[elements.liveSlideProductItem].priceDetail }} $</p>
-                <div class="d-flex m-auto buttonShop">
-                    <button @click="onAddCart(elements.productList[elements.liveSlideProductItem])"
-                        class="buttonAdd">+</button>
-                    <p class="contentShow contentQuantity">
-                        {{elements.productList[elements.liveSlideProductItem].quantityCartProduct}}</p>
-                    <button @click="onSubstractCart(elements.productList[elements.liveSlideProductItem])"
-                        class="buttonAdd">-</button>
-                </div>
-                <p class="cardColor">Cliquez pour ajouter</p>
-                <p class="contentShow">{{elements.productList[elements.liveSlideProductItem].quantityCart}}</p>
-                <p class="contentShow">{{elements.productList[elements.liveSlideProductItem].msgStock}}
-                    <i @click="onSeeProductDetail(elements.productList[elements.liveSlideProductItem])"
-                        class="fas fa-info-circle"></i>
-
-                </p>
-
-
-            </div>
-        </div>
-
-
-        <div id="nextProduct">
-            <button class="buttonAdd" @click="nextProduct"><i class="fas fa-chevron-circle-right"></i></button>
-        </div>
-    </div>
-   
-            `,
-            methods: {
-                onSeeProductDetail(data) {
-                    console.log("seeproductdetail")
-                    this.$emit('onseeproductdetail', data)
-                },
-                onSubstractCart(product) {
-                    this.$emit('onsubstractcart', product)
-                },
-
-                nextProduct() {
-                    this.$emit("liveslidenextproduct")
-                },
-                previousProduct() {
-                    this.$emit("liveslidepreviousproduct")
-
-                },
-                onAddCart(product) {
-                    //document.getElementById('messageShowAddProduct').style.animation = "showMessage 4s"
-                    this.$emit("onaddcart", product);
-                    console.log(product)
-                },
-                onSubstractCart(product) {
-                    this.$emit('onsubstractcart', product)
-                },
-            }
-        })
-    </script>
-
+                                        
 
 
 
@@ -358,6 +282,9 @@
                 productsSelected: {},
                 productSelectedDetail: [],
                 memory: [],
+                ///////info user///////////////
+                token:"",
+                name:"unknow",
                 //nombre de produit en cart
                 numberQuantityCart: 0,
                 //data du carts
@@ -369,6 +296,14 @@
                 window.addEventListener('scroll', this.handleScroll);
             },
             mounted: function() {
+                //recuperation du nom
+                this.name=<?php 
+                    if(isset($_SESSION['name']))
+                    {
+                        echo  "'".$_SESSION['name']."'"; 
+                    } else {echo "'unknow'";}
+               ?>;
+
                 //etudions la largeur de la fenetre
                 this.$nextTick(function() {
                     window.addEventListener('resize', this.getWindowWidth);
@@ -622,15 +557,11 @@
                         }
                     });
                 },
+
                 searchProduct(data) {
 
                     // on cré un tableau avec tous les noms des produits
                     let products = this.products.productList;
-                    // products.forEach(element => {
-                    //     sentence.push(element.title)
-                    // });
-
-
                     let Word = data
                     //passage en minuscule
                     let word = Word.toLowerCase()
@@ -696,6 +627,7 @@
                         this.carts.push(cart)
 
                     }
+                    // mise a jour du nombre de produit dans le cart
                     this.numbersOfproducts()
                     console.log(this.carts);
                     //on reinitialise le dupliateCart en false
@@ -732,6 +664,7 @@
                     let storage = JSON.parse(localStorage.getItem("carts"));
                     console.log(storage);
                 },
+                //ouverture de la page du cart qui n'est plus un modal
                 modal() {
                     this.router.main = true;
                     this.router.showModal = true;
@@ -740,12 +673,14 @@
                         this.scrolling("cartDirection")
                     }, 100);
                 },
+                //fonction pour assurer le scrolling
                 scrolling(element) {
                     document.getElementById(element).scrollIntoView({
                         block: 'start',
                         behavior: 'smooth',
                     })
                 },
+                // slider en version mobile pour les produits
                 liveSlideProductItemNext() {
                     let numberOfFrames = 0
                     this.productsSelected.productList.forEach(
@@ -771,6 +706,7 @@
                     };
                     console.log(this.productsSelected.liveSlideProductItem)
                 },
+                // fonction pour vider le search input
                 resetProduct() {
                     console.log("resetproducts")
                     this.productsSelected.productList = this.products.productList
@@ -820,6 +756,7 @@
                         //this.productsSelected.productList = category
                     }
                 },
+                //fonction pour publier le nombre de produit a coté du cart
                 numbersOfproducts() {
                     if (this.carts == null) {
                         this.numberQuantityCart = 0
@@ -880,6 +817,22 @@
             .then(function(token) {
                 // TokenElem.innerHTML = "token is : " + token
                 console.log(token)
+                
+                // recuperation du token qui est envoyé a la base de données
+                ///////////////////////////////////////////////////////////
+                ////APPEL AXIOS DES TOKENS/////////////////////////
+                axios.get(`proceed.php?action=getthetoken&token=${token}`)
+                    .then(function(response) {
+                        if (response.data.error) {
+                            //app.errorMsg = response.data.message;
+                            console.log(response)
+                        } else {
+                            console.log(response.data)
+                            console.log("success Token");
+                        }
+                    });
+                
+
             })
             .catch(function(err) {
                 //ErrElem.innerHTML = ErrElem.innerHTML + "; " + err
@@ -908,6 +861,7 @@
     </script>
 
 </body>
+<!-- script de la librairie d'animation aos -->
 <script>
     AOS.init();
 </script>

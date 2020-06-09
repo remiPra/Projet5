@@ -92,26 +92,24 @@
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <button id="btnCart" @click="modal()">
-                            <i class="fas fa-shopping-cart">{{numberQuantityCart}}</i>
-                        </button>
-                    </div>
+                   
                 </nav>
-            </header>
+    </header>
         <!-- section principale de presentation du shop -->
-        <section id="mainPositionAbsolute">
-            <picture id="imageParrallax">
+    <section id="mainPositionAbsolute">
+        <picture id="imageParrallax">
                 <source srcset="assets/images/basket-for-apple-picking-in-fruit-orchard.mobile.jpg"
                     media="(max-width: 480px)">
                 <source srcset="assets/images/basket-for-apple-picking-in-fruit-orchard.Ipad.jpg"
                     media="(max-width: 1000px)">
                 <img src="assets/images/basket-for-apple-picking-in-fruit-orchard.jpg"
                     alt="panier en osier se situant sur la gauche dans un champ vert ">
-            </picture>
-        </section>
+        </picture>
+    </section>
           <!-- section de presentation de la page -->
-        <section>
+    <main>
+   
+          <section>
             <div class="col-md-9 container text-center text-light" id="presentationShopAdministration">
                 <div class="container px-md-3 shopTitle">
                     <h1 class="text-light">Ma ferme Bio</h1>
@@ -126,9 +124,25 @@
         
         <!-- section formulaire d'inscription ou de connexion géré var la Vue     -->
         <section id="administrationShop" >
-            <form-connexion></form-connexion>  
+            <form-connexion @onforgotpassword='forgotPassword'></form-connexion>
+            <div class="form-group">
+            </div>
+        <!-- section pour recuperer le mot de passe -->
+        <transition name="fade">
+            <template v-if="sendNewPassword">
+                <form action="">
+                    <div class="form-group">
+                        <label>veuillez entrez votre email pour recuperer votre mot de passe?</label>
+                        <input type="email" name="email" id="email">
+                    </div>
+                    <div class="form-group">
+                        <input class="formButton" type="submit" value="Envoyer" name="btnGetPassword">
+                    </div>
+                </form>
+            </template>
+        </transition>  
         </section>
-
+    </main>
         <footer>
             <div class="row introduction">
                 <div class="col-md-4">
@@ -196,7 +210,10 @@
                     this.sizeSignUp = "col-md-8";
                     this.connexion = false;
                     this.signInForm = true
-                }
+                },
+                onforgotPassword(){
+                    this.$emit('onforgotpassword')
+                },
             },
             template:`
         <div class="col-xl-8 m-auto d-flex flex-wrap justify-content-between">    
@@ -269,7 +286,7 @@
 
 
 
-                    <div class="form-group">
+                    <div class="form-group ">
                         <input class="formButton" type="submit" value="Envoyer" name="btnContact">
                     </div>
                 </form>
@@ -296,12 +313,25 @@
                             <input class="formButton" type="submit" value="Envoyer" name="btnContact">
                         </div>
                     </form>
+                    <div class="text-center">
+                        <button  @click="onforgotPassword" class="m-auto widthButtonMobile buttonBrown">Mot de passe oublié?</button>
+                    </div>
                 </div>
             </template>
         </div>`
                 })
         new Vue({
             el: "#app",
+            data:{
+                sendNewPassword: false
+            },
+            methods:{
+            forgotPassword(){
+                //ouverture et fermeture
+                this.sendNewPassword =! this.sendNewPassword;
+            }
+        }
+
         })
     </script>
 </body>
