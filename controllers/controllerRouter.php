@@ -134,8 +134,22 @@ function cart(){
     echo "<script type='text/javascript'>document.location.replace('index.php?action=stepOrder');</script>";
 
 }
+//fonction pour aller vers les etapes de commande 
 function stepOrder(){
-
      require "view/frontEnd/stepOrder.php";
 }
+//page de connexion de l'adminstration 
+function administration(){
+     require "view/frontEnd/connexionShop.php";
+} 
 
+// function d'appel des curls pour les promotions
+function curl(){
+    require 'models/frontEnd/tokenManager.php';
+    $tokenManager = new TokenManager();
+    $Alltokens = $tokenManager->getAllTokens();
+    
+    require 'models/frontEnd/curlManager.php';
+    $curlManager = new CurlManager();
+    $curlPromotion = $curlManager->sendPromotionsAllTokens($Alltokens);
+} 

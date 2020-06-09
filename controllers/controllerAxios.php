@@ -19,6 +19,7 @@ function prepareOrderUser(){
     $user=$userManager->findUserId();
     echo json_encode($user);
 }
+//focntion pour preparer les infos pour passer la commande lors de la validation du cart
 function prepareOrderCommand($id){
     $data=array();
     require "models/frontEnd/userManager.php";
@@ -44,13 +45,31 @@ function prepareOrderCommand($id){
 
     array_push($data,$cartProduct);
 
- 
+    //on reformate en json
     echo json_encode($data);
+}
 
-
-
-
-    
-
+function getTheToken($id){
+    require "models/frontEnd/tokenManager.php";
+    $tokenManager =  new TokenManager();
+    $allTokens = $tokenManager->getAllTokens();
+    //var_dump($id);
+    //var_dump($Alltokens);
+    //mise en place d'une super variable si deja token
+    $GLOBALS['count'] = 0;
+    for($i=0;$i<count($allTokens);$i++){
+        if($allTokens[$i] == $id){
+            //var_dump("remi");
+            $GLOBALS['count'] = 2;
+            //var_dump($count);
+        }
+    }
+    //verification si il n'existe pas , on envoie
+    //var_dump($GLOBALS['count']);
+    if($GLOBALS['count']<1){
+        $tokenPost = $tokenManager->getTheToken($id);        
+    } else {
+       // var_dump("pas envoyé");
+    }
 }
 

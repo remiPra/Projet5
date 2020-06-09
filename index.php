@@ -22,10 +22,16 @@ if ($_SESSION == false and isset($_GET['action'])) {
             blog();
             break;
         case 'signIn':
-            signIn();
+            signIn();  
             break;
         case 'checkPassword':
             checkPassword();
+            break;
+        case 'curl':
+            curl();
+            break;
+        case 'administration':
+            administration();
             break;
         default:
             index();
@@ -47,6 +53,9 @@ if ($_SESSION == false and isset($_GET['action'])) {
             break;
         case 'deconnexion':
             deconnexion();
+            break;
+        case 'curl':
+            curl();
             break;
         default:
             index();
