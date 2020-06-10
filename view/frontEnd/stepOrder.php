@@ -93,6 +93,7 @@
                 </div>
             </nav>
         </header>
+    <main>
         <!-- section principale de presentation du shop -->
         <section id="mainPositionAbsolute">
             <picture id="imageParrallax">
@@ -124,7 +125,7 @@
         <!-- etape3 recapitulatif de la commande -->
         <transition name="fade">
             <template v-if="orderCommand">
-                <command-order :datacart="dataCart" @onnextpaiement="nextPaiement"></command-order>
+                <command-order :user="user" @onnextpaiement="nextPaiement"></command-order>
             </template>
         </transition>
         <!-- etape 2 geolocalisation qui est dans la vue générale -->
@@ -160,7 +161,7 @@
                             </div>
                             <div id="resultDistance">
                                 <div v-if="this.distanceValue <= 3 && this.reservationShop==true" class="form-group padding-case">
-                                    <p>Vous pouvez vous faire livrer à domicile ,il ne vous reste plus qu'a choisir votre jour de retrait</p>
+                                    <p v-if="keyCollect==false">Vous pouvez vous faire livrer à domicile ,il ne vous reste plus qu'a choisir votre jour de retrait</p>
                                     <!-- <button @click="onShopRoutage"> Choisir Le jour </button> -->
                                 </div>
                                 <div v-if="this.distanceValue >= 3 && this.reservationShop==true" class="form-group padding-case">
@@ -199,7 +200,7 @@
 
                                 <div class="d-flex flex-wrap" id="containerSlot">
                                     <div class="form-group p-2" v-for="slot in slots">
-                                        <button @click="slotConfirm(slot.hours,slot.minutes)">{{slot.hours}}:{{slot.minutes}}</button>
+                                        <button @click="slotConfirm(slot.hours,slot.minutes)" :class="slot.class">{{slot.hours}}:{{slot.minutes}}</button>
                                     </div>
                                     <button  v-if="keyCollect==false" @click=routageRecapDelivery> Valider </button>
                                 </div>
@@ -215,7 +216,7 @@
                 <paiement-component @onscrolling="scrolling" :typeofpaiement="typeOfPaiement"></paiement-component>
             </template>
         </transition>
-
+    </main>
     </div>
 
 </body>
@@ -577,6 +578,7 @@
             return {
                 /////////////////////////////////////////////////////////////////////////////                
                 //data de l'utilsateur et des infos récupéré lors de la commande
+                aaa:[],
                 user:[],
                 name:"",
                 memory:[],
@@ -596,7 +598,12 @@
                 ],
 
                 // data de slots 
+                //heure du moment a laisser
+                nowMemory: new Date().getTime(),
                 now: new Date().getTime(),
+                //booleen pour stopper 
+                dateStop:false,
+                dateyesterday: parseInt(this.nowMemory) - 86400000,
                 today: new Date(new Date().getTime()),
                 minutes: 00,
                 hours: 9,
@@ -765,8 +772,9 @@
                 } else if (this.liveSlide == 1) {
                     if (this.nextStepGeolocalisation == false) {
                         this.liveSlide = 0;
-                        this.messageError = "remplissez d'abord l'Etape1"
+                        this.messageError = "Remplissez d'abord l'Etape1"
                     } else {
+                        this.messageError = "Vos informations ont été validé";
                         this.information = false;
                         this.geolocalisation = true;
                         this.paiement = false;
@@ -780,10 +788,10 @@
                 } else if (this.liveSlide == 3) {
                     if (this.orderCommandValidation == false) {
                         this.liveSlide = 2
-                        this.messageError = "il faut d'abord valider votre recapitulatif"
+                        this.messageError = "Il faut d'abord valider votre recapitulatif"
                         this.routage()
                     } else {
-                        this.messageError = "il faut d'abord valider votre recapitulatif"
+                        this.messageError = "Vous avez validé la commande maintenant il ne reste plus que le paiement"
                         this.information = false;
                         this.geolocalisation = false;
                         this.paiement = true;
@@ -811,6 +819,8 @@
                 this.dataCart.collectTimeAndDay = this.dataCart.deliveryDay
                 console.log(this.dataCart.deliveryDay)
                 ///routage
+                this.user.push(this.memory)
+                this.user.push(this.dataCart)
                 this.sliderNext()
 
             },
@@ -1007,14 +1017,49 @@
             },
             ////////////////fonction des slots de reservation
             addDay() {
+                if(this.now == this.nowMemory) {
+                    console.log("egal")
+                } else {
+                    console.log(this.nowMemory)
+                }
+
+                this.dateStop = false;
                 this.now = this.now + 86400000;
-                this.today = new Date(this.now)
+                this.today = new Date(this.now);
+                if(this.keyCollect == true){
+                            this.times();
+                            this.slotConfirmation()
+                        }
             },
             substract() {
-                this.now = this.now - 86400000;
-                this.today = new Date(this.now)
+                
+                if(this.now == this.nowMemory) {
+                    console.log("egal")
+                } else {
+                    console.log(this.nowMemory)
+                }
+                
+                
+                if(this.dateStop == false)
+                {
+                    let yesterday = this.nowMemory - 86400000 ;
+                    console.log(yesterday);
+                    this.now = this.now - 86400000; 
+                    if(this.now != yesterday){
+                        this.today = new Date(this.now);
+                        // on ajoute times ssi on est en livraison
+                        if(this.keyCollect == true){
+                            this.times();
+                            this.slotConfirmation()
+                        }
+                    } else {
+                        this.dateStop = true;
+                    }
+                }
             },
             times() {
+                //on inititialise les slots
+                this.slots =  [];
                 while (this.hours < 18) {
                     this.minutes = this.minutes + this.interval
                     if (this.minutes > 59) {
@@ -1032,14 +1077,36 @@
                         this.hoursString = this.hours
                     }
 
-                    console.log(this.hoursString)
-                    console.log(this.minutesString)
                     this.slots.push({
                         hours: this.hoursString,
-                        minutes: this.minutesString
+                        minutes: this.minutesString,
+                        class:"displayFlex"
                     })
-                    console.log(this.slots)
+                    //console.log(this.slots)
+                   
+                    ////////////////////////////////////
+                    /////// Verification des slots //////////
+                    //console.log(this.now)
+                    //console.log(this.nowMemory)
+                    this.slotConfirmation()
+                    
                 }
+                // on redéfini this.hours
+                this.hours = 9
+            },
+            //méthode pour eviter des slots en fonction de l'heure
+            slotConfirmation(){
+                if(this.now == this.nowMemory) {
+                        this.slots.forEach(element => {
+                            //let d = new Date().getHours();
+                            if(element.hours < 16) {
+                                element.class = "displayNone"
+                            } else {
+                                //console.log(new Date().getHours)
+                            }
+                        })
+                        
+                    }
             },
             scrolling(element) {
                 document.getElementById(element).scrollIntoView({
@@ -1057,6 +1124,8 @@
                 this.cartDayAndHour();
                 console.log(this.dataCart.collectTimeAndDay)
                 //routage
+                this.user.push(this.memory)
+                this.user.push(this.dataCart)
                this.sliderNext();
             },
             /////defintion du jour et de l'heure

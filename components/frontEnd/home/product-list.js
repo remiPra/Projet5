@@ -36,10 +36,10 @@ Vue.component('shop-products-details', {
     <div class=" box-shadow ProductImage text-center box" v-for="(product,index) in elements.productList" :key="product.name"
         :id="product.title" :class="product.visible">
         <div class="imgBx">
-            <img :src="product.src">
+            <img  @click="onSeeProductDetail(product)"  :src="product.src">
         </div>
         <div class="content">
-            <h3>{{product.title}}</h3>
+            <h3  @click="onSeeProductDetail(product)" >{{product.title}}</h3>
             <p class="contentShow"> {{product.typeOfQuantity}} <br>{{product.priceDetail}} $</p>
             <p class="contentShow"> {{product.msgStock}}
             <i  @click="onSeeProductDetail(product)" class="fas fa-info-circle"></i>
@@ -51,7 +51,7 @@ Vue.component('shop-products-details', {
             <div class="d-flex m-auto buttonShop">
                     <button   @click="onAddCart(product)" class="buttonAdd">+</button>
                     <p v-if="product.keyChange == 0" class="contentShow contentQuantity">
-                        article</p>
+                    <i class="fas fa-shopping-basket"></i></p>
                     <p v-if="product.keyChange == 1" class="contentShow contentQuantity">{{
                         product.quantityCartProduct}}</p>
                     <button  @click="onSubstractCart(product)" class="buttonAdd">-</button>

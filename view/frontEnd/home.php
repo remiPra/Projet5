@@ -41,11 +41,7 @@
                     <a id="logo" class="pl-4 ">
                         Ma Ferme bio
                     </a>
-                    <span id="nameSession">
-                        <?php if (isset($_SESSION['name'])) {
-                            echo 'bienvenue ' . htmlspecialchars($_SESSION['name']) . '';
-                        }; ?> </p>
-                    </span>
+                   
 
 
                 </div>
@@ -101,6 +97,9 @@
                         <button id="btnCart" @click="modal()">
                             <i class="fas fa-shopping-cart">{{numberQuantityCart}}</i>
                         </button>
+                        <div class="arrowCartSlide">
+                             <i :class="arrowSlide"class="fas fa-arrow-circle-up"></i>
+                        </div>
                     </div>
                 </nav>
             </header>
@@ -113,7 +112,7 @@
                         <img src="assets/images/basket-for-apple-picking-in-fruit-orchard.jpg" alt="panier en osier se situant sur la gauche dans un champ vert ">
                     </picture>
                     <div id="containerMain" class="row">
-                        <main-container></main-container>
+                        <main-container :namesession="nameSession"></main-container>
                         <slider-news></slider-news>
                     </div>
                 </section>
@@ -259,7 +258,9 @@
         // vue principale 
         let app = new Vue({
             el: "#app",
+            //slide effect cart
             data: {
+                arrowSlide:"displayNone",
                 //Router de la page
                 router: {
                     main: true,
@@ -285,6 +286,7 @@
                 ///////info user///////////////
                 token:"",
                 name:"unknow",
+                nameSession:"<?php if(isset($_SESSION['name'])){echo  $_SESSION['name']; } else {echo "";}?>",
                 //nombre de produit en cart
                 numberQuantityCart: 0,
                 //data du carts
@@ -297,12 +299,7 @@
             },
             mounted: function() {
                 //recuperation du nom
-                this.name=<?php 
-                    if(isset($_SESSION['name']))
-                    {
-                        echo  "'".$_SESSION['name']."'"; 
-                    } else {echo "'unknow'";}
-               ?>;
+               
 
                 //etudions la largeur de la fenetre
                 this.$nextTick(function() {
@@ -581,6 +578,7 @@
                     })
                 },
                 addCart(cart) {
+                    
                     //verification si le produit existe deja
                     this.carts.forEach(element => {
                         if (element.title == cart.title) {
@@ -635,6 +633,10 @@
                     localStorage.setItem("carts", JSON.stringify(this.carts));
                     let storage = JSON.parse(localStorage.getItem("carts"));
                     console.log(storage.length);
+                    setTimeout(()=>{
+                        this.arrowSlide = "displayNone";
+                    },1000)
+                    this.arrowSlide = "arrowCartSlideIcon";
                 },
                 substractCart(cart) {
                     // verification que le produit est present
@@ -663,6 +665,11 @@
                     localStorage.setItem("carts", JSON.stringify(this.carts));
                     let storage = JSON.parse(localStorage.getItem("carts"));
                     console.log(storage);
+
+                    setTimeout(()=>{
+                        this.arrowSlide = "displayNone";
+                    },500)
+                    this.arrowSlide = "arrowCartSlideIcon";
                 },
                 //ouverture de la page du cart qui n'est plus un modal
                 modal() {
