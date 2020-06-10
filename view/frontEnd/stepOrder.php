@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
 
 
-
+ 
 
     <!-- integration de la librairie axios -->
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.0/dist/aos.css">
@@ -577,12 +577,12 @@
             return {
                 /////////////////////////////////////////////////////////////////////////////                
                 //data de l'utilsateur et des infos récupéré lors de la commande
+                user:[],
                 name:"",
                 memory:[],
                 // Position au scroll
                 scroll:{
-                    slot:600,
-
+                     slot:600,
                 },
                 // data des types de paiements 
                 typeOfPaiement: [{
