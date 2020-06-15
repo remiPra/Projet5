@@ -18,6 +18,12 @@ Vue.component('command-order', {
         <p>Numéro de commande : {{user[0][1].numberCommand}}</p>
         <p>type de commande :{{user[1].status}}</p>   
         <p>Date de {{user[1].status}} de la commande : {{user[1].collectTimeAndDay}}</p>   
+        <p>{{user[1].deliveryDay}}</p>
+        <p>{{user[1].collectTime}}</p>
+        <p></p>
+        <p></p>
+       
+       
         <table class="table table-bordere">
             <thead>
                 <th v-for="(list,index) in cartList.head" :id="list">{{list}}</th>

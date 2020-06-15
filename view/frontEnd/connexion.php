@@ -130,7 +130,7 @@
         <!-- section pour recuperer le mot de passe -->
         <transition name="fade">
             <template v-if="sendNewPassword">
-                <form action="">
+                <form action="index.php?action=newPassword" method="POST">
                     <div class="form-group">
                         <label>veuillez entrez votre email pour recuperer votre mot de passe?</label>
                         <input type="email" name="email" id="email">

@@ -73,3 +73,24 @@ function getTheToken($id){
     }
 }
 
+function updateOrder(){
+
+    
+    // $name = htmlspecialchars($_POST['name']);
+    // $adress = htmlspecialchars($_POST['adress']);
+    // $postalCode = htmlspecialchars($_POST['postalCode']);
+    // $town = htmlspecialchars($_POST['town']);
+    
+    $numberCommand = htmlspecialchars($_POST['numberCommand']);
+    // $status = htmlspecialchars($_POST['status']);
+    // $collectTime = htmlspecialchars($_POST['collectTime']);
+    // $collectTimeAndDay = htmlspecialchars($_POST['collectTimeAndDay']);
+    // $deliveryDay = htmlspecialchars($_POST['deliveryDay']);
+    
+
+    require 'models/backEnd/cartManager.php';
+    $cartManager = new CartManagerBack();
+    $change = $cartManager->changeTime($numberCommand);
+    
+}
+

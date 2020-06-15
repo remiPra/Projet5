@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
 
 
- 
+
 
     <!-- integration de la librairie axios -->
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.0/dist/aos.css">
@@ -55,14 +55,12 @@
                         </li>
                         <li class="nav-items">
                             <a class="nav-link" <?php if (isset($_SESSION['name'])) {
-                                                        echo 'href="index.php?action=deconnexion">Deconnexion';
-                                                    } else {
-                                                        echo 'href="index.php?action=connexion">Connexion';
-                                                    }
-                                                    ?> </a> 
-                        </li>
-                        <li class="nav-items">
-                            <a class="nav-link" href="administrationConnexion.html">Administration</a>
+                                                    echo 'href="index.php?action=deconnexion">Deconnexion';
+                                                } else {
+                                                    echo 'href="index.php?action=connexion">Connexion';
+                                                }
+                                                ?> </a> </li> <li class="nav-items">
+                                <a class="nav-link" href="administrationConnexion.html">Administration</a>
                         </li>
                     </ul>
                 </div>
@@ -80,151 +78,149 @@
                             <a class="nav-link" href="sommaireArticle.html">Actualités</a>
 
                             <a class="nav-link" <?php if (isset($_SESSION['name'])) {
-                                                        echo 'href="index.php?action=deconnexion">Deconnexion';
-                                                    } else {
-                                                        echo 'href="index.php?action=connexion">Connexion';
-                                                    }
-                                                    ?> </a> 
-
-                            <a class="nav-link" href="administrationConnexion.html">Administration</a>
+                                                    echo 'href="index.php?action=deconnexion">Deconnexion';
+                                                } else {
+                                                    echo 'href="index.php?action=connexion">Connexion';
+                                                }
+                                                ?> </a> <a class="nav-link" href="administrationConnexion.html">Administration</a>
 
                         </div>
                     </div>
                 </div>
             </nav>
         </header>
-    <main>
-        <!-- section principale de presentation du shop -->
-        <section id="mainPositionAbsolute">
-            <picture id="imageParrallax">
-                <source srcset="assets/images/basket-for-apple-picking-in-fruit-orchard.mobile.jpg" media="(max-width: 480px)">
-                <source srcset="assets/images/basket-for-apple-picking-in-fruit-orchard.Ipad.jpg" media="(max-width: 1000px)">
-                <img src="assets/images/basket-for-apple-picking-in-fruit-orchard.jpg" alt="panier en osier se situant sur la gauche dans un champ vert ">
-            </picture>
-        </section>
-        <!-- section de presentation de la page -->
-        <section>
-            <div class="col-md-6 container text-center text-light" id="presentationShopAdministration">
-                <!-- section de routing de la single page -->
-                <div class="container px-md-3 headerOrder">
-                    <h1 class="text-light">Ma ferme Bio</h1>
-                    <h2>{{slides[liveSlide].title}}</h2>
-                    <h3 class="text-alert">{{messageError}}</h3>
-                    <button @click="sliderPrevious">Etape précedente</button>
-                    <button @click="sliderNext">Etape suivante</button>
-                    <p>{{slides[liveSlide].paragraphe}}</p>
-                </div>
-            </div>
-        </section>
-        <transition name="fade">
-            <!-- etape 1 verification des informations -->
-            <template v-if="information">
-                <information-user :memory=memory @onnextgeolocalisation="nextGeolocalisation"></information-user>
-            </template>
-        </transition>
-        <!-- etape3 recapitulatif de la commande -->
-        <transition name="fade">
-            <template v-if="orderCommand">
-                <command-order :user="user" @onnextpaiement="nextPaiement"></command-order>
-            </template>
-        </transition>
-        <!-- etape 2 geolocalisation qui est dans la vue générale -->
-        <transition name="fade">
-            <template v-if="geolocalisation">
-                <!-- formulaire de geolocalisation -->
-                <div>
-                    <section id="administrationShop" class="col-sm-10 m-auto text-center">
-                        <div class="form-group news">
-                            <h3>Livraison ou Retrait en magasin</h3>
-                            <div class="form-group padding-case">
-                                <p>Choississez entre le retrait en magasin ou vous faire livrer</p>
-                                <button @click="onShopRoutage">Retrait en magasin<i style="font-size: 30px" class="fas fa-map-marker-alt"></i></button>
-                                <button @click="onLivraisonRoutage">Livraison a Domicile<i style="font-size: 30px" class="fas fa-map-marker-alt"></i></button>
-                            </div>
-                            <div id="livraison">
-                                <div v-if="livraison">
-                                    <div class="form-group padding-case">
-                                        <p>Cliquez sur ce bouton pour vous géolocaliser</p>
-                                        <button @click="getLocated">Se géolocaliser <i style="font-size: 30px" class="fas fa-map-marker-alt"></i></button>
-                                        <button @click="cardShow">rentrer Son adresse <i style="font-size: 30px" class="fas fa-map-marker-alt"></i></button>
-                                    </div>
-                                    <div v-if="inputAdressUser" class="form-group padding-case" id="inputAdressUser">
-                                        <p>Renter votre adresse , choisissez la bonne adresse et cliquez sur le bouton valider</p>
-                                        <label for="">
-                                            <input @click="cardShow" type="text" class="form-control" v-model="address" ref="autocomplete" name="pseudo" id="pseudo">
-                                        </label>
-                                        <button @click="autocompleteShow"> Valider cette adresse </button>
-                                    </div>
-                                    <div v-if="mapShow" class="form-group m-auto" id="mymap">
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="resultDistance">
-                                <div v-if="this.distanceValue <= 3 && this.reservationShop==true" class="form-group padding-case">
-                                    <p v-if="keyCollect==false">Vous pouvez vous faire livrer à domicile ,il ne vous reste plus qu'a choisir votre jour de retrait</p>
-                                    <!-- <button @click="onShopRoutage"> Choisir Le jour </button> -->
-                                </div>
-                                <div v-if="this.distanceValue >= 3 && this.reservationShop==true" class="form-group padding-case">
-                                    <p>Vous ne pouvez pas etre livré a domicile mais vous pouvez venir chercher à un horaire
-                                        précis
-                                        la commande en magasin</p>
-                                    <button @click="onShopRoutage">Retirer en magasin</button>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <div id="slotContainer">
-                        <div v-if="slotShow">
-                            <section   id="slotHours" class="col-sm-10 m-auto text-center containerBrown">
-
-                                <div class="form-group row justify-content-center col-md-8  h-10 m-auto row align-items-center ">
-
-                                    <button class="ButtonGreen" @click="substract">-</button>
-                                    <p class="align-items-center p-3">
-                                        {{jour}} <br>
-
-                                        {{today.getDate()}}
-
-                                        {{mois}}
-
-                                        {{today.getFullYear()}}
-                                    </p>
-                                    <input class="displayNone" type="text" :value="cartDayComputed">
-                                    <button class="ButtonGreen" @click="addDay">+</button>
-                                    <button v-if="keyCollect==false" @click=routageRecapDelivery> Valider </button>
-                                </div>
-                        <!-- separation car pas d'horaires si on est livré  -->
-                        <div v-if="keyCollect==true">
-                                <button @click="times">Voir les horaires</button>
-
-
-                                <div class="d-flex flex-wrap" id="containerSlot">
-                                    <div class="form-group p-2" v-for="slot in slots">
-                                        <button @click="slotConfirm(slot.hours,slot.minutes)" :class="slot.class">{{slot.hours}}:{{slot.minutes}}</button>
-                                    </div>
-                                    <button  v-if="keyCollect==false" @click=routageRecapDelivery> Valider </button>
-                                </div>
-                        </div>
-                            </section>
-                        </div>
+        <main>
+            <!-- section principale de presentation du shop -->
+            <section id="mainPositionAbsolute">
+                <picture id="imageParrallax">
+                    <source srcset="assets/images/basket-for-apple-picking-in-fruit-orchard.mobile.jpg" media="(max-width: 480px)">
+                    <source srcset="assets/images/basket-for-apple-picking-in-fruit-orchard.Ipad.jpg" media="(max-width: 1000px)">
+                    <img src="assets/images/basket-for-apple-picking-in-fruit-orchard.jpg" alt="panier en osier se situant sur la gauche dans un champ vert ">
+                </picture>
+            </section>
+            <!-- section de presentation de la page -->
+            <section>
+                <div class="col-md-6 container text-center text-light" id="presentationShopAdministration">
+                    <!-- section de routing de la single page -->
+                    <div class="container px-md-3 headerOrder">
+                        <h1 class="text-light">Ma ferme Bio</h1>
+                        <h2>{{slides[liveSlide].title}}</h2>
+                        <h3 class="text-alert">{{messageError}}</h3>
+                        <button @click="sliderPrevious">Etape précedente</button>
+                        <button @click="sliderNext">Etape suivante</button>
+                        <p>{{slides[liveSlide].paragraphe}}</p>
                     </div>
                 </div>
-            </template>
-        </transition>
-        <transition name="fade">
-            <template v-if="paiement">
-                <paiement-component @onscrolling="scrolling" :typeofpaiement="typeOfPaiement"></paiement-component>
-            </template>
-        </transition>
-    </main>
+            </section>
+            <transition name="fade">
+                <!-- etape 1 verification des informations -->
+                <template v-if="information">
+                    <information-user :memory=memory @onnextgeolocalisation="nextGeolocalisation"></information-user>
+                </template>
+            </transition>
+            <!-- etape3 recapitulatif de la commande -->
+            <transition name="fade">
+                <template v-if="orderCommand">
+                    <command-order :user="user" @onnextpaiement="nextPaiement"></command-order>
+                </template>
+            </transition>
+            <!-- etape 2 geolocalisation qui est dans la vue générale -->
+            <transition name="fade">
+                <template v-if="geolocalisation">
+                    <!-- formulaire de geolocalisation -->
+                    <div>
+                        <section id="administrationShop" class="col-sm-10 m-auto text-center">
+                            <div class="form-group news">
+                                <h3>Livraison ou Retrait en magasin</h3>
+                                <div class="form-group padding-case">
+                                    <p>Choississez entre le retrait en magasin ou vous faire livrer</p>
+                                    <button @click="onShopRoutage">Retrait en magasin<i style="font-size: 30px" class="fas fa-map-marker-alt"></i></button>
+                                    <button @click="onLivraisonRoutage">Livraison a Domicile<i style="font-size: 30px" class="fas fa-map-marker-alt"></i></button>
+                                </div>
+                                <div id="livraison">
+                                    <div v-if="livraison">
+                                        <div class="form-group padding-case">
+                                            <p>Cliquez sur ce bouton pour vous géolocaliser</p>
+                                            <button @click="getLocated">Se géolocaliser <i style="font-size: 30px" class="fas fa-map-marker-alt"></i></button>
+                                            <button @click="cardShow">rentrer Son adresse <i style="font-size: 30px" class="fas fa-map-marker-alt"></i></button>
+                                        </div>
+                                        <div v-if="inputAdressUser" class="form-group padding-case" id="inputAdressUser">
+                                            <p>Renter votre adresse , choisissez la bonne adresse et cliquez sur le bouton valider</p>
+                                            <label for="">
+                                                <input @click="cardShow" type="text" class="form-control" v-model="address" ref="autocomplete" name="pseudo" id="pseudo">
+                                            </label>
+                                            <button @click="autocompleteShow"> Valider cette adresse </button>
+                                        </div>
+                                        <div v-if="mapShow" class="form-group m-auto" id="mymap">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="resultDistance">
+                                    <div v-if="this.distanceValue <= 3 && this.reservationShop==true" class="form-group padding-case">
+                                        <p v-if="keyCollect==false">Vous pouvez vous faire livrer à domicile ,il ne vous reste plus qu'a choisir votre jour de retrait</p>
+                                        <!-- <button @click="onShopRoutage"> Choisir Le jour </button> -->
+                                    </div>
+                                    <div v-if="this.distanceValue >= 3 && this.reservationShop==true" class="form-group padding-case">
+                                        <p>Vous ne pouvez pas etre livré a domicile mais vous pouvez venir chercher à un horaire
+                                            précis
+                                            la commande en magasin</p>
+                                        <button @click="onShopRoutage">Retirer en magasin</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <div id="slotContainer">
+                            <div v-if="slotShow">
+                                <section id="slotHours" class="col-sm-10 m-auto text-center containerBrown">
+
+                                    <div class="form-group row justify-content-center col-md-8  h-10 m-auto row align-items-center ">
+
+                                        <button class="ButtonGreen" @click="substract">-</button>
+                                        <p class="align-items-center p-3">
+                                            {{jour}} <br>
+
+                                            {{today.getDate()}}
+
+                                            {{mois}}
+
+                                            {{today.getFullYear()}}
+                                        </p>
+                                        <input class="displayNone" type="text" :value="cartDayComputed">
+                                        <button class="ButtonGreen" @click="addDay">+</button>
+                                        <button v-if="keyCollect==false" @click=routageRecapDelivery> Valider </button>
+                                    </div>
+                                    <!-- separation car pas d'horaires si on est livré  -->
+                                    <div v-if="keyCollect==true">
+                                        <button @click="times">Voir les horaires</button>
+
+
+                                        <div class="d-flex flex-wrap" id="containerSlot">
+                                            <div class="form-group p-2" v-for="slot in slots">
+                                                <button @click="slotConfirm(slot.hours,slot.minutes)" :class="slot.class">{{slot.hours}}:{{slot.minutes}}</button>
+                                            </div>
+                                            <button v-if="keyCollect==false" @click=routageRecapDelivery> Valider </button>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </transition>
+            <transition name="fade">
+                <template v-if="paiement">
+                    <paiement-component @onscrolling="scrolling" :propspaiement="propsPaiement"></paiement-component>
+                </template>
+            </transition>
+        </main>
     </div>
 
 </body>
 <script>
     //composant local pour la partie des paiements pour etape 4 
-    </script>
-    <script src="./components/frontEnd/stepOrder/paiement-component.js"></script>
-    <script>
+</script>
+<script src="./components/frontEnd/stepOrder/paiement-component.js"></script>
+<script>
     // Vue.component('paiement-component', {
     //     props: ['typeofpaiement'],
     //     template: ` <section class="col-sm-10 m-auto text-center">
@@ -412,8 +408,8 @@
     //                 </div>
     //             </section>`,      
     //     methods: {
-           
-            
+
+
     //         //routage des différentes étapes de reservations 
     //         showEffect(i) {
 
@@ -457,9 +453,9 @@
     // })
 
     // composant pour les informations de l'utilisateur etape 1
-        </script>
-        <script src="./components/frontEnd/stepOrder/information-user.js"></script>
-        <script>
+</script>
+<script src="./components/frontEnd/stepOrder/information-user.js"></script>
+<script>
     // Vue.component('information-user', {
     //     props:['memory'],
     //     template: `
@@ -496,7 +492,7 @@
     //                     </div>
     //                 </form>
     //             </section>
-        
+
     //     `,
     //     methods: {
     //         onNextGeolocalisation() {
@@ -505,14 +501,14 @@
     //     }
     // })
 
-    
-    
+
+
     // composant pour la validation de la commande 
-    </script>
-    <script src="./components/frontEnd/stepOrder/command-order.js"></script>
-    
-    
-    <script>
+</script>
+<script src="./components/frontEnd/stepOrder/command-order.js"></script>
+
+
+<script>
     // Vue.component('command-order', {
     //     props:['datacart'],
     //     data() {
@@ -524,7 +520,7 @@
     //     },
     //     template: `
     // <div>
-        
+
     //     <div class="col-md-8 text-light buttonBrown m-auto cartConfirm">
     //         <h3 class="text-center pb-2">Recapitulatif de la commande </h3>
     //         <p>{{datacart.status}}</p>   
@@ -571,28 +567,28 @@
 
 
 
-////////////composant global associant la geolocalisation et les slots
-   let app =  new Vue({
+    ////////////composant global associant la geolocalisation et les slots
+    let app = new Vue({
         el: "#app",
         data() {
             return {
                 /////////////////////////////////////////////////////////////////////////////                
                 //data de l'utilsateur et des infos récupéré lors de la commande
-                aaa:[],
-                user:[],
-                name:"",
-                memory:[],
+                order:[],
+                user: [],
+                name: "",
+                memory: [],
                 // Position au scroll
-                scroll:{
-                     slot:600,
+                scroll: {
+                    slot: 600,
                 },
                 // data des types de paiements 
                 typeOfPaiement: [{
-                        name: "Paypal",
+                        name: "CreditCard",
                         effect: "displayNone"
                     },
                     {
-                        name: "CreditCard",
+                        name: "Paypal",
                         effect: "displayNone"
                     }
                 ],
@@ -602,7 +598,7 @@
                 nowMemory: new Date().getTime(),
                 now: new Date().getTime(),
                 //booleen pour stopper 
-                dateStop:false,
+                dateStop: false,
                 dateyesterday: parseInt(this.nowMemory) - 86400000,
                 today: new Date(new Date().getTime()),
                 minutes: 00,
@@ -632,7 +628,7 @@
                 ////livraison ou retrait
                 livraison: false,
                 onShop: false,
-                keyCollect:false,
+                keyCollect: false,
                 //routage des étapes
                 information: true,
                 geolocalisation: false,
@@ -641,6 +637,7 @@
                 nextStepGeolocalisation: false,
                 orderCommandValidation: false,
                 reservationShop: false,
+                routageRecapValidation: false,
                 //////
                 messageError: "",
                 geolocateShow: false,
@@ -669,80 +666,83 @@
                     },
                 ],
                 ///////data de l'envoie des informations 
-                dataCart:{
+                dataCart: {
                     //savoir si collect ou delivery(collecte ou livraison)
-                    deliveryStatus:"",
-                    collectStatus:"",
+                    deliveryStatus: "",
+                    collectStatus: "",
                     //jour de 
-                    deliveryDay:"",
+                    deliveryDay: "",
                     // heure a laquelle chercher    
-                    collectTime:"",
+                    collectTime: "",
                     //
-                    collectTimeAndDay:"",
-                    status:"",
-                }
+                    collectTimeAndDay: "",
+                    status: "",
+                },
+                ////data props pour le paiement
+                propsPaiement:[]
             }
         },
         //nous creeons une ecoute d'un evenement du scroll lors de l'initialisation de la vue
-        created(){
+        created() {
             window.addEventListener('scroll', this.handleScroll);
         },
         mounted: function() {
-                //integration en php du pseudo de l'user
-                this.name = "<?php echo $_SESSION['name'] ;?>";
-                console.log(this.name);
-                this.getCommand();
-                //etudions la largeur de la fenetre
-                this.$nextTick(function() {
-                    window.addEventListener('resize', this.getWindowWidth);
-                    window.addEventListener('resize', this.getWindowHeight);
+            //integration en php du pseudo de l'user
+            this.name = "<?php echo $_SESSION['name']; ?>";
+            console.log(this.name);
+            this.getCommand();
+            //etudions la largeur de la fenetre
+            this.$nextTick(function() {
+                window.addEventListener('resize', this.getWindowWidth);
+                window.addEventListener('resize', this.getWindowHeight);
 
-                    //fonction a executer si la fenetre change
-                    this.getWindowWidth()
-                    //this.getWindowHeight()
+                //fonction a executer si la fenetre change
+                this.getWindowWidth()
+                //this.getWindowHeight()
 
-                })},  
+            })
+        },
         methods: {
             //appel axios pour recuperer la commande
-            getCommand(){
+            getCommand() {
                 //on recupere le nom de session
                 let name = this.name;
                 axios.get(`proceed.php?action=prepareOrder&value=${name}`).then(function(response) {
-                        if (response.data.error) {
-                            app.errorMsg = response.data.message;
-                            console.log(app.errorMsg)
-                        } else {
-                            console.log(response.data);
-                            app.memory = response.data
-                            console.log(app.memory)
-                            console.log("success");
-                        }
-                    });
+                    if (response.data.error) {
+                        app.errorMsg = response.data.message;
+                        console.log(app.errorMsg)
+                    } else {
+                        console.log(response.data);
+                        app.memory = response.data
+                        console.log(app.memory)
+                        console.log("success");
+                    }
+                });
             },
             //evenement lorsque la largeur de fenetre change
             getWindowWidth(event) {
-                    this.windowWidth = document.documentElement.clientWidth;
-                    if (this.windowWidth < 500) {
-                        
-                        console.log("small");
-                 
-                    } else {
-                        
-                        console.log("large");
-                        console.log(this.scroll.cartConfirm)
-                    }
-                },
+                this.windowWidth = document.documentElement.clientWidth;
+                if (this.windowWidth < 500) {
+
+                    console.log("small");
+
+                } else {
+
+                    console.log("large");
+                    console.log(this.scroll.cartConfirm)
+                }
+            },
             //evenement au scroll
             handleScroll(event) {
-                    console.log(window.scrollY)
-                    // Any code to be executed when the window is scrolled
-                },
+                console.log(window.scrollY)
+                // Any code to be executed when the window is scrolled
+            },
             //scroll
-            _scroll(data){
+            _scroll(data) {
                 window.scrollTo({
-                        top: data,
-                        behavior: 'smooth'
-                    })
+                    top: data,
+                    behavior: 'smooth'
+                })
                 console.log("effect")
 
             },
@@ -781,10 +781,17 @@
                         this.orderCommand = false
                     }
                 } else if (this.liveSlide == 2) {
-                    this.information = false;
-                    this.geolocalisation = false;
-                    this.paiement = false;
-                    this.orderCommand = true
+                    if(this.routageRecapValidation == true){
+                        this.information = false;
+                        this.geolocalisation = false;
+                        this.paiement = false;
+                        this.orderCommand = true;
+                        this.messageError = ""
+                    } else {
+                        window.scrollTo(0,0);
+                        this.liveSlide = 1;
+                        this.messageError = "valider d'abord les infos de geolocalisation"
+                    }
                 } else if (this.liveSlide == 3) {
                     if (this.orderCommandValidation == false) {
                         this.liveSlide = 2
@@ -810,15 +817,17 @@
                 this.routage()
             },
             //////livraison///méthode de routage pour aller au recapitulatif passant par delivery///////
-            routageRecapDelivery(){
+            routageRecapDelivery() {
                 ///data a passer 
                 this.dataCart.deliveryStatus = true;
                 this.dataCart.collectStatus = false;
-                this.dataCart.status="livraison";
+                this.dataCart.status = "livraison";
                 //on ne recuperer que le jour
                 this.dataCart.collectTimeAndDay = this.dataCart.deliveryDay
                 console.log(this.dataCart.deliveryDay)
                 ///routage
+                //cle de routage
+                this.routageRecapValidation = true ;
                 this.user.push(this.memory)
                 this.user.push(this.dataCart)
                 this.sliderNext()
@@ -838,7 +847,9 @@
                 this.slotShow = true
                 let show = this.scroll.slot
                 //setTimeout(this.scrolling("slotContainer"), 1000)
-                setTimeout(()=>{this.scrolling("slotContainer")},300);
+                setTimeout(() => {
+                    this.scrolling("slotContainer")
+                }, 300);
                 console.log(this.scroll.slot)
                 console.log("Go")
 
@@ -852,10 +863,54 @@
             },
             nextPaiement() {
                 //this.orderCommand=true
+                // let cron = {name:12,to:2};
+                // console.log(cron);
+                //////////////////////////////////
+                //creation des modifications de la commande
+
+                let order = {
+                    name: this.user[0][0].name,
+                    adress: this.user[0][0].adress,
+                    postalCode: this.user[0][0].postalCode,
+                    town: this.user[0][0].town,
+                    numberCommand: this.user[0][1].numberCommand,
+                    status: this.user[1].status,
+                    collectTime: this.user[1].collectTime,
+                    deliveryDay: this.user[1].deliveryDay,
+                    collectTimeAndDay: this.user[1].collectTimeAndDay
+                }
+                this.order = order;
+                let orderJSON = JSON.stringify(order);
+                console.log(orderJSON);
+
+                let formData = this.toFormData(order) 
+
+                axios.post("https://www.remi-pradere.com/projet5/proceed.php?action=updateOrder", formData).then(function(response) {
+
+                    if (response.data.error) {
+                        console.log(response.data.message);
+                    } else {
+                        console.log(response)
+                    }
+                });
+
+                this.propsPaiement.push(this.order);
+                this.propsPaiement.push(this.typeOfPaiement);
+                console.log(this.propsPaiement)
                 this.orderCommandValidation = true
                 this.liveSlide = 3
                 console.log("vers paiement")
                 this.routage()
+            },
+            toFormData(obj) {
+                // conversion d'une données javascript 
+                let fd = new FormData();
+                for (let i in obj) {
+                    fd.append(i, obj[i]);
+                }
+                console.log(fd);
+                // retourne le resultat
+                return fd;
             },
             //fonction pour montrer la carte
             cardShow() {
@@ -1017,7 +1072,7 @@
             },
             ////////////////fonction des slots de reservation
             addDay() {
-                if(this.now == this.nowMemory) {
+                if (this.now == this.nowMemory) {
                     console.log("egal")
                 } else {
                     console.log(this.nowMemory)
@@ -1026,29 +1081,28 @@
                 this.dateStop = false;
                 this.now = this.now + 86400000;
                 this.today = new Date(this.now);
-                if(this.keyCollect == true){
-                            this.times();
-                            this.slotConfirmation()
-                        }
+                if (this.keyCollect == true) {
+                    this.times();
+                    this.slotConfirmation()
+                }
             },
             substract() {
-                
-                if(this.now == this.nowMemory) {
+
+                if (this.now == this.nowMemory) {
                     console.log("egal")
                 } else {
                     console.log(this.nowMemory)
                 }
-                
-                
-                if(this.dateStop == false)
-                {
-                    let yesterday = this.nowMemory - 86400000 ;
+
+
+                if (this.dateStop == false) {
+                    let yesterday = this.nowMemory - 86400000;
                     console.log(yesterday);
-                    this.now = this.now - 86400000; 
-                    if(this.now != yesterday){
+                    this.now = this.now - 86400000;
+                    if (this.now != yesterday) {
                         this.today = new Date(this.now);
                         // on ajoute times ssi on est en livraison
-                        if(this.keyCollect == true){
+                        if (this.keyCollect == true) {
                             this.times();
                             this.slotConfirmation()
                         }
@@ -1059,7 +1113,7 @@
             },
             times() {
                 //on inititialise les slots
-                this.slots =  [];
+                this.slots = [];
                 while (this.hours < 18) {
                     this.minutes = this.minutes + this.interval
                     if (this.minutes > 59) {
@@ -1080,33 +1134,33 @@
                     this.slots.push({
                         hours: this.hoursString,
                         minutes: this.minutesString,
-                        class:"displayFlex"
+                        class: "displayFlex"
                     })
                     //console.log(this.slots)
-                   
+
                     ////////////////////////////////////
                     /////// Verification des slots //////////
                     //console.log(this.now)
                     //console.log(this.nowMemory)
                     this.slotConfirmation()
-                    
+
                 }
                 // on redéfini this.hours
                 this.hours = 9
             },
             //méthode pour eviter des slots en fonction de l'heure
-            slotConfirmation(){
-                if(this.now == this.nowMemory) {
-                        this.slots.forEach(element => {
-                            //let d = new Date().getHours();
-                            if(element.hours < 16) {
-                                element.class = "displayNone"
-                            } else {
-                                //console.log(new Date().getHours)
-                            }
-                        })
-                        
-                    }
+            slotConfirmation() {
+                if (this.now == this.nowMemory) {
+                    this.slots.forEach(element => {
+                        //let d = new Date().getHours();
+                        if (element.hours < 16) {
+                            element.class = "displayNone"
+                        } else {
+                            //console.log(new Date().getHours)
+                        }
+                    })
+
+                }
             },
             scrolling(element) {
                 document.getElementById(element).scrollIntoView({
@@ -1115,29 +1169,30 @@
                 })
             },
             /////// Definition de l'horaire du slot /////
-            slotConfirm(a,b){
+            slotConfirm(a, b) {
                 console.log(a);
                 console.log(b);
-                this.dataCart.collectTime = a + " : " + b; 
-                this.dataCart.status= "retrait"
+                this.dataCart.collectTime = a + " : " + b;
+                this.dataCart.status = "retrait"
                 console.log(this.dataCart.collectTime)
                 this.cartDayAndHour();
                 console.log(this.dataCart.collectTimeAndDay)
                 //routage
+                this.routageRecapValidation= true;
                 this.user.push(this.memory)
                 this.user.push(this.dataCart)
-               this.sliderNext();
+                this.sliderNext();
             },
             /////defintion du jour et de l'heure
-            cartDayAndHour(){
-                this.dataCart.collectTimeAndDay = this.dataCart.deliveryDay + " " + 
-                    this.dataCart.collectTime;    
+            cartDayAndHour() {
+                this.dataCart.collectTimeAndDay = this.dataCart.deliveryDay + " " +
+                    this.dataCart.collectTime;
             }
             //////////////////////////////////////////////////////////////////////////////////////////            
         },
         computed: {
             jour() {
-                let jours = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
+                let jours = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", ];
                 return jours[this.today.getDay()];
             },
             mois() {
@@ -1147,12 +1202,12 @@
             // computed pour avoir le jour au recuperer ou etre livrer 
             cartDayComputed() {
                 this.dataCart.deliveryDay = this.jour + " " + this.today.getDate() +
-                    " " + this.mois + " " + this.today.getFullYear() ;
+                    " " + this.mois + " " + this.today.getFullYear();
                 return this.jour + " " + this.today.getDate() +
                     " " + this.today.getFullYear() + " " + this.mois;
             },
-           
-            
+
+
 
         }
 

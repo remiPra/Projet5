@@ -11,13 +11,14 @@ class ConnexionManager{
         $phone = htmlspecialchars($_POST['phone'], ENT_QUOTES, 'UTF-8', false);
         $nameUser = htmlspecialchars($_POST['nameUser'], ENT_QUOTES, 'UTF-8', false);
         $surnameUser = htmlspecialchars($_POST['surnameUser'], ENT_QUOTES, 'UTF-8', false);
-        
+        $newPassword = 0;
+        $link = "azerty";
         $password = password_hash($_POST['password'],PASSWORD_DEFAULT);
         
         // envoie du nouveau inscrit
         global $bdd;
-        $req = $bdd->prepare('INSERT INTO user (name,nameUser,surnameUser,email,password,adress,postalCode,town,phone) VALUES(?, ?,?,? ,?, ? ,? ,? ,?)');
-        $req->execute(array($name,$nameUser,$surnameUser, $email,$password, $adress, $postalCode,$town,$phone));
+        $req = $bdd->prepare('INSERT INTO user (name,nameUser,surnameUser,email,password,adress,postalCode,town,phone,newPassword,link) VALUES(?,?,?, ?,?,? ,?, ? ,? ,? ,?)');
+        $req->execute(array($name,$nameUser,$surnameUser, $email,$password, $adress, $postalCode,$town,$phone,$newPassword,$link));
     }
     // fonction pour voir si l'user n'est pas deja inscrit
     public function checkIfUserExist(){

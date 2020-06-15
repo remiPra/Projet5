@@ -66,7 +66,7 @@
                                                     ?> </a> 
                             </li> 
                             <li class="nav-items">
-                                    <a class="nav-link" href="administrationConnexion.html">Administration</a>
+                                    <a class="nav-link" href="index.php?action=administration">Administration</a>
                             </li>
                         </ul>
                     </div>
@@ -89,7 +89,7 @@
                                                         echo 'href="index.php?action=connexion">Connexion';
                                                     }
                                                     ?> </a> <a class="nav-link" href="administrationConnexion.html">Administration</a>
-
+                                  <a class="nav-link" href="index.php?action=administration">Administration</a>
                             </div>
                         </div>
                     </div>

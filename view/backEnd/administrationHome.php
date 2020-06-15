@@ -27,8 +27,8 @@
     <title>Ma ferme Bio</title>
 </head>
 
-
 <body>
+
     <div id="app">
         <header class="d-flex fixed-top justify-content-between">
             <a id="logo" class="pl-4 ">
@@ -50,7 +50,7 @@
                             <a class="nav-link" href="connexion.html">Connexion</a>
                         </li>
                         <li class="nav-items">
-                            <a class="nav-link" href="administrationConnexion.html">administration</a>
+                            <a class="nav-link" href="administrationConnexion.html">Administration</a>
                         </li>
                     </ul>
                 </div>
@@ -67,11 +67,14 @@
                         </div>
                     </div>
                 </div>
-                
+                <div>
+                    <button>
+                        <i class="fas fa-shopping-cart"></i>
+                    </button>
+                </div>
             </nav>
         </header>
         <main>
-            <!-- section principale de presentation du shop -->
             <section id="mainPositionAbsolute">
                 <picture id="imageParrallax">
                     <source srcset="assets/images/basket-for-apple-picking-in-fruit-orchard.mobile.jpg" media="(max-width: 480px)">
@@ -80,56 +83,58 @@
                 </picture>
             </section>
 
+
             <section>
                 <div class="col-md-6 container text-center text-light" id="presentationShopAdministration">
-                    <div class="container px-md-3 shopTitle">
+                    <!-- section de routing de la single page -->
+                    <div class="container px-md-3 headerOrder">
                         <h1 class="text-light">Ma ferme Bio</h1>
-                        <h2>Administration </h2>
-                        <p>Rentrer votre pseudo et votre mot de passe d'administrateur</p>
+                        <h2>{{slides[liveSlide].title}}</h2>
+                        <h3 class="text-alert">{{messageError}}</h3>
+                        <p>ici va apparaitre les messages de notifications</p>
+                        <button @click="sliderPrevious">Etape précedente</button>
+                        <button @click="sliderNext">Etape suivante</button>
+                        <p>{{slides[liveSlide].paragraphe}}</p>
                     </div>
                 </div>
             </section>
-
-
-            <section id="administrationShop" class="col-md-8 m-auto text-center paddingBottomFooter">
-                <form class="col-md-8 text-light" action="index.php?action=administrationCheck" method="POST">
-
-
-
-                    <div class="form-group">
-                        <label> Pseudo :
-                        </label for="name">
-                        <input type="text" name="name" id="name">
-                    </div>
-                    <div class="form-group">
-                        <label> Mot de passe :
-                        </label for="password">
-                        <input type="password" name="password" id="password">
-                    </div>
-
-                    <div class="form-group">
-                        <input class="formButton" type="submit" value="Envoyer" name="btnContact">
+            <section>
+                <template v-if="key.userCommand == true">
+                    <command-user></command-user>
+                </template>
+            </section>
+            <section>
+                <template v-if="key.productShop == true">
+                    <product-shop></product-shop>
+                </template>
+            </section>
+            <!-- section pour la partie des differentes categories de l'administration -->
+            <section>
+                <div class="container-fluid row ">
+                    <div class="col-md-4">
+                        <div class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
+                            <h4>Produits</h4>
+                            <p>Produits en rupture de stock</p>
+                        </div>
                     </div>
 
+                    <div class="col-md-4">
+                        <div class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
+                            <h4>Actualité et Promos</h4>
+                            <p>Promos en cours </p>
+                        </div>
+                    </div>
 
-                </form>
-                <div class="form-group">
-                    <button @click="forgotPassword" class="buttonBrown">Mot de passe oublié?</button>
-                </div>
-                <div id="forgotPasswordScroll">
-                    <transition name="fade">
-                        <template v-if="sendNewPassword">
-                            <form action="">
-                                <div class="form-group">
-                                    <label>veuillez entrez votre email pour recuperer votre mot de passe?</label>
-                                    <input type="email" name="email" id="email">
-                                </div>
-                                <div class="form-group">
-                                    <input class="formButton" type="submit" value="Envoyer" name="btnContact">
-                                </div>
-                            </form>
-                        </template>
-                    </transition>
+                    <div class="col-md-4">
+                        <div class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
+                            <h4>Messages</h4>
+                            <p>Nouveaux messages</p>
+                        </div>
+                    </div>
+
+
+
+
                 </div>
             </section>
         </main>
@@ -188,36 +193,89 @@
             </div>
         </footer>
     </div>
+    <script src="./components/backEnd/command-user.js"></script>
+    <script src="./components/backEnd/product-shop.js"></script>
+    <script src="./components/backEnd/product-shop-new.js"></script>
     <script>
+
+
+
         new Vue({
             el: "#app",
-            data() {
-                return {
-                    sendNewPassword: false
+            data: {
+                form: {
+                    head: ["N° Commande",
+                        "Nom",
+                        "Email",
+                        "Adresse",
+                        "Action"
+                    ]
+                },
+                liveSlide: 0,
+                slides: [{
+                        title: "Section 1 :Commandes a traiter ",
+                        paragraphe: "Voici la liste des commandes a livrer ou collecter"
+                    },
+                    {
+                        title: "Section 2 Produits en Magasin",
+                        paragraphe: "Listes des produits en rupture de stock ou produit au détail"
+                    },
+                    {
+                        title: "Etape 3 Recapitulatif de votre commande ",
+                        paragraphe: "Confirmer les différentes informations de votre commande "
+                    },
+                    {
+                        title: "Etape 4 Paiement ",
+                        paragraphe: "Remplissez les différentes informations de paiement "
+                    },
+                ],
+                messageError: "",
+                ///////////routage//////////
+                /////key//////
+                key: {
+                    userCommand: true,
+                    productShop: false,
                 }
+
+
             },
             methods: {
-                forgotPassword() {
-                    this.sendNewPassword = !this.sendNewPassword;
-                    if (this.sendNewPassword) {
-                        document.getElementById('forgotPasswordScroll').scrollIntoView({
-                            block: 'start',
-                            behavior: 'smooth',
-                        })
-                    } else {
-                        document.getElementById('app').scrollIntoView({
-                            block: 'start',
-                            behavior: 'smooth',
-                        })
+                sliderPrevious() {
+                    this.liveSlide--
+                    if (this.liveSlide == -1) {
+                        this.liveSlide = 0
                     }
-                }
+                    this.routage();
+
+                },
+                sliderNext() {
+                    this.liveSlide++
+                    if (this.liveSlide == 4) {
+                        this.liveSlide = 3
+                    }
+                    this.routage();
+                },
+                routage() {
+                    if (this.liveSlide == 0) {
+                        this.key.userCommand = true,
+                            this.key.productShop = false
+                    } else if (this.liveSlide == 1) {
+                        this.key.userCommand = false,
+                            this.key.productShop = true
+
+
+                    } else if (this.liveSlide == 2) {
+
+                    } else if (this.liveSlide == 3) {
+
+                    }
+                    window.scrollTo(0, 0)
+                },
             }
+
         })
     </script>
-    </script>
+
 </body>
-
-
-
 
 </html>

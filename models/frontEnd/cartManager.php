@@ -13,7 +13,7 @@ class CartManager
         $name = htmlspecialchars($namePost, ENT_QUOTES, 'UTF-8', false);
         $totalPrice=htmlspecialchars($_POST['totalPrice'], ENT_QUOTES, 'UTF-8', false);
         $numberCommand=$date;
-        $timeDeliveryCommand= 0;
+        $dateDeliveryOrder= date("Y-m-d H:i:s");
         $statusCommand=0;
 
         var_dump($date);
@@ -21,7 +21,7 @@ class CartManager
         var_dump($totalPrice);
         var_dump($idUser);
         var_dump($numberCommand);
-        var_dump($timeDeliveryCommand);
+        var_dump($dateDeliveryOrder);
         var_dump($statusCommand);
 
         
@@ -29,9 +29,9 @@ class CartManager
 
         //inserer les infos de la commande
         global $bdd;
-        $req = $bdd->prepare('INSERT INTO command (idClient ,name,dateCommand,numberCommand,timeDeliveryCommand,statusCommand,totalPrice)
+        $req = $bdd->prepare('INSERT INTO command (idClient ,name,dateCommand,numberCommand,dateDeliveryOrder,statusCommand,totalPrice)
          VALUES(?,?,?,?,?,?,?)');
-        $req->execute(array($idUser,$name,$date,$numberCommand,$timeDeliveryCommand,$statusCommand,$totalPrice));    
+        $req->execute(array($idUser,$name,$date,$numberCommand,$dateDeliveryOrder,$statusCommand,$totalPrice));    
         var_dump($numberCommand);
         return $numberCommand;
     }
@@ -79,7 +79,17 @@ class CartManager
 
         //on recupere l'id
         global $bdd;
-        $req = $bdd->prepare('SELECT productName,productQuantity FROM cartproduct WHERE numberCommand=?');
+        //$req = $bdd->prepare('SELECT productName,productQuantity FROM cartproduct WHERE numberCommand=?');
+        
+        $req = $bdd->prepare('
+            SELECT cartproduct.productName,cartproduct.productQuantity,
+                    products.typeOfQuantity,products.price 
+            FROM cartproduct
+            INNER JOIN products ON products.title = cartproduct.productName
+            WHERE numberCommand=?
+            ');
+        
+        
         $req->execute(array($id));
         $data = $req->fetchAll();
         return $data;
