@@ -8,14 +8,17 @@ require 'controllers/controllerAxios.php';
         case 'index':
             getAllProducts();
             break;
-        case 'index':
-            getAllProducts();
+        case 'getthetoken':
+            $id=$_GET['token'];
+            getTheToken($id);
             break;
         case 'prepareOrder':
             $id = $_GET['value'];
             prepareOrderCommand($id);
             break;
-            
+        case 'updateOrder':
+            updateOrder();
+            break;
         }
     
     
