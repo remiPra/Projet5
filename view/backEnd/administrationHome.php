@@ -12,7 +12,9 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
 
-    <!-- integration de la librairie axios -->
+     <!-- integration de la librairie axios -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script>
+    <!-- integration de la librairie aos -->
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.0/dist/aos.css">
     <script src="https://unpkg.com/aos@2.3.0/dist/aos.js"></script>
     <!-- bootstrap -->
@@ -105,7 +107,10 @@
             </section>
             <section>
                 <template v-if="key.productShop == true">
-                    <product-shop></product-shop>
+                    <product-shop 
+                    @onpreviousupdateproduct="previousUpdateProduct"
+                    @onnextupdateproduct="nextUpdateProduct"
+                    :productsprops="productsProps"></product-shop>
                 </template>
             </section>
             <!-- section pour la partie des differentes categories de l'administration -->
@@ -200,7 +205,7 @@
 
 
 
-        new Vue({
+        let vm = new Vue({
             el: "#app",
             data: {
                 form: {
@@ -211,6 +216,15 @@
                         "Action"
                     ]
                 },
+                //data des produits
+                memory:[],
+                productsSelected:[],
+                //props a passer dasn product-shop
+                productsProps:{
+                    products:[],
+                    liveUpdateProduct:"0"    
+                },
+                //info des sliders 
                 liveSlide: 0,
                 slides: [{
                         title: "Section 1 :Commandes a traiter ",
@@ -239,7 +253,29 @@
 
 
             },
-            methods: {
+            mounted(){
+                this.getAllProducts();
+            },
+            methods: 
+                {
+                //methode pour recuperer les produits
+                getAllProducts() {
+                    console.log("users")
+                    axios.get("proceed.php?action=getAllProducts").then(function(response) {
+                        if (response.data.error) {
+                            app.errorMsg = response.data.message;
+                            console.log(app.errorMsg)
+                        } else {
+                            console.log(response.data);
+                            vm.productsSelected = response.data
+                            vm.productsProps.products = response.data
+                            vm.memory = response.data
+                            console.log(app.products)
+                            console.log("success");
+                        }
+                    });
+                },
+                    //configuration du slider du routage 
                 sliderPrevious() {
                     this.liveSlide--
                     if (this.liveSlide == -1) {
@@ -271,6 +307,27 @@
                     }
                     window.scrollTo(0, 0)
                 },
+                nextUpdateProduct(){
+                    console.log('nextUpdateProduct')
+                    console.log(this.productsProps.products.length)
+
+                    this.productsProps.liveUpdateProduct++
+                    if(this.productsProps.liveUpdateProduct == parseIn(this.productsProps.products.length) -1 ){
+                        this.productsProps.liveUpdateProduct = 0
+                    }
+
+                    
+                },
+                previousUpdateProduct(){
+                    console.log(this.productsProps.products.length)
+                    console.log('previousUpdateProduct')
+                    this.productsProps.liveUpdateProduct--
+                    if(this.productsProps.liveUpdateProduct ==  -1 ){
+                        this.productsProps.liveUpdateProduct = parseInt(this.productsProps.products.length) - 1
+                    } 
+
+                    
+                }
             }
 
         })

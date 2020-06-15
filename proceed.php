@@ -19,6 +19,9 @@ require 'controllers/controllerAxios.php';
         case 'updateOrder':
             updateOrder();
             break;
+        case 'userCommand':
+            userCommand();
+            break;
         }
     
     

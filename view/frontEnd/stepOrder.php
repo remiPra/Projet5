@@ -106,9 +106,14 @@
                         <h1 class="text-light">Ma ferme Bio</h1>
                         <h2>{{slides[liveSlide].title}}</h2>
                         <h3 class="text-alert">{{messageError}}</h3>
-                        <button @click="sliderPrevious">Etape précedente</button>
-                        <button @click="sliderNext">Etape suivante</button>
+
+                        <button v-if="previousSliderClass==true" @click="sliderPrevious">Etape précedente</button>
+                        <button v-if="previousSliderClass==false" class="displayGrey">Etape précedente  </button>
+                        
+                        <button v-if="nextSliderClass==true"@click="sliderNext">Etape suivante</button>
+                        <button v-if="nextSliderClass==false" class="displayGrey">Etape suivante</button>
                         <p>{{slides[liveSlide].paragraphe}}</p>
+
                     </div>
                 </div>
             </section>
@@ -216,354 +221,16 @@
     </div>
 
 </body>
-<script>
-    //composant local pour la partie des paiements pour etape 4 
-</script>
+
+    <script src="./components/frontEnd/stepOrder/command-order.js"></script>
+    <!-- //composant local pour la partie des paiements pour etape 4  -->
+
 <script src="./components/frontEnd/stepOrder/paiement-component.js"></script>
 <script>
-    // Vue.component('paiement-component', {
-    //     props: ['typeofpaiement'],
-    //     template: ` <section class="col-sm-10 m-auto text-center">
-    //                 <div   class="paypalContainer accordion">
-    //                     <h3  :id="typeofpaiement[0].name" class="buttonBrown" @click="showEffect(0)">{{typeofpaiement[0].name}}</h3>
-    //                     <div>
-    //                         <form class="form-horizontal span6"  :class="typeofpaiement[0].effect">
-    //                             <fieldset>
-    //                                 <legend>Payment</legend>
-
-    //                                 <div class="control-group">
-    //                                     <label class="control-label">Card Holder's Name</label>
-    //                                     <div class="controls">
-    //                                         <input type="text" class="input-block-level" pattern="\w+ \w+.*"
-    //                                             title="Fill your first and last name" required>
-    //                                     </div>
-    //                                 </div>
-
-    //                                 <div class="control-group">
-    //                                     <label class="control-label">Card Number</label>
-    //                                     <div class="controls">
-    //                                         <div class="row-fluid d-flex">
-    //                                             <div class="span3">
-    //                                                 <input type="text" class="input-block-level" autocomplete="off"
-    //                                                     maxlength="4" pattern="\d{4}" title="First four digits"
-    //                                                     required>
-    //                                             </div>
-    //                                             <div class="span3">
-    //                                                 <input type="text" class="input-block-level" autocomplete="off"
-    //                                                     maxlength="4" pattern="\d{4}" title="Second four digits"
-    //                                                     required>
-    //                                             </div>
-    //                                             <div class="span3">
-    //                                                 <input type="text" class="input-block-level" autocomplete="off"
-    //                                                     maxlength="4" pattern="\d{4}" title="Third four digits"
-    //                                                     required>
-    //                                             </div>
-    //                                             <div class="span3">
-    //                                                 <input type="text" class="input-block-level" autocomplete="off"
-    //                                                     maxlength="4" pattern="\d{4}" title="Fourth four digits"
-    //                                                     required>
-    //                                             </div>
-    //                                         </div>
-    //                                     </div>
-    //                                 </div>
-
-    //                                 <div class="control-group">
-    //                                     <label class="control-label">Card Expiry Date</label>
-    //                                     <div class="controls">
-    //                                         <div class="row-fluid">
-    //                                             <div class="span9">
-    //                                                 <select class="input-block-level">
-    //                                                     <option>January</option>
-    //                                                     <option>...</option>
-    //                                                     <option>December</option>
-    //                                                 </select>
-    //                                             </div>
-    //                                             <div class="span3">
-    //                                                 <select class="input-block-level">
-    //                                                     <option>2013</option>
-    //                                                     <option>...</option>
-    //                                                     <option>2015</option>
-    //                                                 </select>
-    //                                             </div>
-    //                                         </div>
-    //                                     </div>
-    //                                 </div>
-
-    //                                 <div class="control-group">
-    //                                     <label class="control-label">Card CVV</label>
-    //                                     <div class="controls">
-    //                                         <div class="row-fluid">
-    //                                             <div class="span3">
-    //                                                 <input type="text" class="input-block-level" autocomplete="off"
-    //                                                     maxlength="3" pattern="\d{3}"
-    //                                                     title="Three digits at back of your card" required>
-    //                                             </div>
-    //                                             <div class="span8">
-    //                                                 <!-- screenshot may be here -->
-    //                                             </div>
-    //                                         </div>
-    //                                     </div>
-    //                                 </div>
-
-    //                                 <div class="form-actions">
-    //                                     <button type="submit" class="btn btn-primary">Submit</button>
-    //                                     <button type="button" class="btn">Cancel</button>
-    //                                 </div>
-    //                             </fieldset>
-    //                         </form>
-
-    //                     </div>
-    //                 </div>
-
-    //                 <div class="creditCardContainer accordion " :id="typeofpaiement[1].name">
-    //                     <h3 class="buttonBrown" @click="showEffect(1)">{{typeofpaiement[1].name}}</h3>
-
-
-    //                     <div>
-    //                         <form class="form-horizontal span6" :class="typeofpaiement[1].effect">
-    //                             <fieldset>
-    //                                 <legend>Payment</legend>
-
-    //                                 <div class="control-group">
-    //                                     <label class="control-label">Card Holder's Name</label>
-    //                                     <div class="controls">
-    //                                         <input type="text" class="input-block-level" pattern="\w+ \w+.*"
-    //                                             title="Fill your first and last name" required>
-    //                                     </div>
-    //                                 </div>
-
-    //                                 <div class="control-group">
-    //                                     <label class="control-label">Card Number</label>
-    //                                     <div class="controls">
-    //                                         <div class="row-fluid">
-    //                                             <div class="span3">
-    //                                                 <input type="text" class="input-block-level" autocomplete="off"
-    //                                                     maxlength="4" pattern="\d{4}" title="First four digits"
-    //                                                     required>
-    //                                             </div>
-    //                                             <div class="span3">
-    //                                                 <input type="text" class="input-block-level" autocomplete="off"
-    //                                                     maxlength="4" pattern="\d{4}" title="Second four digits"
-    //                                                     required>
-    //                                             </div>
-    //                                             <div class="span3">
-    //                                                 <input type="text" class="input-block-level" autocomplete="off"
-    //                                                     maxlength="4" pattern="\d{4}" title="Third four digits"
-    //                                                     required>
-    //                                             </div>
-    //                                             <div class="span3">
-    //                                                 <input type="text" class="input-block-level" autocomplete="off"
-    //                                                     maxlength="4" pattern="\d{4}" title="Fourth four digits"
-    //                                                     required>
-    //                                             </div>
-    //                                         </div>
-    //                                     </div>
-    //                                 </div>
-
-    //                                 <div class="control-group">
-    //                                     <label class="p-2 control-label">Card Expiry Date</label>
-    //                                     <div class="controls">
-    //                                         <div class="d-flex row-fluid">
-    //                                             <div class="span9">
-    //                                                 <select class="input-block-level">
-    //                                                     <option>January</option>
-    //                                                     <option>...</option>
-    //                                                     <option>December</option>
-    //                                                 </select>
-    //                                             </div>
-    //                                             <div class="span3">
-    //                                                 <select class="input-block-level">
-    //                                                     <option>2013</option>
-    //                                                     <option>...</option>
-    //                                                     <option>2015</option>
-    //                                                 </select>
-    //                                             </div>
-    //                                         </div>
-    //                                     </div>
-    //                                 </div>
-
-    //                                 <div class="control-group">
-    //                                     <label class="control-label">Card CVV</label>
-    //                                     <div class="controls">
-    //                                         <div class="row-fluid">
-    //                                             <div class="span3">
-    //                                                 <input type="text" class="input-block-level" autocomplete="off"
-    //                                                     maxlength="3" pattern="\d{3}"
-    //                                                     title="Three digits at back of your card" required>
-    //                                             </div>
-    //                                             <div class="span8">
-    //                                                 <!-- screenshot may be here -->
-    //                                             </div>
-    //                                         </div>
-    //                                     </div>
-    //                                 </div>
-
-    //                                 <div class="form-actions">
-    //                                     <button type="submit" class="btn btn-primary">Submit</button>
-    //                                     <button type="button" class="btn">Cancel</button>
-    //                                 </div>
-    //                             </fieldset>
-    //                         </form>
-    //                     </div>
-    //                 </div>
-    //             </section>`,      
-    //     methods: {
-
-
-    //         //routage des différentes étapes de reservations 
-    //         showEffect(i) {
-
-    //             for (let index = 0; index < this.typeofpaiement.length; index++) {
-
-    //                 if (index == i && this.typeofpaiement[index].effect != "accordeonShowOpen") {
-    //                     this.typeofpaiement[index].effect = "accordeonShowOpen";
-    //                     let focus = document.getElementById(this.typeofpaiement[index].name);
-    //                     console.log(this.typeofpaiement[index].name)
-    //                     let positionHeader = document.getElementById("Paypal")
-    //                     console.log(positionHeader)
-
-
-    //                     setTimeout(() => {
-    //                         this.$emit('onscrolling', this.typeofpaiement[index].name)
-    //                     }, 200)
-
-
-
-    //                     console.log("default" + index)
-    //                 } else if (index == i && this.typeofpaiement[index].effect == "accordeonShowOpen") {
-    //                     this.typeofpaiement[index].effect = "accordeonShowClose"
-    //                     setTimeout(() => {
-    //                         this.typeofpaiement[index].effect = "displayNone"
-    //                     }, 300)
-    //                     console.log("success" + index)
-    //                 } else if (index != i && this.typeofpaiement[index].effect == "accordeonShowOpen") {
-    //                     this.typeofpaiement[index].effect = "accordeonShowClose"
-    //                     console.log("default" + index)
-    //                 } else if (index != i) {
-    //                     this.typeofpaiement[index].effect = "displayNone"
-    //                     console.log("none" + index)
-    //                 }
-    //             }
-
-    //         },
-    //         destroyed() {
-    //            //window.removeEventListener('scroll', this.handleDebouncedScroll);
-    //         }
-    //     }
-    // })
-
     // composant pour les informations de l'utilisateur etape 1
 </script>
 <script src="./components/frontEnd/stepOrder/information-user.js"></script>
 <script>
-    // Vue.component('information-user', {
-    //     props:['memory'],
-    //     template: `
-    //     <section id="administrationShop" class="col-sm-10 m-auto text-center">
-    //                 <form @submit.prevent="onNextGeolocalisation">
-    //                     <p>Remplissez les différents champs demandées svp?</p>
-    //                     <div class="form-group">
-    //                         <label for="name"> Nom : 
-    //                         </label>
-    //                         <input type="text" v-model="memory[0].nameUser" class="form-control" name="name" id="name" require>
-    //                     </div>
-    //                     <div class="form-group">
-    //                         <label for="surname"> Prenom : {{memory.surname}}
-    //                         </label>
-    //                         <input type="text" v-model="memory[0].surnameuser"class="form-control" name="surname" id="surname" require>
-    //                     </div>
-    //                     <div class="form-group">
-    //                         <label for="address"> Adresse :
-    //                         </label>
-    //                         <textarea name="adress" v-model="memory[0].adress" id="adress" cols="30" rows="10"></textarea>
-    //                     </div>
-    //                     <div class="form-group">
-    //                         <label> Email :
-    //                         </label for="email">
-    //                         <input type="email" v-model="memory[0].email "name="email" id="email" required>
-    //                     </div>
-    //                     <div class="form-group">
-    //                         <label> Telephone :
-    //                         </label for="telephone">
-    //                         <input type="text" v-model="memory[0].phone" name="telephone" id="telephone" required>
-    //                     </div>
-    //                     <div class="form-group">
-    //                         <input class="formButton" type="submit" value="Envoyer" name="btnContact">
-    //                     </div>
-    //                 </form>
-    //             </section>
-
-    //     `,
-    //     methods: {
-    //         onNextGeolocalisation() {
-    //             this.$emit('onnextgeolocalisation')
-    //         }
-    //     }
-    // })
-
-
-
-    // composant pour la validation de la commande 
-</script>
-<script src="./components/frontEnd/stepOrder/command-order.js"></script>
-
-
-<script>
-    // Vue.component('command-order', {
-    //     props:['datacart'],
-    //     data() {
-    //         return {
-    //             cartList: {
-    //                 head: ["Produit", "", "Description", "Prix"]
-    //             }
-    //         }
-    //     },
-    //     template: `
-    // <div>
-
-    //     <div class="col-md-8 text-light buttonBrown m-auto cartConfirm">
-    //         <h3 class="text-center pb-2">Recapitulatif de la commande </h3>
-    //         <p>{{datacart.status}}</p>   
-    //         <p>{{datacart.collectTimeAndDay}}</p>   
-    //         <table class="table table-bordere">
-    //             <thead>
-    //                 <th v-for="(list,index) in cartList.head" :id="list" style="">{{list}}</th>
-    //             </thead>
-    //             <tbody>
-    //                 <tr>
-    //                     <td>banane</td>
-    //                     <td>2</td>
-    //                     <td>sachet de 600grammes </td>
-    //                     <td>
-    //                         12$
-    //                     </td>
-    //                 </tr>
-    //                 <tr>
-    //                     <td>Prix total</td>
-    //                     <td></td>
-    //                     <td></td>
-    //                     <td>
-    //                         123$
-    //                     </td>
-    //                 </tr>
-    //             </tbody>
-    //         </table>
-    //         <button @click="onNextPaiement">Valider la commande</button>
-    //     </div>
-    // </div>    
-    //     `,
-    //     methods: {
-    //         scrolling(element) {
-    //             document.getElementById(element).scrollIntoView({
-    //                 block: 'start',
-    //                 behavior: 'smooth',
-    //             })
-    //         },
-    //         onNextPaiement() {
-    //             this.$emit('onnextpaiement')
-    //         }
-    //     }
-    // })
 
 
 
@@ -633,6 +300,9 @@
                 information: true,
                 geolocalisation: false,
                 paiement: false,
+                //class des boutons
+                previousSliderClass:false,
+                nextSliderClass:false,
                 ///key pour acceder ou  non au slide
                 nextStepGeolocalisation: false,
                 orderCommandValidation: false,
@@ -650,7 +320,7 @@
                 liveSlide: 0,
                 slides: [{
                         title: "Etape 1 Coordonnées",
-                        paragraphe: "Remplissez les différents champs du forulaire"
+                        paragraphe: "Remplissez les différents champs du formulaire"
                     },
                     {
                         title: "Etape 2 Livraison ou Retrait du panier",
@@ -768,7 +438,17 @@
                     this.information = true;
                     this.geolocalisation = false;
                     this.paiement = false;
-                    this.orderCommand = false
+                    this.orderCommand = false;
+                    console.log('O')
+                    console.log(this.nextStepGeolocalisation)
+                    if(this.nextStepGeolocalisation  == true){
+                            this.nextSliderClass = true
+                            this.previousSliderClass = false
+                        } else {
+                            this.nextSliderClass = false
+                            this.previousSliderClass = false;
+                        }
+
                 } else if (this.liveSlide == 1) {
                     if (this.nextStepGeolocalisation == false) {
                         this.liveSlide = 0;
@@ -778,7 +458,15 @@
                         this.information = false;
                         this.geolocalisation = true;
                         this.paiement = false;
-                        this.orderCommand = false
+                        this.orderCommand = false;
+                        this.previousSliderClass = true;
+                        if(this.routageRecapValidation == true){
+                            this.nextSliderClass = true
+                            this.previousSliderClass = true
+                        } else {
+                            this.nextSliderClass = false
+                            this.previousSliderClass = true;
+                        }
                     }
                 } else if (this.liveSlide == 2) {
                     if(this.routageRecapValidation == true){
@@ -787,6 +475,13 @@
                         this.paiement = false;
                         this.orderCommand = true;
                         this.messageError = ""
+                        if(this.orderCommandValidation == true){
+                            this.nextSliderClass = true
+                            this.previousSliderClass = true
+                        } else {
+                            this.nextSliderClass = false
+                            this.previousSliderClass = true
+                        }
                     } else {
                         window.scrollTo(0,0);
                         this.liveSlide = 1;
@@ -803,6 +498,7 @@
                         this.geolocalisation = false;
                         this.paiement = true;
                         this.orderCommand = false
+                        this.nextSliderClass = false
                     }
                 }
                 window.scrollTo(0, 0);

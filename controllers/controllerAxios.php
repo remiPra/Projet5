@@ -94,3 +94,48 @@ function updateOrder(){
     
 }
 
+function userCommand(){
+    $name = $_GET['name']; 
+    
+    $data=[];
+    
+    require "models/frontEnd/userManager.php";
+    $userManager = new userManager();
+    $user=$userManager->findUser($name);
+    
+    array_push($data,$user);
+    
+
+    require "models/backEnd/cartManager.php";
+    $cartManagerBack = new CartManagerBack();
+    $command=$cartManagerBack->findCommandWithUserName($name);
+
+
+    
+    $listCommand = [];
+    
+    for($i=0;$i<count($command);$i++){
+        array_push($listCommand,$command[$i]['numberCommand']);
+    };
+
+
+    array_push($data,$command);
+  
+    //fonction pour appeler tous les produits et leur quantité de la commande
+    require "models/frontEnd/cartManager.php";
+    $cartManager = new CartManager();
+    $productDetailCommand=[];
+    for($i=0;$i<count($listCommand);$i++){
+        $cartProduct=$cartManager->findProductOfCommandUser($listCommand[$i]);
+        array_push($productDetailCommand,(object)array(
+            'numberCommand'=> $listCommand[$i],
+            'datas' =>(object)array('data' => $cartProduct)
+        ));
+    };
+    
+    array_push($data,$productDetailCommand);
+    $data=json_encode($data);
+    echo $data;
+    //var_dump($data);
+}
+

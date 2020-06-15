@@ -82,7 +82,7 @@ class CartManager
         //$req = $bdd->prepare('SELECT productName,productQuantity FROM cartproduct WHERE numberCommand=?');
         
         $req = $bdd->prepare('
-            SELECT cartproduct.productName,cartproduct.productQuantity,
+            SELECT cartproduct.productName,cartproduct.productQuantity,cartproduct.numberCommand,
                     products.typeOfQuantity,products.price 
             FROM cartproduct
             INNER JOIN products ON products.title = cartproduct.productName

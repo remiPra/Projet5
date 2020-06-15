@@ -66,5 +66,15 @@ class CartManagerBack
         return $data;
     }
 
+    public function findCommandWithUserName($id){
+        global $bdd;
+        $req = $bdd->prepare('SELECT numberCommand ,statusCommand,status,collectTimeAndDay,totalPrice FROM command WHERE name=?');
+        $req->execute(array($id));
+        $data = $req->fetchAll();
+        return $data;
+    }
+
+
+
 
 }

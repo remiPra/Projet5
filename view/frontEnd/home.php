@@ -57,20 +57,32 @@
                             <li class="nav-items">
                                 <a class="nav-link" href="index.php?action=blog">Actualités</a>
                             </li>
-                            <li class="nav-items">
-                                <a class="nav-link" <?php if (isset($_SESSION['name'])) {
-                                                        echo 'href="index.php?action=deconnexion"><i class="fas fa-sign-out-alt"></i>';
-                                                    } else {
-                                                        echo 'href="index.php?action=connexion">Connexion';
+                            <li class=" nav-items">
+                                <?php if (isset($_SESSION['name'])) {
+                                    echo '
+                                    <button @click="keyUserModal"> <i class="far fa-user"></i></button>
+                                    <span>'.$_SESSION['name'].'</span>
+                                    <template v-if="keyUserInfo">
+                                        <div class="d-flex flex-column">
+                                            <a href="index.php?action=deconnexion">
+                                                <i class="fas fa-sign-out-alt"></i>
+                                            </a>
+                                            <button @click="userInfoShowCommand">Mon Compte</button>
+                                        </div>
+                                    </template>
+                                                    '
+                                    ;} else {
+                                                        echo '<a class="nav-link" href="index.php?action=connexion">Connexion</a> ';
+                                                                                                        
                                                     }
-                                                    ?> </a> 
+                                                        ?> 
+                            
                             </li> 
-                            <li class="nav-items">
-                                    <a class="nav-link" href="index.php?action=administration">Administration</a>
-                            </li>
+                            
                         </ul>
                     </div>
                     <div id="togglecontainer">
+                        <template v-if="keyToggle">
                         <button class="navbar-toggler navbar-light toggleMenu" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                             <span class="navbar-toggler-icon text-light"></span>
                         </button>
@@ -83,15 +95,27 @@
 
                                 <a class="nav-link" href="index.php?action=blog">Actualités</a>
 
-                                <a class="nav-link" <?php if (isset($_SESSION['name'])) {
-                                                        echo 'href="index.php?action=deconnexion"><i class="fas fa-sign-out-alt"></i>';
-                                                    } else {
-                                                        echo 'href="index.php?action=connexion">Connexion';
+                                <?php if (isset($_SESSION['name'])) {
+                                    echo '
+                                    <button @click="keyUserModal"> <i class="far fa-user"></i></button>
+                                    <template v-if="keyUserInfo">
+                                        <div class="d-flex flex-column">
+                                            <a href="index.php?action=deconnexion">
+                                                <i class="fas fa-sign-out-alt"></i>
+                                            </a>
+                                            <button @click="userInfoShowCommand">Mon Compte</button>
+                                        </div>
+                                    </template>
+                                                    '
+                                    ;} else {
+                                                        echo '<a class="nav-link" href="index.php?action=connexion">Connexion</a> ';
+                                                                                                        
                                                     }
-                                                    ?> </a> <a class="nav-link" href="administrationConnexion.html">Administration</a>
+                                                        ?>
                                   <a class="nav-link" href="index.php?action=administration">Administration</a>
                             </div>
                         </div>
+                        </template>
                     </div>
                     <div>
                         <button id="btnCart" @click="modal()">
@@ -165,7 +189,22 @@
                     </div>
                 </template>
             </transition>
+            
+            <div id="infoCommandUser">
+            <transition name="fade">
+                <template v-if="router.userInfo">
+                    <div id="userInfoCommand">
+                        <info-user-command
+                            @onCloseInfoUserCommand="CloseInfoUserCommand"
+                            :props="propsCompte"></info-user-command>
+                    </div>
+                </template>
+            </transition>
+            </div>
+            
 
+
+            
 
 
 
@@ -218,6 +257,9 @@
                             <a href=""><i class="fab fa-instagram"></i></a>
                             <a href=""><i class="fab fa-pinterest"></i></a>
                         </div>
+                        <div>
+                            <a class="nav-link" href="index.php?action=administration">Administration</a>
+                        </div>
                     </div>
 
 
@@ -247,7 +289,142 @@
     <script src="./components/frontEnd/home/product-list-mobile.js"></script>
 
                                         
+    <script>
+        Vue.component('info-user-command',{
+            props:['props'],
+            data() {
+                return {
+                    details: [""],
+                    keydetail:false,
+                    numberCommandDetail:""
+                }
+            },
+            template:`
+            
+            <article id="articleView">    
+                    <div class="col-md-10 container text-center">
+                      
+                        <div class="text-light container px-md-3 shopTitle">
+                            <h1>Info de l'utilisateur  </h1>
+                            <button id="buttonCloseInfoUserCommand" @click="buttonCloseInfoUserCommand">Fermer la fenetre</button>
+                        </div>
+                    </div>
 
+                    <div class="container-fluid row">
+                        <div class="col-xl-3 col-sm-3 buttonBrown" id="imageArticle">
+                            <h3>{{props[0].name}} {{props[0].nameUser}}</h3>
+                            <p>{{props[0].adress}}</p>
+                            <p>{{props[0].town}}</p>
+                            <p>{{props[0].phone}}</p>
+                            <p>{{props[0].email}}</p>
+                        </div>
+                        <div class="col-xl-9 col-sm-9 text-light" id="articleViewProductDetail">
+                        <template v-if="keydetail == false">
+                            <h3 class="marginTop">Commande en cours</h3>
+                            <table class="infoUserTable">
+                                <thead>
+                                    <th>N°commande</th>
+                                    <th>status</th>
+                                    <th>Prix</th>
+                                    <th>Description</th>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(data,index) in props[1]">
+                                        <td v-if="data.statusCommand==200">{{data.numberCommand}}</td>
+                                        <td v-if="data.statusCommand==200">{{data.status}}</td>
+                                        <td v-if="data.statusCommand==200">{{data.totalPrice}}</td>
+                                        <td v-if="data.statusCommand==200"><button @click="detailProduct(data.numberCommand)">Voir détail</button></td>
+                                    </tr>    
+                                </tbody>
+                            </table>
+                            <h3 class="marginTop">Commande terminé</h3>
+                            <table class="infoUserTable">
+                                <thead>
+                                    <th>N°commande</th>
+                                    <th>status</th>
+                                    <th>Prix</th>
+                                    <th>Description</th>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(data,index) in props[1]">
+                                        <td v-if="data.statusCommand==200">{{data.numberCommand}}</td>
+                                        <td v-if="data.statusCommand==200">{{data.status}}</td>
+                                        <td v-if="data.statusCommand==200">{{data.totalPrice}}</td>
+                                        <td v-if="data.statusCommand==200"><button @click="detailProduct(data.numberCommand)">Voir détail</button></td>
+                                    </tr>    
+                                </tbody>
+                            </table>
+                            <h3 class="marginTop">Commande non confirmé</h3>
+                            <table class="infoUserTable">
+                                <thead>
+                                    <th>N°commande</th>
+                                    <th>status</th>
+                                    <th>Prix</th>
+                                    <th>Description</th>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(data,index) in props[1]">
+                                        <td v-if="data.statusCommand==200">{{data.numberCommand}}</td>
+                                        <td v-if="data.statusCommand==200">{{data.status}}</td>
+                                        <td v-if="data.statusCommand==200">{{data.totalPrice}}</td>
+                                        <td v-if="data.statusCommand==200"><button @click="detailProduct(data.numberCommand)">Voir détail</button></td>
+                                    </tr>    
+                                </tbody>
+                            </table>
+                                    
+                    
+                            
+                            </template>
+
+                            <template v-if="keydetail">
+                            <h3> Commande : {{numberCommandDetail}}</h3>
+                            <button @click="closeDetailProductName">revenir au tableau</button>
+                            <table class="buttonBrown infoUserDetailTable">
+                                <thead>
+                                    <th>Nom du produit</th>
+                                    <th>Quantité</th>
+                                    <th>Type de Quantité</th>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(data,index) in this.details.data">
+                                            <td>{{data.productName}}</td>
+                                            <td>{{data.productQuantity}}</td>
+                                            <td>{{data.typeOfQuantity}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                                    
+                            </template>
+
+
+
+                        </div>
+                    </div>
+            </article>
+            `,
+            methods:{
+                buttonCloseInfoUserCommand(){
+                    this.$emit('oncloseinfousercommand')
+                },
+                detailProduct(data){
+                    this.keydetail =! this.keydetail
+                    this.props[2].forEach( (element) => {
+                        if(element.numberCommand == data){
+                            this.details = element.datas;
+                            console.log(this.details)
+                        }
+
+                    })
+                    this.numberCommandDetail = data;
+                },
+                closeDetailProductName(){
+                    this.keydetail = false;
+                    this.numberCommandDetail = "";
+                }
+            }
+        })
+    
+    </script>
 
 
 
@@ -260,9 +437,12 @@
             el: "#app",
             //slide effect cart
             data: {
+                //toggle close open
+                keyToggle:true,
                 arrowSlide:"displayNone",
                 //Router de la page
                 router: {
+                    userInfo:false,
                     main: true,
                     //confirmation du cart
                     showModal: false,
@@ -284,6 +464,8 @@
                 productSelectedDetail: [],
                 memory: [],
                 ///////info user///////////////
+                propsCompte:[],
+                keyUserInfo:false,
                 token:"",
                 name:"unknow",
                 nameSession:"<?php if(isset($_SESSION['name'])){echo  $_SESSION['name']; } else {echo "";}?>",
@@ -299,7 +481,7 @@
             },
             mounted: function() {
                 //recuperation du nom
-               
+                this.userCommandAxios();
 
                 //etudions la largeur de la fenetre
                 this.$nextTick(function() {
@@ -473,6 +655,41 @@
 
 
             methods: {
+                CloseInfoUserCommand(){
+                    this.router.userInfo = false;
+                    this.keyUserInfo = false;
+                    this.keyToggle = true;
+                    this.scrolling('app');
+                },
+                //ouverture du modal pour les infos de l'user
+                userInfoShowCommand(){
+                    this.router.userInfo = true;
+                    this.keyUserInfo = false;
+                    this.scrolling('infoCommandUser');
+                    this.keyToggle = false;
+                    setTimeout(()=>{this.keyToggle = true},1000)
+                },
+                // ouverture du modal 
+                keyUserModal(){
+                    console.log(this.keyUserInfo)
+                    this.keyUserInfo =! this.keyUserInfo
+                   
+                },
+                userCommandAxios(){
+                    console.log("users")
+                    let name = this.nameSession;
+                    console.log(name);
+                    axios.get(`proceed.php?action=userCommand&name=${name}`).then(function(response) {
+                        if (response.data.error) {
+                            app.errorMsg = response.data.message;
+                            console.log(app.errorMsg)
+                        } else {
+                            console.log(response.data);
+                            app.propsCompte = response.data;      
+                            console.log("success");
+                        }
+                    });
+                },
                 //methode de scroll 
                 _scrollToConfirmCart(){
                     console.log("succesScrollTO")

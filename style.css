@@ -1,64 +1,20 @@
 /* SOMMAIRE */
 
-/* Stylisation de la police  */
-/* Regles gÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©nÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©rales pour le site et pour bootstrap  */
-/* 101 */
-/* Factorisation des elements boutons */
-/* 128 */
-/* Stylisation de la page d'accueil */
-/* Stylisation du menu */
-/* 146 */
-/* Stylisation du main de l'index */
-/* 179 */
-/* stilisation slider */
-/* 182 */
-/* stilisation slider */
-/* 222 */
-/* stylisation de la section text shop */
-/* 319 */
-/* stylisation des card product et product detail */
-/* 236 */
-/* stylisation de la partie des products */
-/* 278 */
-/* stylisation du caddie CartShop */
-/* 428 */
-/* stylisation de la partie contact */
-/* 454 */
-/* Stylisation de la partie blog */
-/* 506 */
-/* crÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©ation des differentes animations */
-
-/* $grid-breakpoints: (
-  // Extra small screen / phone
-  xs: 0,
-  // Small screen / phone
-  sm: 576px,
-  // Medium screen / tablet
-  md: 768px,
-  // Large screen / desktop
-  lg: 992px,
-  // Extra large screen / wide desktop
-  xl: 1200px
-);
-
-$container-max-widths: (
-  sm: 540px,
-  md: 720px,
-  lg: 960px,
-  xl: 1140px
-); */
-
-/* Stylisation de la police  */
-@font-face {
-  font-family: "CairoExtended-Regular";
-  src: url("/assets/police/CairoExtended-Regular.ttf.woff") format("woff"),
-    url("/assets/police/CairoExtended-Regular.ttf.svg") format("svg"),
-    url("/assets/police/CairoExtended-Regular.ttf.eot");
-  font-weight: normal;
-  font-style: normal;
+.box-shadow {
+  box-shadow: 0 7px 20px -10px #000;
 }
 
-/* Regles gÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©nÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©rales pour le site et pour bootstrap  */
+.marginAuto{
+  margin:30px auto;
+}
+
+.marginTop {
+  margin-top:50px;
+}
+
+
+/* Stylisation de la police  */
+/* Regles  pour le site et pour bootstrap  */
 body {
   background-color: #26802e !important;
 }
@@ -81,6 +37,10 @@ h1 {
 }
 .floatingNav {
   border-bottom: 2px solid #d9a679 !important;
+}
+main {
+  background-color: rgba(0, 0, 0, 0.6);
+  padding:20px 2px; 
 }
 
 body,
@@ -109,7 +69,9 @@ header {
   font-family: "CairoExtended-Regular" !important;
   /* font-family: 'Oswald', sans-serif; */
 }
-
+.displayGrey{
+  background-color: #4a4848;
+}
 a {
   cursor: pointer;
   font-size: 20px;
@@ -142,11 +104,17 @@ form,
   background-color: white !important;
 }
 
-form input[type="submit"],input[type="button"],.ButtonGreen,
+#administrationShop {
+  padding-bottom:20px;
+}
+
+form input[type="submit"],
+input[type="button"],
+.ButtonGreen,
 button {
   background-color: white;
   border: 6px solid #26802e;
-  border-radius: 19px;
+  border-radius: 19px!important;
   cursor: pointer;
   color: #284010;
   padding: 6px 11px 10px 11px;
@@ -156,18 +124,21 @@ button {
 #togglecontainer {
   display: none;
 }
-.toggleMenu 
-{border-color: white!important;
-color: white!important;
-background-color: white!important;
+
+#nameSession {
+  color:white;
+}
+.toggleMenu {
+  border-color: white !important;
+  color: white !important;
+  background-color: white !important;
 }
 
 #btnCart {
-  border-color: #26802e!important;
-  color: white!important;
-  background-color: #26802e!important;
+  border-color: #26802e !important;
+  color: white !important;
+  background-color: #26802e !important;
 }
-
 
 /* Stylisation de l'header */
 
@@ -178,6 +149,20 @@ header {
   min-height: 70px;
 }
 
+.arrowCartSlide {
+  text-align: center;
+    position: relative;
+  }  
+  .arrowCartSlideIcon {
+    animation: arrowSlide 0.8s;
+  position: absolute;
+    font-size: 27px;
+    z-index: 222222222222222222222222222222;
+    color:#cea176;
+    top: -16px;
+    left: 24px;
+    opacity:0;
+}
 /* Stylisation du main de l'index */
 #main {
   position: relative;
@@ -194,6 +179,14 @@ header {
   margin: 20px auto;
 }
 
+#nameSessionStyle {
+  color:white;
+  font-size:40px;
+  animation : colorh1 4s ease-in-out;
+  display: block;
+}
+
+
 .shopTitle {
   margin-top: 20px;
   margin-bottom: 20px;
@@ -205,8 +198,18 @@ header {
   padding-top: 20px;
 }
 
+.shopTitle h2 {
+  /* height: 100px; */
+}
+
 .shopTitle button {
-  margin-top:0px!important;
+  /* margin-top: 0px !important; */
+  width: 177px;
+}
+
+#headerButton {
+  width: 342px;
+  font-size: 20px;
 }
 
 #sliderNewsMobile {
@@ -224,11 +227,10 @@ header {
   border-radius: 50px;
 }
 
-#carouselExampleIndicators{
+#carouselExampleIndicators {
   border: 6px solid green;
-    border-radius: 7px;
+  border-radius: 7px;
 }
-
 
 .carrousselcontainer {
   width: 100%;
@@ -245,7 +247,6 @@ header {
   color: white;
 }
 
-
 .slide img {
   width: 100%;
 }
@@ -261,14 +262,17 @@ header {
 }
 
 .buttoncontainer button {
-  margin-top:0px!important
+  margin-top: 0px !important;
 }
 /* stylisation de la section text shop */
 .introduction {
   padding-top: 40px !important;
 }
 
-#textShop h2,#textShop h3,#textShop p,#goals i {
+#textShop h2,
+#textShop h3,
+#textShop p,
+#goals i {
   color: #26802e !important;
 }
 #textShop h3 {
@@ -279,15 +283,14 @@ header {
   margin: 11px auto;
 }
 #goals i {
-  font-size:30px;
+  font-size: 30px;
   padding: 5px 23px;
 }
 
 /*stylisation de la separation*/
 .separation {
-  background-color:white;
+  background-color: white;
 }
-
 
 /* stylisation de la partie des products */
 #products {
@@ -306,13 +309,23 @@ header {
   color: #5a7336 !important;
 }
 #productsList input {
-  margin-bottom: 49px;
-  border: 2px solid green;
-  width: 80%;
-  background-color: #cea176;
+  /* margin-bottom: 49px; */
+  /* border: 2px solid green; */
+  /* width: 80%; */
+  padding: 15px;
   height: 30px;
+  /* overflow: hidden; */
+  /* margin: 0px auto; */
+}
+
+.containerInput {
+  border: 4px solid #28a745;
+  background-color: #cea176;
   border-radius: 11px;
-  /* margin: 47px; */
+}
+
+.containerInput div {
+  width: 46px; /* display:flex; */
 }
 
 .listProducts .col-md-6 {
@@ -328,57 +341,89 @@ header {
 }
 
 /* stylisation du caddie CartShop */
+#cartContainerModal {
+  background-color: #0f3312;
+  /* height:00px; */
+  /* overflow:scroll;
+  position:absolute;
+  top:0;
+  left:0;
+  bottom:0;
+  right:0; */
+  }
+
 /* modal de confirmation */
 #confirmationModal {
-  position:absolute;
-  top:0px;
-  left:0px;
-  right:0px;
-  bottom:0px;
-  z-index:11222222222;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  z-index: 11222222222;
   background-color: rgba(0, 0, 0, 0.8);
 }
 #overlay {
-            padding-top: 94px;
-            background-color: rgba(0, 0, 0, 0.6);
-            padding-bottom: 100px;
-        }
-        #closeModal{
-          position: absolute;
-          right: 0px;
-        }
-.cartSlider {
-  display:none!important
+  /* position: fixed; */
+  /* top: 0px; */
+  /* left: 0px; */
+  /* right: 0px; */
+  /* bottom: 0px; */
+  z-index: 999999999999999999999999999999;
+  padding-top: 94px;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding-bottom: 100px;
 }
+#closeModal {
+  position: absolute;
+  right: 0px;
+}
+.classSlider {
+  background-color: #faf3eb; 
+}
+.cartSlider {
+  display: none !important;
+}
+label[for="priceProduct"] {
+  
+}
+.horizontalLine {
+  width:80%;
+  min-width:200px;
+  margin: 37px auto;
+  border:1px solid white;
+}
+
 .cardColor {
   animation: color 5s infinite;
   font-size: 30px;
   margin-top: -81px;
 }
-#buttonAdd,.buttoncontainer button,.containerBrown {
-  
+.buttonAdd,
+.buttoncontainer button,
+.containerBrown {
   color: white;
   background-color: #d9a679;
   border: 6px solid #26802e;
   border-radius: 19px;
 }
 
-#buttonAdd:active {
-    animation: click 0.1s 
+.buttonAdd:active {
+  animation: click 0.1s;
 }
-#productQuantity {
+.productQuantity {
   /* display: flex; */
-  height: 53px;
+  /* height: 53px; */
   width: 45px;
-  text-align: center;
+  vertical-align: sub;
 }
 #formCart label {
   width: 100%;
   display: flex;
+  align-items: baseline;
 }
 
 input[name="productName"] {
-   /* padding: 15px; */
+  /* padding: 15px; */
 }
 
 #containerCart {
@@ -391,10 +436,10 @@ input[name="productName"] {
 }
 
 .cardColor:active ~ #messageShowAddProduct {
-  animation:showMessage 4s;
+  animation: showMessage 4s;
 }
 #messageShowAddProduct {
-    opacity: 0;
+  opacity: 0;
 }
 
 #selectedCartShop figure {
@@ -484,10 +529,23 @@ input[name="productName"] {
   opacity: 1;
   transform: translateY(0px);
 }
+.buttonShop {
+  align-items: baseline;
+  justify-content: center;
+}
 
+.contentQuantity {
+  padding: 0px 20px;
+}
 /* stylisation de la partie contact */
+#textIntroConnexion {
+  /* background-color: rgba(38, 128, 46, 0.7); */
+}
+.widthButtonMobile{
+  width: 250px;
+}
 #presentationShopAdministration {
-  margin-top: 170px !important;
+  padding-top: 129px !important;
 }
 #mainPositionAbsolute {
   position: absolute;
@@ -517,23 +575,46 @@ textarea {
 #adminForm {
   margin: 40px auto !important;
 }
+
+.padding-case button {
+  width:200px;
+  margin:10px
+}
 #articleView {
   background-color: green;
 }
 #articleView h1 {
   margin-top: 70px;
 }
-#imageArticle {
-  opacity: 0;
+
+.fa-search {
+  vertical-align: bottom;
+  color: #f8f9fa;
 }
-#imageArticleFixed {
-  position: fixed;
-  top: 27%;
+.displayFlex {
+  display: flex;
+}
+.displayNone {
+  display: none !important;
+}
+/* stylisation de la partie productDetail */
+.imageProductDetail {
+  position: relative;
+}
+.fa-info-circle {
+  cursor:pointer;
+  font-size: 22px;
+  color:green;
 }
 
-#imageArticleFixed figure {
-  margin: 50px 18px;
+.imageProductDetail figcaption {
+  position : absolute;
+  top: 52%;
+  text-align: center;
+  width:100%;
 }
+
+
 
 /* footer */
 footer {
@@ -548,7 +629,7 @@ footer i {
   color: white;
 }
 
-#buttonCloseArticle {
+.buttonCloseArticle {
   position: fixed;
   top: 69px;
   right: 0;
@@ -559,11 +640,11 @@ footer i {
   margin: 20px auto !important;
 }
 
-.buttonMain1 h4{
-  height:60px
-} 
-.buttonMain1 p{
-  height:30px
+.buttonMain1 h4 {
+  height: 60px;
+}
+.buttonMain1 p {
+  height: 30px;
 }
 /* stylisation des formulaires d'administration */
 #adminForm label {
@@ -579,12 +660,112 @@ footer i {
   opacity: 0;
 }
 
-/* styisation de la map */
+/* stylisation de la map */
 #mymap {
-  height:400px;
-  width:80%
+  height: 400px;
+  width: 80%;
 }
-/* crÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©ation des differentes animations */
+
+/* stylisation de la partie des paiements */
+.paypalContainer form {
+  z-index: -1;
+  overflow: hidden;
+}
+.creditCardContainer form {
+  z-index: -1;
+  overflow: hidden;
+}
+.accordeonShowOpen {
+  animation: accordeonOpen 0.3s forwards;
+}
+.accordeonShowClose {
+  animation: accordeonClose 0.5s forwards;
+}
+
+#Paypal,#CreditCard {
+  width:100%
+}
+/* stylisation de la partie recupitulatif du cart */
+.cartConfirm tbody,
+.cartConfirm thead {
+  font-size: 14px;
+}
+
+#Produit {
+  min-width: 30%;
+}
+
+#QuantitÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â© {
+  min-width: 20%;
+}
+
+#Description {
+  min-width: 30%;
+}
+
+#Prix {
+  min-width: 20%;
+}
+.headerOrder h2 {
+  height: 100px;
+}
+.headerOrder button {
+  width:180px;
+  margin: 6px 0;
+}
+
+/* stylisation de l'information de l'user dans l'accueil */
+.infoUserTable,.infoUserDetailTable {
+  width:100%;
+  border: 4px solid white;
+  /* border-radius: 43px!important; */
+}
+
+.infoUserTable td,.infoUserDetailTable td {
+  border: 4px solid white;
+  padding:4px;
+}
+
+@keyframes accordeonOpen {
+  0% {
+    height: 5px;
+  }
+  100% {
+    height: 500px;
+  }
+}
+@keyframes accordeonClose {
+  0% {
+    height: 500px;
+  }
+  20% {
+    height: 0px;
+  }
+  100% {
+    height: 0px;
+  }
+}
+/* creation des differentes animations */
+@keyframes arrowSlide{
+  0%{
+    opacity: 0;
+    top:+3px;
+  }
+  
+  20%{
+    top:+2px;
+    opacity:1;
+  }
+  100%{
+    opacity:0;
+    top:-16px
+  }
+}
+
+
+
+
+
 @keyframes color {
   0% {
     color: white;
@@ -598,31 +779,53 @@ footer i {
     color: white;
   }
 }
-@keyframes click {
+@keyframes colorh1 {
   0% {
-     color: #d9a679;
-  background-color: white;
-  border: 6px solid #d9a679;
-  border-radius: 19px;
+    color: green;
   }
   100% {
-     color: #d9a679;
-  background-color: white;
-  border: 6px solid #d9a679;
-  border-radius: 19px;
+    color: white;
   }
 }
-@keyframes showMessage{
-    0% {
-        opacity:1;
-    }
-    100% {
-        opacity:0;
-    }
+@keyframes click {
+  0% {
+    color: #d9a679;
+    background-color: white;
+    border: 6px solid #d9a679;
+    border-radius: 19px;
+  }
+  100% {
+    color: #d9a679;
+    background-color: white;
+    border: 6px solid #d9a679;
+    border-radius: 19px;
+  }
+}
+@keyframes showMessage {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
-/* stylisation pour la rÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©solution Ipad */
+/* stylisation suivant le media querie*/
 @media screen and (max-width: 1024px) {
+  h1 {
+    font-size: 45px !important;
+  }
+  h2 {
+    font-size: 30px !important;
+  }
+
+  #headerButton {
+    width:200px
+  }
+
+  form {
+    width:250px;
+  }
   .categoryContainer .box {
     width: 220px;
     height: 330px;
@@ -664,13 +867,7 @@ footer i {
     min-width: 200px;
   }
   /* stylisation des products details */
-  h1 {
-    font-size: 45px !important;
-  }
-  h2 {
-    font-size: 30px !important;
-  }
-
+ 
   .productImage {
     width: 150px;
   }
@@ -688,7 +885,7 @@ footer i {
     background-color: #8a9da6 !important;
   }
 }
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 570px) {
   #sliderNews {
     display: none;
   }
@@ -706,22 +903,29 @@ footer i {
   }
   /* stylisation des boutons du slider du cart */
   .cartSlider {
-    display:flex!important;
+    display: flex !important;
   }
-  
+
   #previousProduct {
-     position: absolute;
-     top: 46%;
-     left: 0px;
-     z-index: 12;
+    position: absolute;
+    top: 46%;
+    left: 0px;
+    z-index: 12;
   }
-  #nextProduct{
-     position: absolute;
-     top: 46%;
-     right: 0px;
-     z-index: 12;
+  #nextProduct {
+    position: absolute;
+    top: 46%;
+    right: 0px;
+    z-index: 12;
   }
   .productListGrid {
-      display:none!important;
+    display: none !important;
+  }
+  .infoUserTable {
+    /* max-width: 225px!important; */
+    font-size: 12px;
+  }
+  .infoUserDetailTable {
+    font-size: 14px;
   }
 }
