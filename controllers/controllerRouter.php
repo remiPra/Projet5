@@ -153,10 +153,14 @@ function curl()
 
     require 'models/frontEnd/curlManager.php';
     $curlManager = new CurlManager();
+    var_dump($Alltokens);
+    echo "<br>";
+    echo "<br>";
+    var_dump(count($Alltokens));
     
-        sleep(80);
-        $curlPromotion = $curlManager->sendPromotionsAllTokens($Alltokens);
-        sleep(40);
+    for($i=0;$i<count($Alltokens);$i++){
+        $curlPromotion = $curlManager->sendPromotionsAllTokens($Alltokens[$i]);      
+     }
     
 }
 
@@ -345,7 +349,35 @@ function paiementSuccess()
     $productsOrder = $cartManagerFront->findProductOfCommandUser($numberCommand);
     array_push($info, $productsOrder);
 
+
+
+
+
     // EMAIL
+    /////////Variables
+    $status = $info[0]['status'];
+    $dateDeliveryOrder = $info[0]['dateDeliveryOrder'];
+    $date=strtotime($dateDeliveryOrder);
+    $format = date("Ymd",$date);
+    //booleen pour verifier si retrait date a les heures
+    if($status=="retrait"){
+        global $formatA;
+        $formatA = date("His",$date);
+    } else {
+        global $formatA;
+        $format="120000";
+    }
+//echo $format;
+//echo $formatA;
+    // echo '<a href="https://calendar.google.com/calendar/r/eventedit?text='.$status.'+de+la+commande+n'
+    //     .$numberCommand.'&dates='
+    //     .$format.'T'
+    //     .$formatA.'Z/'
+    //     .$format.'T'
+    //     .$formatA.'Z&details&location&trp=false">button</a>'; 
+
+
+
     $headers = "MIME-Version: 1.0" . "\r\n";
     $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 
@@ -356,28 +388,54 @@ function paiementSuccess()
     $message = '
     <html>
     <body>
+    <header style="text-align: center;
+    background-color: green;
+    width: 259px;
+    color: white;
+    padding: 11px;
+    margin: 20px auto;
+    border: 2px solid brown;
+    border-radius: 39px;">
+        <h1>Ma ferme Bio</h1>
+        <p>12 impasse octave sage</p>
+        <p>31100 TOULOUSE</p>
+        <p>06.06.06.06.06</p>
+    </header>
     
-    
-    <h1> ' .$info[1]['name']. ' </h1>
-
     <div>
-    <p>
-        '.$info[0]['name'].'
+        <h1> ' .$info[1]['name']. ' </h1>
+        <h2>'.$info[0]['dateDeliveryDay'].'</h2>
+    <div>
+    <div>
+        <p>
         '.$info[1]['name'].'
         '.$info[1]['nameUser'].'
-    </p>
-    <p>
+        </p>
+        <p>
         '.$info[1]['adress'].'
-    </p>
-    <p>
+        </p>
+        <p>
         '.$info[1]['postalCode'].'
         '.$info[1]['town'].'
-    </p>
-    <p>
+        </p>
+        <p>
         date de '.$info[0]['status'].' : '.$info[0]['collectTimeAndDay'].'
-    </p>
+        </p>
     <p>
-        
+    <p> creer un rappel sur votre google agenda? <p>
+    <button style="background-color: green;
+    border: 2px solid brown;
+    font-size: 25px;
+    border-radius: 16px;">
+    <a style="text-decoration: none;
+            color: white;
+            font-size: 20px;
+            display: flex;" 
+    
+    href="https://calendar.google.com/calendar/r/eventedit?text=Ma+Ferme+Bio'.$status.'+de+la+commande+n°'.$numberCommand.'&dates='.$format.'T'.$formatA.'/'.$format.'T'.$formatA.'&details&location=12+impasse+octave+sage+31100+TOULOUSE&ctz=Europe/Brussels&trp=false">button</a>
+    
+    </button>
+
     <p> vous avez reçu un mail avec tous ce recapitulatif </p>
     <table> 
     <thead>
@@ -430,3 +488,4 @@ function newProduct(){
 
 
 }
+

@@ -60,7 +60,7 @@ class CartManagerBack
 
     public function findUserWithCommandNumberCommand($id){
         global $bdd;
-        $req = $bdd->prepare('SELECT name ,status,collectTimeAndDay,totalPrice FROM command WHERE numberCommand=?');
+        $req = $bdd->prepare('SELECT name ,status,collectTimeAndDay,totalPrice,dateDeliveryOrder FROM command WHERE numberCommand=?');
         $req->execute(array($id));
         $data = $req->fetch();
         return $data;

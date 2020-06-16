@@ -89,59 +89,59 @@
             <section>
                 <div class="col-md-6 container text-center text-light" id="presentationShopAdministration">
                     <!-- section de routing de la single page -->
-                    <div class="container px-md-3 headerOrder">
+                    <div class="container px-md-3 headerOrder" >
                         <h1 class="text-light">Ma ferme Bio</h1>
-                        <h2>{{slides[liveSlide].title}}</h2>
-                        <h3 class="text-alert">{{messageError}}</h3>
-                        <p>ici va apparaitre les messages de notifications</p>
-                        <button @click="sliderPrevious">Etape précedente</button>
-                        <button @click="sliderNext">Etape suivante</button>
-                        <p>{{slides[liveSlide].paragraphe}}</p>
+                        <h2>Administration</h2>
+                        <h3 class="text-alert">{{messageError}}</h3> 
+                       <h3> Produits</h3>
                     </div>
                 </div>
             </section>
-            <section>
-                <template v-if="key.userCommand == true">
-                    <command-user></command-user>
-                </template>
-            </section>
-            <section>
-                <template v-if="key.productShop == true">
-                    <product-shop 
-                    @onpreviousupdateproduct="previousUpdateProduct"
-                    @onnextupdateproduct="nextUpdateProduct"
-                    :productsprops="productsProps"></product-shop>
-                </template>
-            </section>
-            <!-- section pour la partie des differentes categories de l'administration -->
-            <section>
+            <section id="routerMain">
+                <!-- section pour la partie des differentes categories de l'administration -->
                 <div class="container-fluid row ">
-                    <div class="col-md-4">
+                    <div @click="routageCommand" class="col-lg-3 col-md-6">
+                        <div class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
+                            <h4>Commandes</h4>
+                            <p>Commandes a traiter</p>
+                        </div>
+                    </div>
+                    <div @click="routageProduct" class="col-lg-3 col-md-6">
                         <div class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
                             <h4>Produits</h4>
                             <p>Produits en rupture de stock</p>
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-lg-3 col-md-6">
                         <div class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
                             <h4>Actualité et Promos</h4>
                             <p>Promos en cours </p>
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-lg-3 col-md-6">
                         <div class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
                             <h4>Messages</h4>
                             <p>Nouveaux messages</p>
                         </div>
                     </div>
-
-
-
-
-                </div>
+                </div>    
             </section>
+            <section class="marginTopAdmin" id="routerCommand">
+                <template v-if="router.command" >
+                    <command-user></command-user>
+                </template>
+            </section>
+            <section class="marginTopAdmin" id="routerProduct">
+                <template v-if="router.product">
+                    <product-shop 
+                    @onpreviousupdateproduct="previousUpdateProduct"
+                    @onnextupdateproduct="nextUpdateProduct"
+                    :productsprops="productsProps"></product-shop>
+                </template>
+            </section>
+            
         </main>
         <footer>
             <div class="row introduction">
@@ -225,33 +225,21 @@
                     liveUpdateProduct:"0"    
                 },
                 //info des sliders 
-                liveSlide: 0,
-                slides: [{
-                        title: "Section 1 :Commandes a traiter ",
-                        paragraphe: "Voici la liste des commandes a livrer ou collecter"
-                    },
-                    {
-                        title: "Section 2 Produits en Magasin",
-                        paragraphe: "Listes des produits en rupture de stock ou produit au détail"
-                    },
-                    {
-                        title: "Etape 3 Recapitulatif de votre commande ",
-                        paragraphe: "Confirmer les différentes informations de votre commande "
-                    },
-                    {
-                        title: "Etape 4 Paiement ",
-                        paragraphe: "Remplissez les différentes informations de paiement "
-                    },
-                ],
+                
                 messageError: "",
                 ///////////routage//////////
-                /////key//////
-                key: {
-                    userCommand: true,
-                    productShop: false,
+                router:{
+                    main:true,
+                    //categorie
+                    product:false,
+                    command:false,
+                        //product
+                        productStock:false,
+                        productList:false,
+                        productNew:false,
+                        productUpdate:false
                 }
-
-
+                
             },
             mounted(){
                 this.getAllProducts();
@@ -275,60 +263,39 @@
                         }
                     });
                 },
-                    //configuration du slider du routage 
-                sliderPrevious() {
-                    this.liveSlide--
-                    if (this.liveSlide == -1) {
-                        this.liveSlide = 0
-                    }
-                    this.routage();
-
+                routageProduct(){
+                    this.router.product = true
+                    this.router.command = false
+                    this.scrolling("routerProduct")      
                 },
-                sliderNext() {
-                    this.liveSlide++
-                    if (this.liveSlide == 4) {
-                        this.liveSlide = 3
-                    }
-                    this.routage();
+                routageCommand(){
+                    this.router.product = false
+                    this.router.command = true
+                    this.scrolling("routerCommand")      
                 },
-                routage() {
-                    if (this.liveSlide == 0) {
-                        this.key.userCommand = true,
-                            this.key.productShop = false
-                    } else if (this.liveSlide == 1) {
-                        this.key.userCommand = false,
-                            this.key.productShop = true
-
-
-                    } else if (this.liveSlide == 2) {
-
-                    } else if (this.liveSlide == 3) {
-
+                scrolling(element) {
+                document.getElementById(element).scrollIntoView(
+                    {
+                        block: 'start',
+                        behavior: 'smooth',
                     }
-                    window.scrollTo(0, 0)
+                )
                 },
+                //changement du productsProps.liveUpdateProduct pour l'update
                 nextUpdateProduct(){
-                    console.log('nextUpdateProduct')
-                    console.log(this.productsProps.products.length)
-
                     this.productsProps.liveUpdateProduct++
-                    if(this.productsProps.liveUpdateProduct == parseIn(this.productsProps.products.length) -1 ){
+                    if(this.productsProps.liveUpdateProduct == this.productsProps.products.length){
                         this.productsProps.liveUpdateProduct = 0
                     }
-
-                    
                 },
                 previousUpdateProduct(){
-                    console.log(this.productsProps.products.length)
-                    console.log('previousUpdateProduct')
                     this.productsProps.liveUpdateProduct--
-                    if(this.productsProps.liveUpdateProduct ==  -1 ){
-                        this.productsProps.liveUpdateProduct = parseInt(this.productsProps.products.length) - 1
-                    } 
-
-                    
+                    if(this.productsProps.liveUpdateProduct == - 1){
+                        this.productsProps.liveUpdateProduct = this.productsProps.products.length - 1
+                    }
                 }
-            }
+                
+        }
 
         })
     </script>
