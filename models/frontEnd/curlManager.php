@@ -1,7 +1,7 @@
 <?php
 class CurlManager
 {
-    public function sendPromotionsAllTokens($token)
+    public function sendPromotionsAllTokens($token,$articles)
     {
 
             var_dump($token);
@@ -14,8 +14,13 @@ class CurlManager
             //var_dump($token);
             
             $serverKey = 'AAAAwz0nWUc:APA91bHnhm0Ki9MDHkXkYBpjApwoZ8S2ynXhwTcd7USJTiRUq3w0gACRgFThFYgAcQpwAH5j7Sy_NXow5RKE2WDu6XqS2iV82j3n8wB18Tzr42X4qjKqikRgRIBJFotjtpcgE4nT_6kA';
-            $title = "La ferme Bio vous attends";
-            $body = "Cliquez sur ce message , de nouvelles promotions sont arrivés :-) ?";
+            if($articles['title']!=null){
+                $title = $articles['title'];
+                $body = $articles['description'];
+            } else {
+                $title = "La ferme Bio vous attends";
+                $body = "Cliquez sur ce message , de nouvelles promotions sont arrivés :-) ?";
+            }
             $notification = array(
                 'title' => $title,
                 'body' => $body,

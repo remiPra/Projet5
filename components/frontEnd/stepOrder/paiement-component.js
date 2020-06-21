@@ -13,8 +13,8 @@
                             <div class="control-group">
                                 <label class="control-label">Nom du titulaire de la carte</label>
                                 <div class="controls">
-                                    <input type="text" class="input-block-level" 
-                                        title="tapez votre nom et prenom" required>
+                                    <input value="DUPONT JEAN" type="text" class="input-block-level" 
+                                        title="tapez votre nom et prenom">
                                 </div>
                             </div>
 
@@ -23,24 +23,24 @@
                                 <div class="controls">
                                     <div class="row-fluid d-flex">
                                         <div class="span3">
-                                            <input type="text" class="input-block-level" autocomplete="off"
+                                            <input value="1234" type="text" class="input-block-level" autocomplete="off"
                                                  title="First four digits"
-                                                required>
+                                                >
                                         </div>
                                         <div class="span3">
-                                            <input type="text" class="input-block-level" autocomplete="off"
+                                            <input value="1234" type="text" class="input-block-level" autocomplete="off"
                                                  title="Second four digits"
-                                                required>
+                                                >
                                         </div>
                                         <div class="span3">
-                                            <input type="text" class="input-block-level" autocomplete="off"
+                                            <input value="1234" type="text" class="input-block-level" autocomplete="off"
                                                  title="Third four digits"
-                                                required>
+                                                >
                                         </div>
                                         <div class="span3">
-                                            <input type="text" class="input-block-level" autocomplete="off"
+                                            <input type="text" value="1234" class="input-block-level" autocomplete="off"
                                                  title="Fourth four digits"
-                                                required>
+                                                >
                                         </div>
                                     </div>
                                 </div>
@@ -74,8 +74,8 @@
                                     <div class="row-fluid">
                                         <div class="span3">
                                             <input type="text" class="input-block-level" autocomplete="off"
-                                                
-                                                title="Three digits at back of your card" required>
+                                                    value="333"                                               
+                                                title="Three digits at back of your card" >
                                         </div>
                                         <div class="span8">
                                             <!-- screenshot may be here -->
@@ -83,7 +83,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <input type="text" class="input-block-level" 
+                            <input type="text" class="input-block-level" hidden
                                         name="numberCommand" :value="propspaiement[0].numberCommand" required >
                             <div class="form-actions">
                                 <button type="submit" class="btn btn-primary">Payer</button>
@@ -106,8 +106,8 @@
                                 <label class="control-label">Entrez votre adresse mail : </label>
                                 <div class="controls">
                                     <input type="mail" class="input-block-level" value="remipradere@gmail.com" disabled 
-                                        title="tapez votre nom et prenom" required>
-                                        <input type="text" class="input-block-level" 
+                                        title="tapez votre email" required>
+                                        <input hidden type="text" class="input-block-level" 
                                         name="numberCommand" :value="propspaiement[0].numberCommand" required >        
                                 </div>        
                             </div>

@@ -36,13 +36,13 @@ Vue.component('shop-products-details', {
     <div class=" box-shadow ProductImage text-center box" v-for="(product,index) in elements.productList" :key="product.name"
         :id="product.title" :class="product.visible">
         <div class="imgBx">
-            <img  @click="onSeeProductDetail(product)"  :src="product.src">
+            <img :src="product.src">
         </div>
         <div class="content">
-            <h3  @click="onSeeProductDetail(product)" >{{product.title}}</h3>
-            <p class="contentShow"> {{product.typeOfQuantity}} <br>{{product.priceDetail}} $</p>
+            <h3>{{product.title}}</h3>
+            <p class="contentShow"> {{product.typeOfQuantity}} <br>{{product.priceDetail}} €</p>
             <p class="contentShow"> {{product.msgStock}}
-            <i  @click="onSeeProductDetail(product)" class="fas fa-info-circle"></i>
+            <i @click="onSeeProductDetail(product)" title="plus d'infos" class="fas fa-info-circle"></i>
             
             </p>
             

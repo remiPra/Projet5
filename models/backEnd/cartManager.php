@@ -56,6 +56,10 @@ class CartManagerBack
             'statusCommand'=>200,
             'numberCommand'=>$numberCommand
         ));
+        
+
+
+
     }
 
     public function findUserWithCommandNumberCommand($id){
@@ -74,6 +78,32 @@ class CartManagerBack
         return $data;
     }
 
+    public function getAllCommands(){
+        global $bdd;
+        $req = $bdd->prepare('SELECT command.dateDeliveryOrder,command.* ,user.* 
+        FROM command 
+        INNER JOIN user ON user.name = command.name
+        ORDER BY command.dateDeliveryOrder
+        ');
+        $req->execute(array());
+        $data = $req->fetchAll();
+        return $data;
+    }
+    
+    public function getAllRetraitCommands(){
+        global $bdd;
+        $req = $bdd->prepare('SELECT deliveryDay,collectTime 
+        FROM command
+        WHERE status = :status
+        ');
+        $req->execute(array(
+            'status'=>'retrait'
+        ));
+        $data = $req->fetchAll();
+        return $data;
+
+
+    }
 
 
 

@@ -52,10 +52,13 @@ Vue.component('command-order', {
     `,
     methods: {
         scrolling(element) {
-            document.getElementById(element).scrollIntoView({
-                block: 'start',
-                behavior: 'smooth',
-            })
+            const id = element;
+            const yOffset = -100; 
+            const elements = document.getElementById(id);
+            const y = elements.getBoundingClientRect().top + window.pageYOffset + yOffset;
+            
+            window.scrollTo({top: y, behavior: 'smooth'});
+            
         },
         onNextPaiement() {
             this.$emit('onnextpaiement')

@@ -139,3 +139,40 @@ function userCommand(){
     //var_dump($data);
 }
 
+function getAllArticles(){
+    require 'models/backEnd/articlesManager.php';
+    $articlesManager = new ArticlesManager();
+    $Articles = $articlesManager->getAllArticles();
+    $list =  json_encode($Articles);
+    echo $list;
+}
+function getAllNews(){
+    require 'models/backEnd/newsManager.php';
+    $articlesManager = new newsManager();
+    $Articles = $articlesManager->getAllNews();
+    $list =  json_encode($Articles);
+    echo $list;
+}
+function getAllCommands(){
+    $dataOrder=[];
+    
+    require "models/backEnd/cartManager.php";
+    $cartManagerBack = new CartManagerBack();
+    $listCommands = $cartManagerBack->getAllCommands();
+
+    array_push($dataOrder,$listCommands);
+
+
+    require 'models/backEnd/productManager.php';
+    $productManager = new productManagerBack();
+    $cartUser=$productManager->findAllProductOfNumberCommandUser();
+    array_push($dataOrder,$cartUser);
+    
+    echo json_encode($dataOrder);    
+}
+function allRetraitCommand(){
+    require 'models/backEnd/cartManager.php';
+    $cartManagerBack = new CartManagerBack();
+    $hoursReserved = $cartManagerBack->getAllRetraitCommands();
+    echo json_encode($hoursReserved);
+}

@@ -15,7 +15,13 @@ class CartManager
         $numberCommand=$date;
         $dateDeliveryOrder= date("Y-m-d H:i:s");
         $statusCommand=0;
+        $status = "unknow";
+        $collectTime = "00 : 00";
+        $deliveryDay= "unknow";
+        $collectTimeAndDay="unknow";
 
+        echo '<br/>';
+        echo '<br/>';
         var_dump($date);
         var_dump($name);
         var_dump($totalPrice);
@@ -23,16 +29,19 @@ class CartManager
         var_dump($numberCommand);
         var_dump($dateDeliveryOrder);
         var_dump($statusCommand);
+        echo '<br/>';
+        echo '<br/>';
 
         
 
 
         //inserer les infos de la commande
         global $bdd;
-        $req = $bdd->prepare('INSERT INTO command (idClient ,name,dateCommand,numberCommand,dateDeliveryOrder,statusCommand,totalPrice)
-         VALUES(?,?,?,?,?,?,?)');
-        $req->execute(array($idUser,$name,$date,$numberCommand,$dateDeliveryOrder,$statusCommand,$totalPrice));    
+        $req = $bdd->prepare('INSERT INTO command (status,collectTime,deliveryDay,collectTimeAndDay,idClient ,name,dateCommand,numberCommand,dateDeliveryOrder,statusCommand,totalPrice)
+         VALUES(?,?,?,?,?,?,?,?,?,?,?)');
+        $req->execute(array($status,$collectTime,$deliveryDay,$collectTimeAndDay,$idUser,$name,$date,$numberCommand,$dateDeliveryOrder,$statusCommand,$totalPrice)) or die(print_r($req ->errorInfo(), TRUE));    
         var_dump($numberCommand);
+        
         return $numberCommand;
     }
     
@@ -56,7 +65,7 @@ class CartManager
             //fonction d'envoie
             global $bdd;
             $req = $bdd->prepare('INSERT INTO cartproduct (name,productName,productQuantity,numberCommand) VALUES(?,?,?,?)');
-            $req->execute(array($name,$productName,$productQuantity,$orderNumberCommand));    
+            $req->execute(array($name,$productName,$productQuantity,$orderNumberCommand)) or die(print_r($req->errorInfo(), TRUE));    
             var_dump($orderNumberCommand);
         }    
     }

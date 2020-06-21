@@ -19,9 +19,9 @@
             <img :src="elements.productList[elements.liveSlideProductItem].src">
         </div>
         <div class="content">
-            <h3 @click="onSeeProductDetail(elements.productList[elements.liveSlideProductItem])">{{elements.productList[elements.liveSlideProductItem].title}}</h3>
-            <p @click="onSeeProductDetail(elements.productList[elements.liveSlideProductItem])" class="contentShow"> {{elements.productList[elements.liveSlideProductItem].typeOfQuantity}}
-                <br>{{elements.productList[elements.liveSlideProductItem].priceDetail }} $</p>
+            <h3 >{{elements.productList[elements.liveSlideProductItem].title}}</h3>
+            <p  class="contentShow"> {{elements.productList[elements.liveSlideProductItem].typeOfQuantity}}
+                <br>{{elements.productList[elements.liveSlideProductItem].priceDetail }} €</p>
             <div class="d-flex m-auto buttonShop">
                 <button @click="onAddCart(elements.productList[elements.liveSlideProductItem])"
                     class="buttonAdd">+</button>

@@ -26,6 +26,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <!-- integration de vue.js -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    
     <!-- integration de font-awesome -->
     <script src="https://kit.fontawesome.com/5a70a7892a.js"></script>
     <link rel="manifest" href="./manifest.json">
@@ -235,6 +236,7 @@
                         <p>
                             xxxxxxxxx@gmail.com
                         </p>
+                        <button class="add-button">Add to home screen</button>
 
                     </div>
                     <div class="col-md-4">
@@ -493,130 +495,7 @@
                     //this.getWindowHeight()
 
                 })
-                /////////////////////////////////////////////////////////////////////////////                
-                // this.productsSelected.productList = [
-                //     {
-                //         title: "abricot",
-                //         src: "./assets/images/fruitsEtLegumes/abricotFormat.png",
-                //         quantity: 1,
-                //         quantityCartProduct: 0,
-                //         typeOfQuantity: "barquette de 600g",
-                //         priceDetail: "13.92kg",
-                //         price: 32,
-                //         totalPriceProduct: 32,
-                //         // booleen
-                //         //utton: 1,
-                //         //ityButton: 0,
-                //         visible: "displayFlex",
-                //         category: "fruits"
-                //     },
-                //     {
-                //         title: "prune",
-                //         src: "./assets/images/fruitsEtLegumes/pruneFormat.png",
-                //         quantity: 1,
-                //         quantityCartProduct: 0,
-                //         typeOfQuantity: "barquette de 600g",
-                //         priceDetail: "13.92kg",
-                //         price: 32,
-                //         totalPriceProduct: 32,
-                //         visible: "displayFlex",
-                //         //utton: 1,
-                //         //ityButton: 0,
-                //         category: "fruits"
-                //     },
-                //     {
-                //         title: "melon",
-                //         src: "./assets/images/fruitsEtLegumes/melonFormat.png",
-                //         quantity: 1,
-                //         quantityCartProduct: 0,
-                //         typeOfQuantity: "barquette de 600g",
-                //         priceDetail: "13.92kg",
-                //         price: 32,
-                //         totalPriceProduct: 32,
-                //         visible: "displayFlex",
-                //         //utton: 1,
-                //         //ityButton: 0,
-                //         category: "fruits"
-
-                //     },
-                //     {
-                //         title: "cerise",
-                //         src: "./assets/images/fruitsEtLegumes/ceriseFormat.png",
-                //         quantity: 1,
-                //         quantityCartProduct: 0,
-                //         typeOfQuantity: "barquette de 600g",
-                //         priceDetail: "13.92kg/Kilogramme",
-                //         price: 32,
-                //         totalPriceProduct: 32,
-                //         visible: "displayFlex",
-                //         //utton: 1,
-                //         //ityButton: 0,
-                //         category: "fruits"
-
-                //     },
-                //     {
-                //         title: "haricots",
-                //         src: "./assets/images/fruitsEtLegumes/haricotsFormat.png",
-                //         quantity: 1,
-                //         quantityCartProduct: 0,
-                //         typeOfQuantity: "barquette de 600g",
-                //         priceDetail: "13.92kg",
-                //         price: 32,
-                //         totalPriceProduct: 32,
-                //         visible: "displayFlex",
-                //         //utton: 1,
-                //         //ityButton: 0,
-                //         category: "legumes"
-                //     },
-                //     {
-                //         title: "framboise",
-                //         src: "./assets/images/fruitsEtLegumes/framboiseFormat.png",
-                //         quantity: 1,
-                //         quantityCartProduct: 0,
-                //         typeOfQuantity: "barquette de 300g",
-                //         priceDetail: "13.92kg",
-                //         price: 32,
-                //         totalPriceProduct: 32,
-                //         visible: "displayFlex",
-                //         //utton: 1,
-                //         //ityButton: 0,
-                //         category: "fruits"
-
-                //     },
-                //     {
-                //         title: "aubergine",
-                //         src: "./assets/images/fruitsEtLegumes/aubergineFormat.png",
-                //         quantity: 1,
-                //         quantityCartProduct: 0,
-                //         typeOfQuantity: "barquette de 600g",
-                //         priceDetail: "13.92kg",
-                //         price: 32,
-                //         totalPriceProduct: 32,
-                //         visible: "displayFlex",
-                //         //utton: 1,
-                //         //ityButton: 0,
-                //         category: "legumes"
-                //     },
-                //     {
-                //         title: "peche",
-                //         src: "./assets/images/fruitsEtLegumes/pecheFormat.png",
-                //         quantity: 1,
-                //         quantityCartProduct: 0,
-                //         typeOfQuantity: "barquette de 600g",
-                //         priceDetail: "13.92kg",
-                //         price: 32,
-                //         totalPriceProduct: 32,
-                //         visible: "displayFlex",
-                //         //utton: 1,
-                //         //ityButton: 0,
-                //         category: "fruits"
-                //     }
-
-                // ];
-                // this.products = this.productsSelected;
-                // this.memory = this.productsSelected;
-                ///////////////////////////////////////////////////////////////////
-                //Appel Axios
+                
                 this.getAllProducts()
                 this.products.liveSlideProductItem = 0
                 this.productsSelected = this.products;
@@ -692,11 +571,12 @@
                 },
                 //methode de scroll 
                 _scrollToConfirmCart(){
-                    console.log("succesScrollTO")
-                    window.scrollTo({
-                        top:  this.scroll.cartConfirm,
-                        behavior: 'smooth'
-                    })
+                    // console.log("succesScrollTO")
+                    // window.scrollTo({
+                    //     top:  this.scroll.cartConfirm,
+                    //     behavior: 'smooth'
+                    // })
+                    this.scrolling('cartContainerModal')
 
                 },
                 //nous ecoutons le scroll
@@ -836,6 +716,8 @@
                     if (!this.duplicateCart) {
                         this.products.productList.forEach(product => {
                             if (product.title == cart.title) {
+                                //booleen du panier
+                                product.keyChange = 1
                                 product.quantityCartProduct = 1
                             }
                         })
@@ -893,16 +775,20 @@
                     this.router.main = true;
                     this.router.showModal = true;
                     console.log("true");
-                    setTimeout(() => {
-                        this.scrolling("cartDirection")
-                    }, 100);
+                    setTimeout(()=>{
+                        this.scrolling("cartContainerModal")
+                    },300) 
+                    
                 },
                 //fonction pour assurer le scrolling
                 scrolling(element) {
-                    document.getElementById(element).scrollIntoView({
-                        block: 'start',
-                        behavior: 'smooth',
-                    })
+                    const id = element;
+                    const yOffset = -100; 
+                    const elements = document.getElementById(id);
+                 const y = elements.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        
+                    window.scrollTo({top: y, behavior: 'smooth'});
+                    
                 },
                 // slider en version mobile pour les produits
                 liveSlideProductItemNext() {
@@ -1015,7 +901,19 @@
     </script>
 
     <script>
+
+
+
+
+
+
+
+
+
+
+
         //firebase config
+
         var config = {
             apiKey: "AIzaSyACBEl4RcIkJB7oy5X-zrOAcECPDvTH4hw",
             authDomain: "simply-notify-68b52.firebaseapp.com",
@@ -1089,6 +987,64 @@
 <script>
     AOS.init();
 </script>
+<script>
+    if ('serviceWorker' in navigator) {
+    console.log("Will the service worker register?");
+    navigator.serviceWorker.register('../firebase-messaging-sw.js')
+      .then(function(reg){
+        console.log("Yes, it did.")
+        ;
+      }).catch(function(err) {
+        console.log("No it didn't. This happened: ", err)
+      });
+  }
 
+let deferredPrompt;
+const addBtn = document.querySelector('.add-button');
+console.log(addBtn)
+
+
+var _beforeInstallPrompt; if ( "onbeforeinstallprompt" in window ) 
+{ window.addEventListener( "beforeinstallprompt", beforeInstallPrompt ); } 
+function beforeInstallPrompt( evt ) { evt.preventDefault(); 
+    _beforeInstallPrompt = evt;console.log("ok") } 
+
+//return _beforeInstallPrompt.prompt() .then( function ( evt ) { // Wait for the user to respond to the prompt return _beforeInstallPrompt.userChoice; } ) .then( function ( choiceResult ) { //do stuff here } ) .catch( function ( err ) { if ( err.message.indexOf( "user gesture" ) > -1 ) { //recycle, but make sure there is a user gesture involved } else if ( err.message.indexOf( "The app is already installed" ) > -1 ) { //the app is installed, no need to prompt, but you may need to log or update state values } else { return err; } } ); 
+
+console.log(Window.onbeforeinstallprompt)
+
+
+
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  // Prevent Chrome 67 and earlier from automatically showing the prompt
+ // e.preventDefault();
+  console.log(e)
+  // Stash the event so it can be triggered later.
+  deferredPrompt = e;
+
+
+  addBtn.addEventListener('click', (e) => {
+    // hide our user interface that shows our A2HS button
+    //addBtn.style.display = 'none';
+    // Show the promp
+    deferredPrompt.prompt();
+    console.log(deferredPrompt)
+    // Wait for the user to respond to the prompt
+    deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('User accepted the A2HS prompt');
+        } else {
+          console.log('User dismissed the A2HS prompt');
+        }
+        deferredPrompt = null;
+      });
+  });
+  });
+
+
+
+
+</script>
 
 </html>

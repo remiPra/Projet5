@@ -122,11 +122,20 @@ function cart()
     require "models/frontEnd/userManager.php";
     $userManager = new userManager();
     $userId = $userManager->findUserId();
+    echo '<br/>';
+    var_dump($userId);
+    echo '<br/>';
 
     //enregistrement  de toutes les infos du cart
     require "models/frontEnd/cartManager.php";
     $cartManager = new CartManager();
     $orderNumberCommand = $cartManager->cartAddList($userId);
+    echo '<br/>';
+    var_dump($cartManager);
+    echo '<br/>'; 
+
+
+
 
     //enregistrement de toute la lliste des produits
     $cart = $cartManager->cartAddProduct($orderNumberCommand);
@@ -159,7 +168,7 @@ function curl()
     var_dump(count($Alltokens));
     
     for($i=0;$i<count($Alltokens);$i++){
-        $curlPromotion = $curlManager->sendPromotionsAllTokens($Alltokens[$i]);      
+        $curlPromotion = $curlManager->sendPromotionsAllTokens($Alltokens[$i],$articles);      
      }
     
 }
@@ -186,6 +195,7 @@ function administrationPasswordForgotCheck()
             $userLinkCode = $userManager->alertPassword($link, $firstname);
             // Always set content-type when sending HTML email
             $headers = "MIME-Version: 1.0" . "\r\n";
+            $headers .= "From: remipradere@gmail.com\r\n";
             $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 
             // More headers
@@ -380,6 +390,7 @@ function paiementSuccess()
 
     $headers = "MIME-Version: 1.0" . "\r\n";
     $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+    $headers .= "From: remipradere@gmail.com\r\n";
 
 
     $subject = "Votre commande".$numberCommand." a été validé " ;
@@ -485,6 +496,73 @@ function newProduct(){
     $productManagerBack = new productManagerBack;
     $newProduct = $productManagerBack-> addNewProduct();
 
+
+
+}
+
+function sendNewArticle(){
+    require 'models/backEnd/articlesManager.php';
+    $articlesManager = new ArticlesManager();
+    $sendArticle = $articlesManager->sendNewArticleModel();
+    
+    $title = htmlspecialchars($_POST['title']);
+    $description = htmlspecialchars($_POST['description']);
+    $articles['title'] = str_replace("'","\'",$title);
+    $articles['description'] = str_replace("'","\'",$description);
+
+    require 'models/frontEnd/tokenManager.php';
+    $tokenManager = new TokenManager();
+    $Alltokens = $tokenManager->getAllTokens();
+
+    
+    require 'models/frontEnd/curlManager.php';
+    $curlManager = new CurlManager();
+    var_dump($Alltokens);
+    echo "<br>";
+    echo "<br>";
+    var_dump($articles);
+    echo "<br>";
+    echo "<br>";
+    echo "<br>";
+    var_dump(count($Alltokens));
+    
+    for($i=0;$i<count($Alltokens);$i++){
+        $curlPromotion = $curlManager->sendPromotionsAllTokens($Alltokens[$i],$articles);      
+     }
+}
+function sendNewNews(){
+    require 'models/backEnd/newsManager.php';
+    $newsManager = new newsManager();
+    $sendnews = $newsManager->sendNewNewsModel();    
+}
+
+function test(){
+    require 'models/backEnd/productManager.php';
+    $productManager = new productManagerBack();
+    $cartUser=$productManager->findAllProductOfNumberCommandUser();
+   
+}
+function addStockProduct(){
+    $data = $_POST[0];
+    $stock = $_POST[1] + 1;
+    var_dump($stock);
+    var_dump($data);
+
+    require 'models/backEnd/productManager.php';
+    $productManagerBack = new productManagerBack();
+    $addStock = $productManagerBack->addStockProduct($data,$stock);
+
+
+}
+function substractStockProduct(){
+    $data = $_POST[0];
+    $stock = $_POST[1] - 1;
+    var_dump($stock);
+    var_dump($data);
+
+    require 'models/backEnd/productManager.php';
+    $productManagerBack = new productManagerBack();
+    $substractStock = $productManagerBack->substrackStockProduct($data,$stock);
 
 
 }

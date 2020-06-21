@@ -11,6 +11,12 @@ if ($_SESSION == false and isset($_GET['action'])) {
 
     switch (($_GET['action'])) {
 
+        
+        
+        
+        case 'test':
+            test();
+            break;
         case 'home':
             index();
             break;
@@ -83,8 +89,10 @@ if ($_SESSION == false and isset($_GET['action'])) {
             index();
             break;
     }
-} else if (isset($_SESSION) and isset($_GET['action']) 
-and ($_SESSION['name'] == "administration")) {
+} else if (
+    isset($_SESSION) and isset($_GET['action'])
+    and ($_SESSION['name'] == "administration")
+) {
     switch (($_GET['action'])) {
 
         case 'administrationHome':
@@ -96,11 +104,23 @@ and ($_SESSION['name'] == "administration")) {
         case 'deconnexion':
             deconnexion();
             break;
-            
+
         case 'newProduct':
             newProduct();
             break;
-
+        case 'sendNewArticle':
+            sendNewArticle();
+            break;
+        case 'sendNewNews':
+            sendNewNews();
+            break;
+        case 'addStockProduct':
+            addStockProduct();
+            break;
+        case 'substractStockProduct':
+            substractStockProduct();
+            break;
+        
         default:
             index();
             break;

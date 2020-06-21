@@ -108,9 +108,9 @@
                         <h3 class="text-alert">{{messageError}}</h3>
 
                         <button v-if="previousSliderClass==true" @click="sliderPrevious">Etape précedente</button>
-                        <button v-if="previousSliderClass==false" class="displayGrey">Etape précedente  </button>
-                        
-                        <button v-if="nextSliderClass==true"@click="sliderNext">Etape suivante</button>
+                        <button v-if="previousSliderClass==false" class="displayGrey">Etape précedente </button>
+
+                        <button v-if="nextSliderClass==true" @click="sliderNext">Etape suivante</button>
                         <button v-if="nextSliderClass==false" class="displayGrey">Etape suivante</button>
                         <p>{{slides[liveSlide].paragraphe}}</p>
 
@@ -181,7 +181,8 @@
                                     <div class="form-group row justify-content-center col-md-8  h-10 m-auto row align-items-center ">
 
                                         <button class="ButtonGreen" @click="substract">-</button>
-                                        <p class="align-items-center p-3">
+                                        
+                                        <p class="align-items-center p-3 ">
                                             {{jour}} <br>
 
                                             {{today.getDate()}}
@@ -201,7 +202,16 @@
 
                                         <div class="d-flex flex-wrap" id="containerSlot">
                                             <div class="form-group p-2" v-for="slot in slots">
-                                                <button @click="slotConfirm(slot.hours,slot.minutes)" :class="slot.class">{{slot.hours}}:{{slot.minutes}}</button>
+                                                <template v-if="slot.class == 'displayFlex' ">
+                                                    <button @click="slotConfirm(slot.hours,slot.minutes)" :class="slot.class">
+                                                        <template>{{slot.hours}}:{{slot.minutes}}</template>
+                                                    </button>
+                                                </template>
+                                                <template v-if="slot.class == 'displayNone' ">
+                                                    <button class="displayRed">
+                                                        <template>{{slot.hours}}:{{slot.minutes}}</template>
+                                                    </button>
+                                                </template>
                                             </div>
                                             <button v-if="keyCollect==false" @click=routageRecapDelivery> Valider </button>
                                         </div>
@@ -222,8 +232,8 @@
 
 </body>
 
-    <script src="./components/frontEnd/stepOrder/command-order.js"></script>
-    <!-- //composant local pour la partie des paiements pour etape 4  -->
+<script src="./components/frontEnd/stepOrder/command-order.js"></script>
+<!-- //composant local pour la partie des paiements pour etape 4  -->
 
 <script src="./components/frontEnd/stepOrder/paiement-component.js"></script>
 <script>
@@ -231,20 +241,20 @@
 </script>
 <script src="./components/frontEnd/stepOrder/information-user.js"></script>
 <script>
-
-
-
     ////////////composant global associant la geolocalisation et les slots
     let app = new Vue({
         el: "#app",
         data() {
             return {
+               
                 /////////////////////////////////////////////////////////////////////////////                
                 //data de l'utilsateur et des infos récupéré lors de la commande
-                order:[],
+                order: [],
                 user: [],
                 name: "",
                 memory: [],
+                //data de toutes les commandes avec horaires réservés
+                memoryHoursReserved:[],
                 // Position au scroll
                 scroll: {
                     slot: 600,
@@ -261,8 +271,9 @@
                 ],
 
                 // data de slots 
-                //heure du moment a laisser
                 nowMemory: new Date().getTime(),
+                //heure du moment a laisser
+                nowHour:new Date().getHours(),
                 now: new Date().getTime(),
                 //booleen pour stopper 
                 dateStop: false,
@@ -301,8 +312,8 @@
                 geolocalisation: false,
                 paiement: false,
                 //class des boutons
-                previousSliderClass:false,
-                nextSliderClass:false,
+                previousSliderClass: false,
+                nextSliderClass: false,
                 ///key pour acceder ou  non au slide
                 nextStepGeolocalisation: false,
                 orderCommandValidation: false,
@@ -349,7 +360,7 @@
                     status: "",
                 },
                 ////data props pour le paiement
-                propsPaiement:[]
+                propsPaiement: []
             }
         },
         //nous creeons une ecoute d'un evenement du scroll lors de l'initialisation de la vue
@@ -361,6 +372,8 @@
             this.name = "<?php echo $_SESSION['name']; ?>";
             console.log(this.name);
             this.getCommand();
+            //on recupere les reservations deja existantes
+            this.getAllCommandWithReservedHours()
             //etudions la largeur de la fenetre
             this.$nextTick(function() {
                 window.addEventListener('resize', this.getWindowWidth);
@@ -385,6 +398,19 @@
                         console.log(response.data);
                         app.memory = response.data
                         console.log(app.memory)
+                        console.log("success");
+                    }
+                });
+            },
+            getAllCommandWithReservedHours(){
+                axios.get('proceed.php?action=allRetraitCommand').then(function(response) {
+                    if (response.data.error) {
+                        app.errorMsg = response.data.message;
+                        console.log(app.errorMsg)
+                    } else {
+                        console.log(response.data);
+                        app.memoryHoursReserved = response.data
+                        console.log(app.memoryHoursReserved)
                         console.log("success");
                     }
                 });
@@ -441,13 +467,13 @@
                     this.orderCommand = false;
                     console.log('O')
                     console.log(this.nextStepGeolocalisation)
-                    if(this.nextStepGeolocalisation  == true){
-                            this.nextSliderClass = true
-                            this.previousSliderClass = false
-                        } else {
-                            this.nextSliderClass = false
-                            this.previousSliderClass = false;
-                        }
+                    if (this.nextStepGeolocalisation == true) {
+                        this.nextSliderClass = true
+                        this.previousSliderClass = false
+                    } else {
+                        this.nextSliderClass = false
+                        this.previousSliderClass = false;
+                    }
 
                 } else if (this.liveSlide == 1) {
                     if (this.nextStepGeolocalisation == false) {
@@ -460,7 +486,7 @@
                         this.paiement = false;
                         this.orderCommand = false;
                         this.previousSliderClass = true;
-                        if(this.routageRecapValidation == true){
+                        if (this.routageRecapValidation == true) {
                             this.nextSliderClass = true
                             this.previousSliderClass = true
                         } else {
@@ -469,13 +495,13 @@
                         }
                     }
                 } else if (this.liveSlide == 2) {
-                    if(this.routageRecapValidation == true){
+                    if (this.routageRecapValidation == true) {
                         this.information = false;
                         this.geolocalisation = false;
                         this.paiement = false;
                         this.orderCommand = true;
                         this.messageError = ""
-                        if(this.orderCommandValidation == true){
+                        if (this.orderCommandValidation == true) {
                             this.nextSliderClass = true
                             this.previousSliderClass = true
                         } else {
@@ -483,7 +509,7 @@
                             this.previousSliderClass = true
                         }
                     } else {
-                        window.scrollTo(0,0);
+                        window.scrollTo(0, 0);
                         this.liveSlide = 1;
                         this.messageError = "valider d'abord les infos de geolocalisation"
                     }
@@ -523,7 +549,7 @@
                 console.log(this.dataCart.deliveryDay)
                 ///routage
                 //cle de routage
-                this.routageRecapValidation = true ;
+                this.routageRecapValidation = true;
                 this.user.push(this.memory)
                 this.user.push(this.dataCart)
                 this.sliderNext()
@@ -551,11 +577,11 @@
 
             },
             onLivraisonRoutage() {
-                //setTimeout(this.scrolling("livraison"), 1000)
                 this.keyCollect = false;
                 this.onShop = false;
                 this.slotShow = true;
                 this.livraison = true
+                setTimeout(this.scrolling("livraison"), 300)
             },
             nextPaiement() {
                 //this.orderCommand=true
@@ -579,7 +605,7 @@
                 let orderJSON = JSON.stringify(order);
                 console.log(orderJSON);
 
-                let formData = this.toFormData(order) 
+                let formData = this.toFormData(order)
 
                 axios.post("https://www.remi-pradere.com/projet5/proceed.php?action=updateOrder", formData).then(function(response) {
 
@@ -614,6 +640,7 @@
                 this.inputAdressUser = true;
                 this.geolocateShow = true;
                 this.reservationShop = true;
+                setTimeout(()=>{this.scrolling('inputAdressUser')},200)
                 //
 
                 this.mapShow()
@@ -849,20 +876,49 @@
                 if (this.now == this.nowMemory) {
                     this.slots.forEach(element => {
                         //let d = new Date().getHours();
-                        if (element.hours < 16) {
+                        if (element.hours < this.nowHour + 1 ) {
                             element.class = "displayNone"
                         } else {
                             //console.log(new Date().getHours)
                         }
                     })
+                }
+                 //c'est ici qu'on va verfifier si le slot n'est pas deja pris
+                  //forEach sur les resultats  
+                  this.memoryHoursReserved.forEach( (data) => {
+                    // ensuite on va verifier les jours de retraits
+                    if(data.deliveryDay == this.aaa){
+                        //si trouvé on va modifier certains slots
+                        this.slots.forEach((element) => {
+                            let slotString = element.hours + " : " + element.minutes;
+                            if(slotString == data.collectTime){
+                                console.log(slotString);
+                                element.class = "displayNone"
+                            }
+                        })
+
+                    }
+                })
+                //verifions si le dimanche on veut pas 
+                console.log(this.aaa.search("Dimanche"))
+                if(this.aaa.search("Dimanche")>-1){
+                    this.slots.forEach(  (data) => {
+                        data.class = "displayNone"
+                    })     
 
                 }
+           
             },
             scrolling(element) {
-                document.getElementById(element).scrollIntoView({
-                    block: 'start',
-                    behavior: 'smooth',
-                })
+                const id = element;
+                const yOffset = -100;
+                const elements = document.getElementById(id);
+                const y = elements.getBoundingClientRect().top + window.pageYOffset + yOffset;
+
+                window.scrollTo({
+                    top: y,
+                    behavior: 'smooth'
+                });
             },
             /////// Definition de l'horaire du slot /////
             slotConfirm(a, b) {
@@ -874,7 +930,7 @@
                 this.cartDayAndHour();
                 console.log(this.dataCart.collectTimeAndDay)
                 //routage
-                this.routageRecapValidation= true;
+                this.routageRecapValidation = true;
                 this.user.push(this.memory)
                 this.user.push(this.dataCart)
                 this.sliderNext();
@@ -902,6 +958,9 @@
                 return this.jour + " " + this.today.getDate() +
                     " " + this.today.getFullYear() + " " + this.mois;
             },
+            aaa(){
+                return this.jour + " "+ this.today.getDate()+" "+ this.mois + " " + this.today.getFullYear() 
+            }
 
 
 

@@ -47,15 +47,15 @@ Vue.component('text-shop', {
                 <div class="carousel-inner">
                     <div class="carousel-item active">
                         <img class="d-block w-100"
-                            src="./assets/images/sliderBoutique/a-man-stands-at-the-counter-of-a-coffee-shop.jpg"
+                            src="./assets/images/sliderBoutique/a-man-stands-at-the-counter-of-a-coffee-shop.png"
                             alt="un homme qui se tient derrier le cointoir d'une boutique">
                     </div>
                     <div class="carousel-item">
-                        <img class="d-block w-100" src="./assets/images/sliderBoutique/a-woman-in-her-shop.jpg"
+                        <img class="d-block w-100" src="./assets/images/sliderBoutique/a-woman-in-her-shop.png"
                             alt="une vedeuse se tenant de debout a la caisse">
                     </div>
                     <div class="carousel-item">
-                        <img class="d-block w-100" src="./assets/images/sliderBoutique/products-are-paid.jpg"
+                        <img class="d-block w-100" src="./assets/images/sliderBoutique/products-are-paid.png"
                             alt="transaction dans un magasin entre le client et la vendeuse">
                     </div>
                 </div>

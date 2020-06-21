@@ -3,9 +3,9 @@ Vue.component('cart-product', {
         `
 <div id="cartContainerModal">     
 <div>
-    <div class="form-group">
-        <h3>Votre Commande  </h3>
-    </div>
+   
+        <h3 class="text-light">Votre Commande  </h3>
+    
 </div>
 <form  action="index.php?action=cart" id="cart" class="col-md-8 text-light"  method="POST">
 <div>

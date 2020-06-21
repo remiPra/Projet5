@@ -2,7 +2,7 @@
         Vue.component('product-shop', {
             props:['productsprops'],
             template: `
-            <section id="routageMenu">
+            <section id="routerMenu">
             <div>
                 <div class="container-fluid row ">
                     <div @click="routageProductList" class="col-md-4">
@@ -51,7 +51,7 @@
                                 <table class="table table-bordere">
                                     <thead>
                                         <th>Produit</th>
-                                        <th>Description</th>
+                                        
                                         <th>Stock</th>
                                         <th>Prix</th>
                                         <th>Action</th>
@@ -59,11 +59,15 @@
                                     <!-- tableau des Chapters brouillon -->
                                     <tbody>
     
-                                        <tr>
-                                            <td>fraise </td>
-                                            <td>xxxxxx</td>
-                                            <td>xxxxxx</td>
-                                            <td>xxxxxx</td>
+                                        <tr v-for="(data,index) in memory" :key="data.title">
+                                            <td>{{data.title}}</td>
+                                            
+                                            <td>
+                                                <button @click="addStockProduct(data.title,data.quantityStock)">+</button>
+                                                {{data.quantityStock}}
+                                                <button @click="substractStockProduct(data.title,data.quantityStock)">-</button>
+                                            </td>
+                                            <td>{{data.priceDetail}}</td>
                                             <td>
                                                 <div class="actionTableau">
                                                     <a class="LinkAdministration">Modifié </a>
@@ -206,7 +210,8 @@
                                 <div class="form-group">
                                     <label for="title"> Nom du produit :
                                     </label>
-                                    <input type="text" name="title" id="title" required>
+                                    <input :value="productsprops.products[productsprops.liveUpdateProduct].title"
+                                    type="text" name="title" id="title" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="quantityStock"> Stock a mettre en place :
@@ -281,7 +286,8 @@
         </section>  
             `,
             data() {
-                return {   
+                return {
+                    memory:this.productsprops.products,   
                     router: {
                         productShopList: true,
                         productShopTest: false,
@@ -321,21 +327,85 @@
                     this.scrolling("routerCommandAction")
                 },
                 routageMenu(){
-                    this.scrolling("routageMenu")
+                    this.scrolling("routerMain")
                 },
                 scrolling(element) {
-                    document.getElementById(element).scrollIntoView(
-                        {
-                            block: 'start',
-                            behavior: 'smooth',
-                        }
-                    )
+                    const id = element;
+                    const yOffset = -100; 
+                    const elements = document.getElementById(id);
+                    const y = elements.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                    
+                    window.scrollTo({top: y, behavior: 'smooth'});
                 },
                 onPreviousUpdateProduct(){
                     this.$emit('onpreviousupdateproduct')
                 },
                 onNextUpdateProduct(){
                     this.$emit('onnextupdateproduct')
+                },
+                //appel axios pour ajouter stock produit
+                addStockProduct(data,stock){
+                    // on utilise une data pas la props car trop rapide pour axios
+                this.memory.forEach( (datas) => {
+                    if(datas.title == data){
+                        datas.quantityStock = parseInt(stock) + 1
+                    }
                 }
+                )
+                
+                let product=[]
+                product.push(data)    
+                product.push(stock)    
+                let name = this.toFormData(product)
+                //let name = new FormData
+                 
+                axios.post("index.php?action=addStockProduct",name).then(function(response) {
+                            if (response.data.error) {
+                                
+                                console.log(app.errorMsg)
+                            } else {
+                                console.log(response.data);
+                                console.log("success");
+                            }
+                        });
+                this.$emit('updateproducts')        
+                },
+                substractStockProduct(data,stock){
+                    // on utilise une data pas la props car trop rapide pour axios
+                this.memory.forEach( (datas) => {
+                    if(datas.title == data){
+                        datas.quantityStock = parseInt(stock) - 1
+                    }
+                }
+                )
+                
+                let product=[]
+                product.push(data)    
+                product.push(stock)    
+                let name = this.toFormData(product)
+                //let name = new FormData
+                 
+                axios.post("index.php?action=substractStockProduct",name).then(function(response) {
+                            if (response.data.error) {
+                                
+                                console.log(app.errorMsg)
+                            } else {
+                                console.log(response.data);
+                                console.log("success");
+                            }
+                        });
+                this.$emit('updateproducts')        
+                },
+                toFormData(obj) {
+                    // conversion d'une données javascript 
+                    let fd = new FormData();
+                    console.log()
+                    for (let i in obj) {
+                        fd.append(i, obj[i]);
+                    }
+                    console.log(fd);
+                    // retourne le resultat
+                    return fd;
+                },
             }
         })
