@@ -138,7 +138,7 @@ function userCommand(){
     echo $data;
     //var_dump($data);
 }
-
+//fonction recuperant tous les articles 
 function getAllArticles(){
     require 'models/backEnd/articlesManager.php';
     $articlesManager = new ArticlesManager();
@@ -146,6 +146,7 @@ function getAllArticles(){
     $list =  json_encode($Articles);
     echo $list;
 }
+//fonction recuperant toutes les news
 function getAllNews(){
     require 'models/backEnd/newsManager.php';
     $articlesManager = new newsManager();
@@ -153,6 +154,16 @@ function getAllNews(){
     $list =  json_encode($Articles);
     echo $list;
 }
+
+//fonction recuperant le nombre de news servant pout le slider
+function countNumberOfNews(){
+    require 'models/backEnd/newsManager.php';
+    $articlesManager = new newsManager();
+    $Articles = $articlesManager->countNews();
+    $list =  json_encode($Articles);
+    echo $list;
+}
+
 function getAllCommands(){
     $dataOrder=[];
     
@@ -175,4 +186,74 @@ function allRetraitCommand(){
     $cartManagerBack = new CartManagerBack();
     $hoursReserved = $cartManagerBack->getAllRetraitCommands();
     echo json_encode($hoursReserved);
+}
+
+function validateCollectCommand(){
+    $numberCommand = $_POST['numberCommand'];
+    var_dump($numberCommand);
+    require 'models/backEnd/cartManager.php';
+    $cartManagerBack = new CartManagerBack();
+    $updateStatusCollectReady = $cartManagerBack->updateStatusCollectReady($numberCommand);  
+    $message= "la commande ".$_POST['numberCommand']." est preparer par nos soins et est prete à etre retiré";
+    echo "<script type='text/javascript'>document.location.replace('index.php?action=administrationHome&message=".$message."');</script>";
+}
+
+//cvalidation de la commande prete pour la livraison
+function validateLivraisonCommand(){
+    $numberCommand = $_POST['numberCommand'];
+    var_dump($numberCommand);
+    require 'models/backEnd/cartManager.php';
+    $cartManagerBack = new CartManagerBack();
+    $updateStatusCollectReady = $cartManagerBack->updateStatusLivraisonReady($numberCommand); 
+    $message= "la commande ".$_POST['numberCommand']." est preparer par nos soins et est prete à etre livré";
+    echo "<script type='text/javascript'>document.location.replace('index.php?action=administrationHome&message=".$message."');</script>";
+
+}
+function checkCommand(){
+    $numberCommand = $_POST['numberCommand'];
+
+    var_dump("check");
+    var_dump($numberCommand);
+    require 'models/backEnd/cartManager.php';
+    $cartManagerBack = new CartManagerBack();
+    $updateStatusCollectReady = $cartManagerBack->updateStatusCheckCommand($numberCommand);  
+    $message="la commande a bien été passé dans les commandes terminées";
+    echo "<script type='text/javascript'>document.location.replace('index.php?action=administrationHome&message=".$message."');</script>";
+}
+function problemCommand(){
+    $numberCommand = $_POST['numberCommand'];
+    var_dump($numberCommand);
+    require 'models/backEnd/cartManager.php';
+    $cartManagerBack = new CartManagerBack();
+    $updateStatusCollectReady = $cartManagerBack->updateStatusProblemCommand($numberCommand);  
+}
+
+
+
+function deleteProduct(){ 
+    
+    // require  'models/backEnd/imageManager.php';
+    // $imagemanager =  new imageManager();
+    // $imageUpload = $imagemanager->uploadImage();
+    $id = $_POST['id'];
+    var_dump($_POST['id']);
+    require 'models/backEnd/productManager.php';
+    $productManagerBack = new productManagerBack;
+    $deleteProduct = $productManagerBack-> deleteProduct($id);
+    echo "<script type='text/javascript'>document.location.replace('index.php?action=administrationHome');</script>";
+
+}
+
+function updateDeleteProduct(){
+    $id = $_POST['id'];
+    require 'models/backEnd/productManager.php';
+    $productManagerBack = new productManagerBack;
+    $deleteProduct = $productManagerBack-> updateDeleteProduct($id);
+}
+
+function updateTestProduct(){
+    $id = $_POST['id'];
+    require 'models/backEnd/productManager.php';
+    $productManagerBack = new productManagerBack;
+    $deleteProduct = $productManagerBack-> updateTestProduct($id);
 }

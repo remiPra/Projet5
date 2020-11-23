@@ -30,6 +30,10 @@ require 'controllers/controllerAxios.php';
         case 'getAllNews':
             getAllNews();
             break;
+        //recuperation du nombre de news publiées
+        case 'countNumberOfNews':
+            countNumberOfNews();
+            break;
         //recuperation de toutes les commandes      
         case 'getAllCommands':
             getAllCommands();
@@ -37,6 +41,34 @@ require 'controllers/controllerAxios.php';
             //recuperation de toutes les horaires reservées des commandes dans stepOrder
             case 'allRetraitCommand':
                 allRetraitCommand();
+                break;
+            //validation d'une command a collecter        
+            case 'validateCollectCommand':
+                validateCollectCommand();
+                break;        
+            
+            //validation d'une command a livrer        
+            case 'validateLivraisonCommand':
+                validateLivraisonCommand();
+                break;        
+            //valdation commande réussi
+            case 'checkCommand':
+                checkCommand();
+                break;
+            //updater un probleme commande        
+            case 'problemCommand':
+                problemCommand();
+                break;
+            //effacer définitivement un produit        
+            case 'deleteProduct':
+                deleteProduct();
+                break;        
+            // passer dans la liste des produits supprimés
+            case 'updateDeleteProduct':
+                updateDeleteProduct();
+                break;        
+            case 'updateTestProduct':
+                updateTestProduct();
                 break;        
             }
     

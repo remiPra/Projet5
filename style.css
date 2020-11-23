@@ -9,12 +9,19 @@
 }
 
 .marginTop {
-  margin-top:50px;
+  margin-top:50px!important;
+}
+
+.marginTopAdmin {
+  margin-top:100px!important;
 }
 
 
 /* Stylisation de la police  */
 /* Regles  pour le site et pour bootstrap  */
+html {
+  scroll-behavior: smooth;
+}
 body {
   background-color: #26802e !important;
 }
@@ -91,7 +98,7 @@ a:hover {
 #articleViewtext,
 form,
 .buttonBrown,
-.tableAdministration,
+.tableAdministration,.tableAdmin,
 .buttonMain1 {
   color: white;
   background-color: #d9a679;
@@ -119,6 +126,17 @@ button {
   color: #284010;
   padding: 6px 11px 10px 11px;
 }
+
+.onButtonGreen {
+  background-color: white;
+  border: 6px solid #26802e;
+}
+.onButtonGreenTotal {
+  background-color: #26802e;
+  border: 6px solid #26802e;
+}
+
+
 
 /* Stylisation du menu */
 #togglecontainer {
@@ -198,9 +216,6 @@ header {
   padding-top: 20px;
 }
 
-.shopTitle h2 {
-  /* height: 100px; */
-}
 
 .shopTitle button {
   /* margin-top: 0px !important; */
@@ -383,9 +398,7 @@ header {
 .cartSlider {
   display: none !important;
 }
-label[for="priceProduct"] {
-  
-}
+
 .horizontalLine {
   width:80%;
   min-width:200px;
@@ -398,6 +411,22 @@ label[for="priceProduct"] {
   font-size: 30px;
   margin-top: -81px;
 }
+
+.formWithNoBorder {
+  border:0px!important
+}
+
+
+
+.buttonAdministration {
+  color: black!important;
+    background-color: white;
+    padding: 7px;
+    border-radius: 20px;
+    border: 6px solid green;
+}
+
+
 .buttonAdd,
 .buttoncontainer button,
 .containerBrown {
@@ -420,10 +449,6 @@ label[for="priceProduct"] {
   width: 100%;
   display: flex;
   align-items: baseline;
-}
-
-input[name="productName"] {
-  /* padding: 15px; */
 }
 
 #containerCart {
@@ -538,9 +563,7 @@ input[name="productName"] {
   padding: 0px 20px;
 }
 /* stylisation de la partie contact */
-#textIntroConnexion {
-  /* background-color: rgba(38, 128, 46, 0.7); */
-}
+
 .widthButtonMobile{
   width: 250px;
 }
@@ -570,6 +593,10 @@ textarea {
   width: 100%;
 }
 
+#productTinymce {
+  color:white!important;
+  background-color: seagreen;
+}
 /* Stylisation de la partie blog */
 .news,
 #adminForm {
@@ -587,6 +614,8 @@ textarea {
   margin-top: 70px;
 }
 
+
+
 .fa-search {
   vertical-align: bottom;
   color: #f8f9fa;
@@ -596,6 +625,9 @@ textarea {
 }
 .displayNone {
   display: none !important;
+}
+.displayRed {
+  background-color: red!important;
 }
 /* stylisation de la partie productDetail */
 .imageProductDetail {
@@ -636,15 +668,25 @@ footer i {
 }
 
 /*stylisation de la partie administration*/
-.tableAdministration {
-  margin: 20px auto !important;
-}
 
 .buttonMain1 h4 {
   height: 60px;
 }
 .buttonMain1 p {
-  height: 30px;
+  height: 54px;
+}
+
+.traitSeparation {
+  content:" ";
+  background-color: white;
+  border: 2px solid white;
+  width: 80%;
+  height:2px;
+  margin:100px auto
+}
+
+.articleTitle {
+  min-width:200px;
 }
 /* stylisation des formulaires d'administration */
 #adminForm label {
@@ -725,6 +767,7 @@ footer i {
   border: 4px solid white;
   padding:4px;
 }
+
 
 @keyframes accordeonOpen {
   0% {
@@ -881,11 +924,30 @@ footer i {
     color: whitesmoke;
     justify-content: center;
   }
-  tbody tr:nth-child(even) {
-    background-color: #8a9da6 !important;
+  tbody tr{
+    margin-bottom: 100px;
+    /* width: 100%!important; */
+    border:3px green solid;
   }
+
+  .administrationFlex {
+    width:100%
+  }
+
+  .administrationFlex tr{
+    border:3px solid white;
+  }
+  .administrationFlex th,.administrationFlex td {
+    display:inline-block;
+  }
+
+  
 }
 @media screen and (max-width: 570px) {
+  .administrationFlex th {
+    display:none;
+  }
+
   #sliderNews {
     display: none;
   }
@@ -900,6 +962,16 @@ footer i {
   /* stylisation des formulaires d'administration */
   #adminForm {
     width: 300px;
+  }
+  
+   .administrationFlex {
+     margin:20px auto;
+   }
+
+  .administrationFlex td {
+    padding: 5px 20px 5px 20px;
+    width:200px;
+
   }
   /* stylisation des boutons du slider du cart */
   .cartSlider {

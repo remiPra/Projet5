@@ -31,6 +31,36 @@ function blog()
 {
     require 'view/frontEnd/blog.php';
 }
+
+//routage de la page du formulaire de contact
+function contact(){
+    require 'view/frontEnd/contact.php';
+}
+//routage de l'envoie d'un message de contact
+function contactSend(){
+    // Controlleur de la page de l'envoie d'un message contact si envoyé
+
+    if (($_POST['pseudo'] != null) and ($_POST['email'] != null)
+        and ($_POST['message'] != null) and ($_POST['subject'] != null)
+    ) {
+
+        //appel de la méthode contact pur recuperer le message
+        require 'models/frontEnd/contactManager.php';
+        $ContactManager = new ContactManager();
+        $contactForm = $ContactManager->contactForm();
+        $message = 'Votre message a bien été envoyé';
+        //affichag de la page qui montre que le contact est recu
+        echo "<script type='text/javascript'>document.location.replace('index.php?action=contact&messageSuccess=" . $message . "');</script>";
+
+    } else {
+
+        $message = 'vous n\'avez pas remplis tous les champs';
+        echo "<script type='text/javascript'>document.location.replace('index.php?action=contact&messageError=" . $message . "');</script>";
+
+    }
+}
+
+
 function signIn()
 {
     require 'models/frontEnd/connexionManager.php';
@@ -131,12 +161,39 @@ function cart()
     $cartManager = new CartManager();
     $orderNumberCommand = $cartManager->cartAddList($userId);
     echo '<br/>';
-    var_dump($cartManager);
+    var_dump("134 ".$orderNumberCommand);
     echo '<br/>'; 
 
 
 
 
+    
+    
+    require 'models/frontEnd/productsManager.php';
+    $productsManager = new ProductsManager();
+
+    //modification des stocks dans la data
+    for($i=0;$i < count($_POST['productName']);$i++){
+        
+        $productName = htmlspecialchars($_POST['productName'][$i], ENT_QUOTES, 'UTF-8', false);
+        echo '<br/>';
+        echo '<br/>';
+        var_dump("148 ".$productName);
+        echo '<br/>'; 
+        echo '<br/>'; 
+
+
+        $stock = $productsManager-> getStockFromProduct($productName);
+
+        echo '<br/>';
+        echo '<br/>';
+        var_dump($stock);
+        echo '<br/>'; 
+        echo '<br/>'; 
+
+        $updateStock = $cartManager->substractProductFromCartToStock($productName,$stock);
+
+    }
     //enregistrement de toute la lliste des produits
     $cart = $cartManager->cartAddProduct($orderNumberCommand);
 
@@ -496,10 +553,53 @@ function newProduct(){
     $productManagerBack = new productManagerBack;
     $newProduct = $productManagerBack-> addNewProduct();
 
+    //notifications $get msg bien rajouté
+    $msg= " votre produit a bien été créé ";
+    require 'view/backEnd/administrationHome.php';
 
 
 }
+function updateProduct(){
+    $data = basename($_FILES['avatar']['name']);
+    if($data != null){
+    require  'models/backEnd/imageManager.php';
+    $imagemanager =  new imageManager();
+    $imageUpload = $imagemanager->uploadImage();
+    }
 
+    require 'models/backEnd/productManager.php';
+    $productManagerBack = new productManagerBack;
+    $updateProduct = $productManagerBack-> updateProduct();
+
+    //notifications $_GET msg bien rajouté
+    $message= " votre produit a bien été modifié ";
+    echo "<script type='text/javascript'>document.location.replace('index.php?action=administrationHome&message=".$message."');</script>";
+
+}
+
+function deleteProduct(){
+    
+    // require  'models/backEnd/imageManager.php';
+    // $imagemanager =  new imageManager();
+    // $imageUpload = $imagemanager->uploadImage();
+    $id = $_POST['id'];
+    require 'models/backEnd/productManager.php';
+    $productManagerBack = new productManagerBack;
+    $deleteProduct = $productManagerBack-> deleteProduct($id);
+}
+
+function updateDeleteProduct(){
+    $id = $_POST['id'];
+    require 'models/backEnd/productManager.php';
+    $productManagerBack = new productManagerBack;
+    $deleteProduct = $productManagerBack-> updateDeleteProduct($id);
+}
+
+
+
+
+
+// controller qui envoie le nouvel article 
 function sendNewArticle(){
     require 'models/backEnd/articlesManager.php';
     $articlesManager = new ArticlesManager();
@@ -530,10 +630,70 @@ function sendNewArticle(){
         $curlPromotion = $curlManager->sendPromotionsAllTokens($Alltokens[$i],$articles);      
      }
 }
+
+//router pour supprimer un article
+function deleteArticle(){
+    
+    // require  'models/backEnd/imageManager.php';
+    // $imagemanager =  new imageManager();
+    // $imageUpload = $imagemanager->uploadImage();
+    $id = $_POST['id'];
+    var_dump($id);
+    require 'models/backEnd/articlesManager.php';
+    $articlesManagerBack = new ArticlesManager;
+    $deleteArticle = $articlesManagerBack-> deleteArticle($id);
+    //echo "<script type='text/javascript'>document.location.replace('index.php?action=administrationHome');</script>";    
+}
+
+
+
+
+//router pour envoyer une nouvelle promo ou news
 function sendNewNews(){
+    // envoie du nouvel article
     require 'models/backEnd/newsManager.php';
     $newsManager = new newsManager();
     $sendnews = $newsManager->sendNewNewsModel();    
+    //on recupere l'ensemble des tokens
+    require 'models/frontEnd/tokenManager.php';
+    $tokenManager = new TokenManager();
+    $Alltokens = $tokenManager->getAllTokens();
+
+
+    $news['title'] = htmlspecialchars($_POST['title']);
+    $news['description'] = htmlspecialchars($_POST['description']);
+    require 'models/frontEnd/curlManager.php';
+    $curlManager = new CurlManager();
+    
+    
+    for($i=0;$i<count($Alltokens);$i++){
+        $curlPromotion = $curlManager->sendNewsAllTokens($Alltokens[$i],$news);      
+     }
+
+     $message = "votre news a bien été publié";
+    
+    echo "<script type='text/javascript'>document.location.replace('index.php?action=administrationHome&message=".$message."');</script>";
+         
+
+
+}
+//router pour modifier une promo ou news existante 
+function updateNews(){
+    require 'models/backEnd/newsManager.php';
+    $newsManager = new newsManager();
+    $sendnews = $newsManager->updateNewsModel();
+    $message = "votre news a bien été modifier";
+    
+    echo "<script type='text/javascript'>document.location.replace('index.php?action=administrationHome&message=".$message."');</script>";
+         
+}
+
+function deleteNews(){
+    $id = $_POST['id'];
+    var_dump($id);
+    require 'models/backEnd/newsManager.php';
+    $newsManager = new newsManager();
+    $sendnews = $newsManager->deleteNewsModel($id);
 }
 
 function test(){
@@ -542,6 +702,7 @@ function test(){
     $cartUser=$productManager->findAllProductOfNumberCommandUser();
    
 }
+//function pour ajouter ou supprime du stock depuis l'adminitration
 function addStockProduct(){
     $data = $_POST[0];
     $stock = $_POST[1] + 1;
@@ -567,3 +728,33 @@ function substractStockProduct(){
 
 }
 
+function validateCollectCommand(){
+    $post = json_decode($_POST);
+    var_dump($post['numberCommand']);
+    $numberCommand = $post['numberCommand'];
+    require 'models/backEnd/cartManager.php';
+    $cartManagerBack = new CartManagerBack();
+    $updateStatusCollectReady = $cartManagerBack->updateStatusCollectReady($numberCommand);
+    
+    
+    // require 'models/backEnd/cartManager.php';
+    // $cartManagerBack = new CartManagerBack();
+    
+}
+
+function updateCommand(){
+    $id=$_POST['id'];
+    $data = basename($_FILES['avatar']['name']);
+    if($data != null){
+        require  'models/backEnd/imageManager.php';
+        $imagemanager =  new imageManager();
+        $imageUpload = $imagemanager->uploadImage();
+    }
+
+    require 'models/backEnd/articlesManager.php';
+    $articlesManager = new ArticlesManager;
+    $updateCommand = $articlesManager-> updateCommand($id);
+    $message = "votre article a bien été modifié" ;
+    echo "<script type='text/javascript'>document.location.replace('index.php?action=administrationHome&message=".$message."');</script>";
+
+}

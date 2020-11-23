@@ -3,7 +3,7 @@ class CartManagerBack
 {
     public function changeTime($numberCommand)
     {
-
+     
         // $numberCommand = htmlspecialchars($_POST['numberCommand']);
         $status = htmlspecialchars($_POST['status']);
         $collectTime = htmlspecialchars($_POST['collectTime']);
@@ -22,12 +22,23 @@ class CartManagerBack
         //$str = "18 : 00";
         $g = explode(" ", $collectTime);
 
-        $hour = $g[0];
+        //si ce status="livraison" on met automatiquement midi
+        if($status==="livraison"){
+            $hour = 12;
+            $minutes = 00;
+            $secondes = 00;
+        }
+        else {
+            $hour = $g[0];
         $minutes = $g[2];
         $secondes = 00;
 
+        }
+        
         $d = mktime($hour, $minutes, $secondes, $month, $day, $year);
+     
         $dateDeliveryOrder = date("Y-m-d H:i:s", $d);
+       
 
 
         global $bdd;
@@ -105,6 +116,48 @@ class CartManagerBack
 
     }
 
+    public function updateStatusCollectReady($data){
+        var_dump("function");
+        global $bdd;
+        $req = $bdd->prepare('UPDATE command SET status = :status
+        WHERE numberCommand =:numberCommand');
+        $req->execute(array(
+            'status' => "retraitPret",
+            'numberCommand' => $data 
+        ));        
+    }
+    public function updateStatusLivraisonReady($data){
+        var_dump("function");
+        global $bdd;
+        $req = $bdd->prepare('UPDATE command SET status = :status
+        WHERE numberCommand =:numberCommand');
+        $req->execute(array(
+            'status' => "livraisonPrete",
+            'numberCommand' => $data 
+        ));        
+    }
 
+    public function updateStatusCheckCommand($data){
+        var_dump("function");
+        global $bdd;
+        $req = $bdd->prepare('UPDATE command SET statusCommand = :statusCommand, status = :status
+        WHERE numberCommand =:numberCommand');
+        $req->execute(array(
+            'statusCommand' => 400,
+            'status' => 'executer',
+            'numberCommand' => $data 
+        ));
+    }
+
+    public function updateStatusProblemCommand($data){
+        var_dump("function");
+        global $bdd;
+        $req = $bdd->prepare('UPDATE command SET statusCommand = :statusCommand
+        WHERE numberCommand =:numberCommand');
+        $req->execute(array(
+            'statusCommand' => 500,
+            'numberCommand' => $data 
+        ));
+    }
 
 }

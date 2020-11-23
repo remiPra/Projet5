@@ -56,15 +56,15 @@ Vue.component('news-shop',{
                                 <!-- tableau des Chapters brouillon -->
                                 <tbody>
 
-                                    <tr>
-                                        <td>fraise </td>
-                                        <td>xxxxxx</td>
-                                        <td>xxxxxx</td>
+                                    <tr v-for="(data,index) in newsprops.news">
+                                        <td>{{data.title}}</td>
+                                        <td>{{data.description}}</td>
+                                        <td>{{data.date}}</td>
                                     
                                         <td>
                                             <div class="actionTableau">
-                                                <a class="LinkAdministration">Modifié </a>
-                                                <a class="LinkAdministration">Brouillon </a>
+                                                <a @click="emitModifyNewView(index)" class="LinkAdministration">Modifié </a>
+                                                
                                             </div>
                                         </td>
                                     </tr>
@@ -90,16 +90,22 @@ Vue.component('news-shop',{
                                 <!-- tableau des Chapters brouillon -->
                                 <tbody>
 
-                                    <tr>
-                                        <td>22222</td>
-                                        <td>xxxxxx</td>
-                                        <td>xxxxxx</td>
+                                <tr v-for="(data,index) in newsprops.news">
+                                <template v-if="data.statusNews == 1">
+                                <td>{{data.title}}</td>
+                                <td>{{data.description}}</td>
+                                <td>{{data.date}}</td>
                                         <td>
                                             <div class="actionTableau">
-                                                <a class="LinkAdministration">Valider </a>
-                                                <a class="LinkAdministration">Supprimer </a>
+                                                <a @click="emitModifyNewView(index)" class="LinkAdministration">Modifié </a>
+                                                
+                                                <form method="POST" action="index.php?action=deleteNews">
+                                                    <input required hidden name="id" :value="data.id">
+                                                    <button type="submit"> Supprimer</button>    
+                                                </form>    
                                             </div>
                                         </td>
+                                    </template>    
                                     </tr>
                                 </tbody>
                             </table>
@@ -132,7 +138,7 @@ Vue.component('news-shop',{
                                 </label>
                             </div>
 
-                            <div class="form-group">
+                            
                            
                             <div class="form-group">
                                 <input class="formButton" type="submit" value="Valider" name="btnContact">
@@ -161,12 +167,12 @@ Vue.component('news-shop',{
                             <div class="form-group">
                                 <label for="title"> Titre de l'article :
                                 </label>
-                                <input type="text" name="title" id="title" required>
+                                <input :value="newsprops.news[newsprops.liveUpdateNews].title" type="text" name="title" id="title" required>
                             </div>
                             <div class="form-group">
                                 <label for="description"> Décrivez le produit :
                                 </label>
-                                <input type="text" name="description" id="description" required>
+                                <input :value="newsprops.news[newsprops.liveUpdateNews].description" type="text" name="description" id="description" required>
                             </div>
                             
                             
@@ -179,8 +185,9 @@ Vue.component('news-shop',{
                                     <input type="radio" name="statusNews" id="statusNews" value="0">
                                 </label>
                             </div>
-
                             <div class="form-group">
+                            <input name="id" :value="newsprops.news[newsprops.liveUpdateNews].id" hidden required> 
+                            
                                 <input class="formButton" type="submit" value="Valider" name="btnContact">
                             </div>
 
@@ -211,6 +218,8 @@ methods: {
         this.router.shopNewsNew= false,
         this.router.shopNewsUpdate= false,
         this.scrolling("routerCommandAction")
+        console.log("routageNewsList")
+        console.log(this.newsprops)
     },
     routageNewsTest(){
         this.router.shopNewsList= false,
@@ -249,6 +258,13 @@ methods: {
     },
     onNextUpdateNews(){
         this.$emit('onnextupdatenews')
+    },
+    emitModifyNewView(index){
+        this.routageNewsUpdate()
+        console.log(index);
+        this.$emit('onmodifynewview',index)
     }
+
+    
 }
 })

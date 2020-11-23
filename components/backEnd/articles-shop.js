@@ -1,7 +1,11 @@
-Vue.component('articles-shop',{
-    props:['articlesprops'],
-    template:`
+Vue.component('articles-shop', {
+    props: ['articlesprops'],
+    template: `
     <section id="routageMenu">
+            
+    
+
+
             <div>
                 <div class="container-fluid row ">
                     <div @click="routageArticleList" class="col-md-4">
@@ -36,7 +40,7 @@ Vue.component('articles-shop',{
             <div id="routerCommandAction"
             class="marginTopAdmin col-md-10 marginAuto text-center text-light tableAdministration">
             <div>
-                <h2>Listes des différents Produits </h2>
+                <h2>Listes des différents articles publiés </h2>
                 <button @click="routageMenu"> Menu </button>
                 <h3 class="text-alert">{{messageError}}</h3>
 
@@ -53,18 +57,18 @@ Vue.component('articles-shop',{
                                     <th>Date</th>
                                     <th>Action</th>
                                 </thead>
-                                <!-- tableau des Chapters brouillon -->
+                                <!-- tableau des articles publiés -->
                                 <tbody>
 
-                                    <tr>
-                                        <td>fraise </td>
-                                        <td>xxxxxx</td>
-                                        <td>xxxxxx</td>
-                                    
+                                    <tr v-for="(data,index) in articlesprops.articles">
+                                        <td>{{data.title}}</td>
+                                        <td>{{data.description}}</td>
+                                        <td>{{data.date}}</td>
+    
                                         <td>
                                             <div class="actionTableau">
-                                                <a class="LinkAdministration">Modifié </a>
-                                                <a class="LinkAdministration">Brouillon </a>
+                                                <a @click="emitMofifyArticleView(index)" class="LinkAdministration">Modifié </a>
+                                               
                                             </div>
                                         </td>
                                     </tr>
@@ -77,6 +81,7 @@ Vue.component('articles-shop',{
 
                 <transition name="fade">
                     <template v-if="router.shopArticleTest">
+                    
                         <div class="col-md-8 m-auto">
                             <table class="table table-bordere">
                                 <thead>
@@ -87,17 +92,19 @@ Vue.component('articles-shop',{
                                     
                                     <th>Action</th>
                                 </thead>
-                                <!-- tableau des Chapters brouillon -->
+                                <!-- tableau des articles en brouillon -->
                                 <tbody>
 
-                                    <tr>
-                                        <td>22222</td>
-                                        <td>xxxxxx</td>
-                                        <td>xxxxxx</td>
+                                    <tr v-for="(data,index) in articlesprops.articles">
+                                        <td>{{data.title}}</td>
+                                        <td>{{data.description}}</td>
+                                        <td>{{data.date}}</td>
                                         <td>
                                             <div class="actionTableau">
-                                                <a class="LinkAdministration">Valider </a>
-                                                <a class="LinkAdministration">Supprimer </a>
+                                               <form method="POST" action="index.php?action=deleteArticle">
+                                                    <input required hidden name="id" :value="data.id">
+                                                    <button type="submit"> Supprimer</button>    
+                                                </form>    
                                             </div>
                                         </td>
                                     </tr>
@@ -108,18 +115,18 @@ Vue.component('articles-shop',{
                 </transition>
 
                 <transition name="fade">
-                    <template v-if="router.shopArticleNew">
+                    <template v-if="router.shopArticleNew"> 
                         <form class="col-md-8 text-light" enctype="multipart/form-data"
                             action="index.php?action=sendNewArticle" method="POST">
                             <div class="form-group">
                                 <label for="title"> Titre de l'article :
                                 </label>
-                                <input type="text" name="title" id="title" required>
+                                <input type="text" name="title" id="title" maxlength="30" required>
                             </div>
                             <div class="form-group"> 
                                 <label for="description"> Décrivez le produit :
                                 </label>
-                                <input type="text" name="description" id="description" required>
+                                <input type="text" name="description" id="description" maxlength="60" required>
                             </div>
                             
                             <div class="form-group">
@@ -134,7 +141,7 @@ Vue.component('articles-shop',{
 
                             <div class="form-group">
                             <label>Rediger ici votre article:</label>
-                            <textarea name="content" class="tinymce" id="" cols="300" rows="10" ></textarea>
+                            <textarea name="content" class="tinymce" id="textareaNewArticle" cols="300" rows="10" ></textarea>
                             </div>
 
                             <div class="form-group">
@@ -158,41 +165,66 @@ Vue.component('articles-shop',{
                             <div class="d-flex text-center marginAuto">
                                 <button @click="onPreviousUpdateArticle">
                                     <- </button>
-                                        <p>{{articlesprops.articles[articlesprops.liveUpdateArticles].title}}</p>
+                                        <p class="articleTitle">{{articlesprops.articles[articlesprops.liveUpdateArticles].title}}</p>
                                         <button @click="onNextUpdateArticle"> -> </button>
                             </div>
                         </div>
                         <p>{{articlesprops.liveUpdateArticles}}</p>
                         <form class="col-md-8 text-light" enctype="multipart/form-data"
-                            action="index.php?action=updateProduct" method="POST">
+                            action="index.php?action=updateCommand" method="POST">
                             
                             <div class="form-group">
                                 <label for="title"> Titre de l'article :
                                 </label>
-                                <input type="text" name="title" id="title" required>
+                                <input :value="articlesprops.articles[articlesprops.liveUpdateArticles].id" name="id" hidden required>
+                                <input :value="articlesprops.articles[articlesprops.liveUpdateArticles].title" 
+                                type="text" name="title" id="title"  maxlength="30" required>
                             </div>
                             <div class="form-group">
                                 <label for="description"> Décrivez le produit :
                                 </label>
-                                <input type="text" name="description" id="description" required>
+                                <input :value="articlesprops.articles[articlesprops.liveUpdateArticles].description" 
+                                type="text" name="description" id="description" maxlength="60" required>
                             </div>
                             
                             <div class="form-group">
                                 <label> Voulez vous publier cet article ?</label>
                                 <label for="statusArticle"> Oui
-                                    <input type="radio" name="statusArticle" id="statusArticle" value="1">
+                                    <template v-if="articlesprops.articles[articlesprops.liveUpdateArticles].statusArticles == 1">
+                                        <input type="radio" name="statusArticles" id="statusArticle" value="1" checked>
+                                    </template>
+                                    <template v-if="articlesprops.articles[articlesprops.liveUpdateArticles].statusArticles == 0">
+                                        <input type="radio" name="statusArticles" id="statusArticle" value="1">
+                                    </template>    
                                 </label>
                                 <label for="statusArticle"> Non
-                                    <input type="radio" name="statusArticle" id="statusArticle" value="0">
+                                <template v-if="articlesprops.articles[articlesprops.liveUpdateArticles].statusArticles == 1">
+                                        <input type="radio" name="statusArticles" id="statusArticle" value="0">
+                                </template>
+                                <template v-if="articlesprops.articles[articlesprops.liveUpdateArticles].statusArticles == 0">
+                                        <input type="radio" name="statusArticles" id="statusArticle" value="0" checked>
+                                </template>
                                 </label>
                             </div>
                             
-                            <textarea name="content" class="tinymce" id="" cols="300" rows="10" ></textarea>
+                            <textarea name="content" class="tinymce" id="textareaUpdateArticle" cols="300" rows="10" >
+                                <div>{{this.articlesprops.articles[this.articlesprops.liveUpdateArticles].content}}</div>
+                            </textarea>
 
                             <div class="form-group">
                                 <label>Uploader le fichier image:</label>
                                 <input name="avatar" type="file" />
                             </div>
+
+                            <div class="form-group">
+                                <label for="image"> Image en cours:
+                                </label>
+                                <img :src="articlesprops.articles[articlesprops.liveUpdateArticles].src" style="width:300px"> 
+                                <input :value="articlesprops.articles[articlesprops.liveUpdateArticles].src" id="src" type="text" name="src" hidden 
+                                    required />
+                            </div>
+
+
 
                             <div class="form-group">
                                 <input class="formButton" type="submit" value="Valider" name="btnContact">
@@ -207,62 +239,110 @@ Vue.component('articles-shop',{
         </div>
     </section>
    `,
-   data() {
-    return {   
-        router: {
-            shopArticleList: true,
-            shopArticleTest: false,
-            shopArticleNew: false,
-            shopArticleUpdate:false
+    data() {
+        return {
+            router: {
+                shopArticleList: true,
+                shopArticleTest: false,
+                shopArticleNew: false,
+                shopArticleUpdate: false
+            },
+            messageError: "",
+        }
+    },
+    methods: {
+        routageArticleList() {
+            this.router.shopArticleList = true,
+                this.router.shopArticleTest = false,
+                this.router.shopArticleNew = false,
+                this.router.shopArticleUpdate = false,
+                this.scrolling("routerCommandAction")
+
         },
-        messageError: "",
+        routageArticleTest() {
+            this.router.shopArticleList = false,
+                this.router.shopArticleTest = true,
+                this.router.shopArticleNew = false,
+                this.router.shopArticleUpdate = false,
+                this.scrolling("routerCommandAction")
+        },
+        routageArticleNew() {
+            this.router.shopArticleList = false,
+                this.router.shopArticleTest = false,
+                this.router.shopArticleNew = true,
+                this.router.shopArticleUpdate = false,
+                this.scrolling("routerCommandAction"),
+            
+                //relance du tinymce
+                tinymce.remove();
+                    
+                //on met un setTimeout pout etre sur qu'il soit appliqué en mem temps que les props
+                setTimeout(()=>{tinymce.init({
+                    selector: '#textareaNewArticle',
+                })
+                
+            },1000);
+
+        },
+        routageArticleUpdate() {
+                tinymce.remove();
+                this.router.shopArticleList = false,
+                this.router.shopArticleTest = false,
+                this.router.shopArticleNew = false,
+                this.router.shopArticleUpdate = true,
+                this.scrolling("routerCommandAction"),
+                //relance du tinymce
+                    
+                //on met un setTimeout pout etre sur qu'il soit appliqué en mem temps que les props
+                setTimeout(()=>{tinymce.init({
+                    selector: '#textareaUpdateArticle',
+                })
+                //on va inserer la nouvelle valeur recu par la props
+                //tinymce.get('textareaUpdateArticle').setContent(this.articlesprops.articles[this.articlesprops.liveUpdateArticles].content);
+                console.log(this.articlesprops.articles[this.articlesprops.liveUpdateArticles].content)
+            },1000);
+        },
+        routageMenu() {
+            this.scrolling("routageMenu")
+        },
+        scrolling(element) {
+            const id = element;
+            const yOffset = -100;
+            const elements = document.getElementById(id);
+            const y = elements.getBoundingClientRect().top + window.pageYOffset + yOffset;
+
+            window.scrollTo({ top: y, behavior: 'smooth' });
+        },
+        // modifier un article 
+        emitMofifyArticleView(index){
+            this.routageArticleUpdate()
+            console.log(index);
+            this.$emit('onmodifyarticleview',index)
+        },
+        onPreviousUpdateArticle() {
+            tinymce.remove();
+                    
+            //on met un setTimeout pout etre sur qu'il soit appliqué en mem temps que les props
+            setTimeout(()=>{tinymce.init({
+              selector: '#textareaUpdateArticle'
+            })
+            //on va inserer la nouvelle valeur recu par la props
+            tinymce.get('textareaUpdateArticle').setContent(this.articlesprops.articles[this.articlesprops.liveUpdateArticles].content);
+        },1000);
+ 
+            this.$emit('onpreviousupdatearticle')
+        },
+        onNextUpdateArticle() {
+            tinymce.remove();
+                    
+            //on met un setTimeout pout etre sur qu'il soit appliqué en mem temps que les props
+            setTimeout(()=>{tinymce.init({
+              selector: '#textareaUpdateArticle'
+            })
+            //on va inserer la nouvelle valeur recu par la props
+            tinymce.get('textareaUpdateArticle').setContent(this.articlesprops.articles[this.articlesprops.liveUpdateArticles].content);
+        },1000);
+            this.$emit('onnextupdatearticle')
+        }
     }
-},
-methods: {
-    routageArticleList(){
-        this.router.shopArticleList= true,
-        this.router.shopArticleTest= false,
-        this.router.shopArticleNew= false,
-        this.router.shopArticleUpdate= false,
-        this.scrolling("routerCommandAction")
-    },
-    routageArticleTest(){
-        this.router.shopArticleList= false,
-        this.router.shopArticleTest= true,
-        this.router.shopArticleNew= false,
-        this.router.shopArticleUpdate= false,
-        this.scrolling("routerCommandAction")
-    },
-    routageArticleNew(){
-        this.router.shopArticleList= false,
-        this.router.shopArticleTest= false,
-        this.router.shopArticleNew= true,
-        this.router.shopArticleUpdate= false,
-        this.scrolling("routerCommandAction")
-    },
-    routageArticleUpdate(){
-        this.router.shopArticleList= false,
-        this.router.shopArticleTest= false,
-        this.router.shopArticleNew= false,
-        this.router.shopArticleUpdate= true,
-        this.scrolling("routerCommandAction")
-    },
-    routageMenu(){
-        this.scrolling("routageMenu")
-    },
-    scrolling(element) {
-        const id = element;
-        const yOffset = -100; 
-        const elements = document.getElementById(id);
-        const y = elements.getBoundingClientRect().top + window.pageYOffset + yOffset;
-        
-        window.scrollTo({top: y, behavior: 'smooth'});
-    },
-    onPreviousUpdateArticle(){
-        this.$emit('onpreviousupdatearticle')
-    },
-    onNextUpdateArticle(){
-        this.$emit('onnextupdatearticle')
-    }
-}
 })

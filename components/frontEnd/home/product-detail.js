@@ -23,7 +23,7 @@
                         </div>
                         <div class="col-xl-9 col-sm-9 text-light" id="articleViewProductDetail">
                             <h2>{{currentarticle.title}}</h2>
-                            <p>{{currentarticle.description}}</p>
+                            <div v-html="currentarticle.description"></div>
                         </div>
                     </div>
             </article>

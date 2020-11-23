@@ -70,6 +70,41 @@ class CartManager
         }    
     }
 
+    //fonction pour enlever les produits du stock
+    public function substractProductFromCartToStock($productName,$quantityStock){
+        for($i=0;$i < count($_POST['productName']);$i++){
+            //différentes variables a rentrer
+            echo '<br/>';
+            var_dump($_POST['productName'][$i]);
+            echo '<br/>';
+            var_dump($quantityStock);
+            echo '<br/>';
+            echo '<br/>';
+            echo '82';
+            
+            //verification des différentes variables
+            $productQuantity = htmlspecialchars($_POST['productQuantity'][$i], ENT_QUOTES, 'UTF-8', false);
+            $Stock = $quantityStock - $productQuantity;
+            
+
+            global $bdd;
+            $req = $bdd->prepare('UPDATE products 
+            SET 
+            quantityStock = :quantityStock
+            WHERE title =:title');
+            $req->execute(array(
+            'title'=> $productName,   
+            'quantityStock' => $Stock,
+           
+        ));
+
+
+
+        }
+    }
+
+
+
     public function findCommandUser($namePost){
         //on utilise la session pour retrouvr l'user
         //$namePost=$_SESSION['name'];

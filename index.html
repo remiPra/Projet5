@@ -89,8 +89,8 @@
                         </div>
                     </div>
                     <div>
-                        <button id="btnCart" @click="modal()">
-                            <i class="fas fa-shopping-cart">{{numbersOfproducts}}</i>
+                        <button dtat-aos="fade-up" id="btnCart" @click="modal()">
+                            <i class="fas fa-shopping-cart">{{numberQuantityCart}}</i>
                         </button>
                     </div>
                 </nav>
@@ -213,548 +213,26 @@
         </template>
     </div>
     <script>
-        // etablissement de composant local
-        // vue composant du header
-        Vue.component('main-container', {
-            data() {
-                return {
-                    header: {
-                        h1: "Bienvenue chez ma ferme Bio",
-                        h2: "Votre magasin de fruits et legumes avec la possibilité de commander en ligne",
-
-                    },
-                }
-            },
-            methods: {
-                scrolling(element) {
-                    document.getElementById(element).scrollIntoView(
-                        {
-                            block: 'start',
-                            behavior: 'smooth',
-                        }
-                    )
-                },
-            },
-            template: `
-            <div class="col-sm-6 container text-center" id="presentationShop">
-                <div class="container px-md-3 shopTitle">
-                    <h1 class="text-light">{{header.h1}}</h1>
-                    <h2>{{header.h2}} </h2>
-                    
-                    <button id="headerButton" @click="scrolling('goShop')">Commencez vos courses</button>
-                </div>
-            </div>`
-        })
-        // vue composant des infos de slider 
-        Vue.component('slider-news', {
-            data() {
-                return {
-                    liveSlide: 0,
-                    marginLeft: "",
-                    slides: [
-                        {
-                            title: "Promotion de 50%",
-                            paragraphe: "du lundi 30 Janvier au samedi 27 Janvier , nous vous proposons un grand stock de cerises a 50%"
-                        },
-                        { title: "title2", paragraphe: "title2" },
-                        { title: "title3", paragraphe: "title2" },
-                        { title: "title4", paragraphe: "title2" },
-                    ]
-                }
-            },
-            template: `<div class="col-sm-6" id="sliderNews">
-                <div class="carroussel">
-                    <div class="carrousselcontainer" :style="{marginLeft : marginLeft}">
-                        <div class="slideNews" v-for="slide in slides">
-                            <h3>{{slide.title}}</h3>
-                            <p>{{slide.paragraphe}}</p>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="buttoncontainer">
-                    <button v-on:click="previous()"><i class="fas fa-chevron-circle-left"></i>News</button>
-                    <button v-on:click="next()"><i class="fas fa-chevron-circle-right"></i>News</button>
-                </div>
-            </div>`,
-            methods: {
-                next() {
-                    if (this.liveSlide === 3) {
-                        this.liveSlide = 0
-                    } else { this.liveSlide++; }
-                    console.log(this.liveSlide);
-
-                    this.marginLeft = - this.liveSlide * 300 + "px";
-                },
-                previous() {
-                    if (this.liveSlide === 0) {
-                        this.liveSlide = this.slides.length - 1
-                    } else { this.liveSlide--; }
-                    console.log(this.liveSlide);
-
-                    this.marginLeft = - this.liveSlide * 300 + "px";
-                }
-            },
-            computed: {
-                slideLength: function () {
-                    return this.slides.length
-                }
-            },
-        })
-        // vue composant pour l version mobile
-        Vue.component('slider-new-mobile', {
-            data() {
-                return {
-                    liveSlide: 0,
-                    marginLeft: "",
-                    slides: [
-                        {
-                            title: "Promotion de 50%",
-                            paragraphe: "du lundi 30 Janvier au samedi 27 Janvier , nous vous proposons un grand stock de cerises a 50%"
-                        },
-                        { title: "title2", paragraphe: "title2" },
-                        { title: "title3", paragraphe: "title2" },
-                        { title: "title4", paragraphe: "title2" },
-                    ]
-                }
-            },
-            template: `
-            <div class="col-md-6" id="sliderNewsMobile">
-                <div class="carroussel">
-                    <div class="carrousselcontainer" :style="{marginLeft : marginLeft}">
-                        <div class="slideNews" v-for="slide in slides">
-                            <h3>{{slide.title}}</h3>
-                            <p>{{slide.paragraphe}}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="buttoncontainer">
-                    <button v-on:click="previous()"><i class="fas fa-chevron-circle-left"></i>News</button>
-                    <button v-on:click="next()"><i class="fas fa-chevron-circle-right"></i>News</button>
-                </div>
-            </div>`,
-            methods: {
-                next() {
-                    if (this.liveSlide === 3) {
-                        this.liveSlide = 0
-                    } else { this.liveSlide++; }
-                    console.log(this.liveSlide);
-
-                    this.marginLeft = - this.liveSlide * 300 + "px";
-                },
-                previous() {
-                    if (this.liveSlide === 0) {
-                        this.liveSlide = this.slides.length - 1
-                    } else { this.liveSlide--; }
-                    console.log(this.liveSlide);
-
-                    this.marginLeft = - this.liveSlide * 300 + "px";
-                }
-            },
-            computed: {
-                slideLength: function () {
-                    return this.slides.length
-                }
-            },
-
-        })
-
-        // vue composant de la presentation du site 
-        Vue.component('text-shop', {
-            data() {
-                return {
-                    h2: "Ma ferme bio : un magasin a votre service",
-                    IntroTextShop: "Ma ferme bio vous propose un nouveau service pour faciliter vos courses : le Click and Collect",
-                    goals: [
-                        {
-                            h3: "Choisissez tranquillement vos articles de votre magasin sur le site !!",
-                            icon: "fas fa-carrot"
-                        },
-                        {
-                            h3: "Acheter vos produits directement en ligne",
-                            icon: "fas fa-apple-alt"
-                        },
-                        {
-                            h3: `Vous avez ensuite deux possibilités :
-                                    soit cherchez votre commande en magasin ou soit vous faire livrer `,
-                            icon: "fas fa-lemon"
-                        },
-                    ]
-                }
-            },
-            template: `
-        <div id="textShop" >
-            <div class="introduction col-lg-8 col-xm-10 text-center m-auto">
-                <h2 class="p-2">{{h2}}</h2>
-                <p>{{IntroTextShop}}</p>
-            </div>
-            <div class="d-flex flex-wrap container-fluid">
-                <div id="goals" class="col-md-7 m-auto">
-                    <div id="goalContainer">
-                        <div v-for="text in goals" class="d-flex goalsItems">
-                            <i :class="text.icon"></i><h3>{{text.h3}}</h3>
-                        </div>
-                    </div>    
-                </div>
-                <div class="col-md-5">
-                    <!-- mise en place du carroussel de news -->
-                    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                        <ol class="carousel-indicators">
-                            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                        </ol>
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <img class="d-block w-100"
-                                    src="./assets/images/sliderBoutique/a-man-stands-at-the-counter-of-a-coffee-shop.jpg"
-                                    alt="un homme qui se tient derrier le cointoir d'une boutique">
-                            </div>
-                            <div class="carousel-item">
-                                <img class="d-block w-100" src="./assets/images/sliderBoutique/a-woman-in-her-shop.jpg"
-                                    alt="une vedeuse se tenant de debout a la caisse">
-                            </div>
-                            <div class="carousel-item">
-                                <img class="d-block w-100" src="./assets/images/sliderBoutique/products-are-paid.jpg"
-                                    alt="transaction dans un magasin entre le client et la vendeuse">
-                            </div>
-                        </div>
-                        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            </div> 
-            `,
-        })
-
-        // vue composant par catégories 
-        Vue.component('shop-products', {
-            data() {
-                return {
-                    h2: "Faites vos courses en ligne",
-                    IntroTextShop: "Ajouter le type de produits que vous désirez et vous déciderez ensuite en cliquant sur le petit panier en haut à droite la quantité désirez",
-                    goals: [
-                        {
-                            h3: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do",
-                            icon: ""
-                        },
-                        {
-                            h3: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do",
-                            icon: ""
-                        },
-                        {
-                            h3: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do",
-                            icon: ""
-                        },
-                    ]
-                }
-            },
-            template: `
-    <div>
-        <div class="introduction col-lg-8 col-xm-10 text-center m-auto">
-            <h2 class="p-2">{{h2}}</h2>
-            <p>{{IntroTextShop}}</p>
-        </div>
-        <div class="col-lg-10 col-md-12 m-auto categoryContainer row">
-
-            <div class="box">
-                <div class="imgBx">
-                    <img src="assets/images/category/fresh-vegetables-flatlay.jpg">
-                </div>
-                <div class="content">
-                    <h2>Title</h2>
-                    <p class="cardColor">Cliquez ici</p>
-                    <p class="contentShow">Cliquez sur le bouton pour pouvoir decouvrir nos différents produits disponible en magasin</p>
-                    <button href="#">Read More</button>
-                    
-                </div>
-            </div>
-            <div class="box">
-                <div class="imgBx">
-                    <img src="assets/images/category/vertical-citrus-fruit-pile.jpg">
-                </div>
-                <div class="content">
-                    <h2>Panier garni</h2>
-                    <p class="cardColor">Cliquez ici</p>
-                    <p class="contentShow">Votre magasin vous propose une selection de produits choisis dans ce panier garni.</p>
-                    <button href="#">Read More</button>
-                </div>
-            </div>
-        </div>
-    </div>`        })
-
-
-        // vue composant des differents produits 
-        Vue.component('shop-products-details', {
-            props: ["elements"],
-            data() {
-                return {
-                    category: [{ name: "all" }, { name: "legumes" }, { name: "fruits" }],
-                    h2: "Nos légumes",
-                    text: "Retouvez la selection de nos plus beaux légumes disponible dans notre magasin",
-                    searchProduct: "",
-                    productsListShow: true,
-                    liveCategory: 0,
-                    error: "",
-                    //on garde le total du depart
-                    searchClass: "displayFlex"
-                }
-            },
-            template: `
-        <div id="goShop">
-        <div class="introduction col-lg-8 col-xm-10 text-center m-auto">
-            <h2 class="p-2">{{h2}}</h2>
-            <h3>{{text}}</h3>   
-            <p>Parourez les categories</p>    
-           <div class="pb-3">
-                <button @click="liveCategoryPrevious"><i class="fas fa-chevron-circle-left"></i></button>            
-                <button class="buttonBrown w-50" >{{category[liveCategory].name}}</button>
-                <button @click="liveCategoryNext"><i class="fas fa-chevron-circle-right"></i></button>
-            </div>
-            
-            <div class="m-auto containerInput" :class="searchClass" >
-            <input  id="searchInput" type="text" v-model="searchProduct" @keyup="search">
-            <div><i class="fas fa-search"></i></div>
-            </div>
-        </div>
-        <div class="justify-content-flex-start flex-wrap categoryContainer productListGrid">
-            <div class="ProductImage text-center box" v-for="(product,index) in elements.productList" :key="product.name"
-                :id="product.title" :class="product.visible">
-                <div class="imgBx">
-                    <img :src="product.src">
-                </div>
-                <div class="content">
-                    <h3>{{product.title}}</h3>
-                    <p class="contentShow"> {{product.typeOfQuantity}} <br>{{product.priceDetail}}</p>
-                    
-                    <p class=" cardColor"> cliquez pour selectionner</p>
-                      
-                    <div class="d-flex m-auto buttonShop">
-                            <button   @click="onAddCart(product)" id="buttonAdd">+</button>
-                            <p class="contentShow" id="contentQuantity">{{product.quantityCartProduct}}</p>
-                            <button  @click="onSubstractCart(product)" id="buttonAdd">-</button>
-                    </div>
-                    
-                    
-                </div>
-            </div>    
-        </div>
+        AOS.init();
+    </script>
+    <script>
         
-            <div class="justify-content-flex-start flex-wrap categoryContainer cartSlider">
-                <div id="previousProduct">
-                    <button @click="previousProduct"><i class="fas fa-chevron-circle-left"></i> </button>
-                </div>
-
-                <div class="ProductImage text-center box" :class="elements.productList[elements.liveSlideProductItem].visible"
-                    :id="elements.productList[elements.liveSlideProductItem].title">
-                    <div class="imgBx">
-                        <img :src="elements.productList[elements.liveSlideProductItem].src">
-                    </div>
-                    <div class="content">
-                        <h3>{{elements.productList[elements.liveSlideProductItem].title}}</h3>
-                        <p class="contentShow"> {{elements.productList[elements.liveSlideProductItem].typeOfQuantity}}
-                            <br>{{elements.productList[elements.liveSlideProductItem].priceDetail}}</p>
-                        <div class="d-flex m-auto buttonShop">
-                            <button @click="onAddCart(elements.productList[elements.liveSlideProductItem])" id="buttonAdd">+</button>
-                            <p class="contentShow" id="contentQuantity">{{elements.productList[elements.liveSlideProductItem].quantityCartProduct}}</p>
-                            <button @click="onSubstractCart(elements.productList[elements.liveSlideProductItem])" id="buttonAdd">-</button>
-                        </div>
-                        <p class="contentShow">{{elements.productList[elements.liveSlideProductItem].quantityCart}}</p>
-                        <p class="cardColor">Cliquez pour ajouter</p>
-                        <p id="messageShowAddProduct">{{elements.productList[elements.liveSlideProductItem].title}} ajouté</p>
-
-                    </div>
-                </div>
-
-
-                <div id="nextProduct">
-                    <button @click="nextProduct"><i class="fas fa-chevron-circle-right"></i></button>
-                </div>
-            </div>
-        </div>
-
-        
-           
-            
-        
-        </div>`,
-            methods: {
-                search() {
-                    console.log(this.searchProduct)
-                    this.$emit("searchproduct", this.searchProduct)
-                },
-                liveCategoryPrevious() {
-                    this.$emit("resetproduct")
-                    
-                    this.searchProduct = "";
-                    console.log(this.elements)
-                    if (this.liveCategory == 0) {
-                        this.liveCategory = this.category.length - 1
-                    } else {
-                        this.liveCategory--
-                    }
-                    console.log(this.liveCategory)
-                    // if(this.category[this.liveCategory].name =="all") {
-                    //     this.searchClass ="displayFlex"
-                    // } else {
-                    // this.searchClass = "displayNone"
-                    // }
-                    this.onSelectedCategory(this.category[this.liveCategory].name)
-
-                },
-                liveCategoryNext() {
-                    this.$emit("resetproduct")
-                    this.searchProduct = ""
-                    console.log(this.elements)
-                    // this.fullElements.forEach(element => {
-                    //     document.getElementById(element.title).style.display = "block"
-                    // })
-                    if (this.liveCategory == this.category.length - 1) {
-                        this.liveCategory = 0
-                    } else {
-                        this.liveCategory++
-                    }
-                    console.log(this.liveCategory)
-
-                    // if(this.category[this.liveCategory].name =="all") {
-                    //     this.searchClass ="displayFlex"
-                    // } else {
-                    // this.searchClass = "displayNone"
-                    // }
-                    this.onSelectedCategory(this.category[this.liveCategory].name)
-                },
-                //evenment de selection de category vers parent
-
-                onSelectedCategory(category) {
-                    this.searchProduct = "";
-                    this.elements.productList.forEach(element => {
-                        document.getElementById(element.title).style.display = "block"
-                    })
-                    console.log(this.category[this.liveCategory].name)
-                    this.$emit("onselectedcategory", category);
-                    console.log(category)
-                },
-                onAddCart(product) {
-                    //document.getElementById('messageShowAddProduct').style.animation = "showMessage 4s"
-                    this.$emit("onaddcart", product);
-                    console.log(product)
-                },
-                onSubstractCart(product) {
-                    this.$emit('onsubstractcart', product)
-                },
-
-                nextProduct() {
-                    this.$emit("liveslidenextproduct")
-                },
-                previousProduct() {
-                    this.$emit("liveslidepreviousproduct")
-
-                },
-
-            }
-        })
-
-
-        Vue.component('cart-product', {
-            template:
-                `
-    <div>     
-        <div>
-            <div class="form-group">
-                <h3>Votre Panier </h3>
-            </div>
-        </div>
-        <form id="cart" class="col-md-8 text-light"  method="POST">
-        <div>
-            <div class="form-group">
-                <h3>Votre Panier </h3>
-            </div>
-        </div>
-            <template v-if='this.carts==""''>
-            <div class="d-flex" >
-                <div id="formCart" class="form-group">
-                Vous n'avez pas d'articles dans votre panier
-                </div>
-            </div>    
-            </template>
-        <div id="containerCart">
-        <div class="from-group">
-            
-        </div>
-        <div class="form-group" v-for="(cart,index) in carts">
-            <div class="align-items-center" >
-                <div class="form-group">
-                    <label for="productName">
-                    <input type="text" :value="cart.title"  name="productName" id="productName">
-                    </label>
-                </div>
-                <div id="formCart" class="form-group">
-
-                    <label for="productQuantity">
-                    <button type="button" @click="onAddCart(cart)">+</button>
-                    <input type="text" :value="cart.quantity" name="productQuantity" id="productQuantity">
-                    <button type="button" @click="onSubstractQuantity(cart)">-</button>
-                    </label>
-
-                    <label for="priceProduct">
-                    <input type="text" :value="cart.totalPriceProduct"  name="totalPriceProduct" id="totalPriceProduct">
-                    </label>
-                    
-                </div>
-               
-                <div class="form-group">
-                    
-                </div>
-
-            </div>    
-        </div>    
-        </div>
-        <div class="form-group">
-            <input class="formButton" @click="confirmationShow" type="button" value="Passez la commande" name="btnContact">
-        </div>
-        <div id="confirmationModal" v-if="confirmationModal">
-            <div class="form-group">
-                <h3>Voulez vous confirmez votre choix?</h3>
-                <button><a href="etape.html">Oui</a></button>  
-                <button @click="confirmationModal=false">Non</button>  
-            </div>
-        </div>
-        </form>
-    </div>
-    `,
-            props: ['carts'],
-            data() {
-                return {
-                    confirmationModal: false
-                }
-            },
-            methods: {
-                onAddCart(cart) {
-                    console.log(cart);
-                    this.$emit('onaddcart', cart)
-                },
-                onSubstractQuantity(cart) {
-                    this.$emit('onsubstractcart', cart)
-                },
-                confirmationShow() {
-                    this.confirmationModal = true;
-                    console.log(this.confirmationModal)
-                }
-            }
-        })
-
-
-
-
-
-
+    </script>
+    <!-- vue composant du header -->
+    <script src="components/frontEnd/home/header-home.js"></script>
+    <!-- vue composant des infos de slider  -->
+        <script src="./components/frontEnd/home/slider-news.js"></script>
+    <!-- vue composant pour la version mobile -->
+    <script src="./components/frontEnd/home/slider-news-mobile.js"></script>
+    <!-- vue composant de la presentation du site  -->
+    <script src="./components/frontEnd/home/text-shop.js"></script>
+    <!-- vue composant par catégories  -->
+       <script src="./components/frontEnd/home/product-shop.js"></script>
+    <!-- vue composant des differents produits -->
+    <script src="./components/frontEnd/home/product-list.js"></script>
+    <!-- vue composant du cart  -->
+    <script src="./components/frontEnd/home/cart-product.js"></script>
+<script>
         // vue principale 
         let app = new Vue({
             el: "#app",
@@ -765,10 +243,14 @@
                 duplicateCart: false,
                 products:{
                     productList:[],
-                    liveSlideProductItem: "0"
+                    liveSlideProductItem: "0",
+                    msgStock:"",
                 },
                 productsSelected: {},
                 memory:[],
+                //nombre de produit en cart
+                numberQuantityCart:0,
+                //data du carts
                 carts: [],
                 quantityCart: ""
             },
@@ -794,6 +276,7 @@
                     console.log(this.productsSelected)
                     console.log(this.carts);
                     this.modal()
+                    this.numbersOfproducts()
                 }
                 else {
                     this.productsSelected = this.products
@@ -849,15 +332,39 @@
                     //verification si le produit existe deja
                     this.carts.forEach(element => {
                         if (element.title == cart.title) {
+                    //stop si il n 'y a plus de stock'
                             element.quantity++;
-                            this.products.productList.forEach(product => {
+                            this.productsSelected.productList.forEach(prod =>
+                                    //retrouvons le produit selectionné
+                                    {
+                                    if(element.title == prod.title){
+                                        // si le nombre demandé est trop grand
+                                        if(element.quantity>prod.quantityStock)
+                                            {
+                                                element.quantity--;
+                                                prod.msgStock= "quantité resté à " + element.quantity +
+                                                    "manque de stock"
+                                            }
+                                        else {
+                                            prod.msgStock="disponible"
+                                        }
+
+                                    }        
+                                }
+                            )
+                                this.productsSelected.productList.forEach(product => {
                                 if (product.title == element.title) {
                                     product.quantityCartProduct = element.quantity
                                 }
                             })
                             element.totalPriceProduct = element.quantity * element.price
                             this.duplicateCart = true
+                             
+                                
+                            
+                            
                         }
+                        
                     })
                     //si il est deja present on ne le rajoute pas
                     if (!this.duplicateCart) {
@@ -869,6 +376,7 @@
                         this.carts.push(cart)
 
                     }
+                    this.numbersOfproducts()
                     console.log(this.carts);
                     //on reinitialise le dupliateCart en false
                     this.duplicateCart = false;
@@ -883,6 +391,7 @@
                             element.quantity--;
                             this.products.productList.forEach(product => {
                                 if (product.title == element.title) {
+                                    product.msgStock="stock disponible"
                                     product.quantityCartProduct = element.quantity
                                     console.log(product.quantityCartProduct)
                                 }
@@ -897,6 +406,7 @@
                             element.totalPriceProduct = element.quantity * element.price
                         }
                     })
+                    this.numbersOfproducts()
                     localStorage.setItem("carts", JSON.stringify(this.carts));
                     let storage = JSON.parse(localStorage.getItem("carts"));
                     console.log(storage);
@@ -972,17 +482,22 @@
                             console.log(this.products.productList)
                             //this.productsSelected.productList = category
                     }
-                }
+                },
+                numbersOfproducts() {
+                    if (this.carts == null) { this.numberQuantityCart = 0 };
+                    console.log(this.carts)
+                    // somme des quantité
+                    let result=0
+                    this.carts.forEach(somme => {
+                        result = parseInt(result) + parseInt(somme.quantity)
+                    })
+                    this.numberQuantityCart = result
+                    ////////
+                    
+                },
 
             },
             computed: {
-                numbersOfproducts() {
-                    if (this.carts == null) { return 0 };
-                    const numberArticles = this.carts.reduce((acc, curr) => {
-                        return acc + curr.quantity;
-                    }, 0);
-                    return numberArticles;
-                },
                 totalPriceCart() {
                     const totalPrice = this.carts.reduce((acc, curr) => {
                         return acc + curr.totalPriceProduct;

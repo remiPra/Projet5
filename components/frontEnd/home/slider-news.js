@@ -1,4 +1,5 @@
 Vue.component('slider-news', {
+    props:['newsprops'],
     data() {
         return {
             liveSlide: 0,
@@ -17,9 +18,9 @@ Vue.component('slider-news', {
     template: `<div data-aos="zoom-in" class="col-sm-6" id="sliderNews">
         <div class="carroussel">
             <div class="carrousselcontainer" :style="{marginLeft : marginLeft}">
-                <div class="slideNews" v-for="slide in slides">
+                <div class="slideNews" v-for="slide in newsprops.news">
                     <h3>{{slide.title}}</h3>
-                    <p>{{slide.paragraphe}}</p>
+                    <p>{{slide.description}}</p>
 
                 </div>
             </div>
@@ -31,16 +32,17 @@ Vue.component('slider-news', {
     </div>`,
     methods: {
         next() {
-            if (this.liveSlide === 3) {
+            if (this.liveSlide === this.newsprops.count[0][0] - 1) {
                 this.liveSlide = 0
             } else { this.liveSlide++; }
             console.log(this.liveSlide);
+            console.log(this.newsprops.count[0])
 
             this.marginLeft = - this.liveSlide * 300 + "px";
         },
         previous() {
             if (this.liveSlide === 0) {
-                this.liveSlide = this.slides.length - 1
+                this.liveSlide = this.newsprops.count[0][0] - 1
             } else { this.liveSlide--; }
             console.log(this.liveSlide);
 

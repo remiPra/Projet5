@@ -138,7 +138,7 @@
                     </picture>
                     <div id="containerMain" class="row">
                         <main-container :namesession="nameSession"></main-container>
-                        <slider-news></slider-news>
+                        <slider-news :newsprops="newsProps"></slider-news>
                     </div>
                 </section>
                 <!-- section de la partie slider pour la version mobile -->
@@ -196,6 +196,7 @@
                 <template v-if="router.userInfo">
                     <div id="userInfoCommand">
                         <info-user-command
+                            @oncartswitholdcommand="cartsWithOldCommand"
                             @onCloseInfoUserCommand="CloseInfoUserCommand"
                             :props="propsCompte"></info-user-command>
                     </div>
@@ -313,14 +314,14 @@
                     </div>
 
                     <div class="container-fluid row">
-                        <div class="col-xl-3 col-sm-3 buttonBrown" id="imageArticle">
+                        <div class="col-xl-3 col-sm-5 buttonBrown" id="imageArticle">
                             <h3>{{props[0].name}} {{props[0].nameUser}}</h3>
                             <p>{{props[0].adress}}</p>
                             <p>{{props[0].town}}</p>
                             <p>{{props[0].phone}}</p>
                             <p>{{props[0].email}}</p>
                         </div>
-                        <div class="col-xl-9 col-sm-9 text-light" id="articleViewProductDetail">
+                        <div class="col-xl-9 col-sm-7 text-light" id="articleViewProductDetail">
                         <template v-if="keydetail == false">
                             <h3 class="marginTop">Commande en cours</h3>
                             <table class="infoUserTable">
@@ -349,10 +350,10 @@
                                 </thead>
                                 <tbody>
                                     <tr v-for="(data,index) in props[1]">
-                                        <td v-if="data.statusCommand==200">{{data.numberCommand}}</td>
-                                        <td v-if="data.statusCommand==200">{{data.status}}</td>
-                                        <td v-if="data.statusCommand==200">{{data.totalPrice}}</td>
-                                        <td v-if="data.statusCommand==200"><button @click="detailProduct(data.numberCommand)">Voir détail</button></td>
+                                        <td v-if="data.statusCommand==400">{{data.numberCommand}}</td>
+                                        <td v-if="data.statusCommand==400">{{data.status}}</td>
+                                        <td v-if="data.statusCommand==400">{{data.totalPrice}}</td>
+                                        <td v-if="data.statusCommand==400"><button @click="detailProduct(data.numberCommand)">Voir détail</button></td>
                                     </tr>    
                                 </tbody>
                             </table>
@@ -366,10 +367,10 @@
                                 </thead>
                                 <tbody>
                                     <tr v-for="(data,index) in props[1]">
-                                        <td v-if="data.statusCommand==200">{{data.numberCommand}}</td>
-                                        <td v-if="data.statusCommand==200">{{data.status}}</td>
-                                        <td v-if="data.statusCommand==200">{{data.totalPrice}}</td>
-                                        <td v-if="data.statusCommand==200"><button @click="detailProduct(data.numberCommand)">Voir détail</button></td>
+                                        <td v-if="data.statusCommand==0">{{data.numberCommand}}</td>
+                                        <td v-if="data.statusCommand==0">{{data.status}}</td>
+                                        <td v-if="data.statusCommand==0">{{data.totalPrice}}</td>
+                                        <td v-if="data.statusCommand==0"><button @click="detailProduct(data.numberCommand)">Voir détail</button></td>
                                     </tr>    
                                 </tbody>
                             </table>
@@ -380,7 +381,7 @@
 
                             <template v-if="keydetail">
                             <h3> Commande : {{numberCommandDetail}}</h3>
-                            <button @click="closeDetailProductName">revenir au tableau</button>
+                            <button class="ButtonGreen box-shadow marginAuto" @click="closeDetailProductName">revenir au tableau</button>
                             <table class="buttonBrown infoUserDetailTable">
                                 <thead>
                                     <th>Nom du produit</th>
@@ -388,13 +389,14 @@
                                     <th>Type de Quantité</th>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="(data,index) in this.details.data">
+                                    <tr v-for="(data,index) in details.data">
                                             <td>{{data.productName}}</td>
                                             <td>{{data.productQuantity}}</td>
                                             <td>{{data.typeOfQuantity}}</td>
                                     </tr>
                                 </tbody>
                             </table>
+                            <button @click="cartsReopen(details.data)" class="marginAuto ButtonGreen box-shadow">Reutiliser cette liste</button>
                                     
                             </template>
 
@@ -422,6 +424,10 @@
                 closeDetailProductName(){
                     this.keydetail = false;
                     this.numberCommandDetail = "";
+                },
+                cartsReopen(data){
+                    console.log(data);
+                    this.$emit("oncartswitholdcommand",data)
                 }
             }
         })
@@ -467,6 +473,12 @@
                 memory: [],
                 ///////info user///////////////
                 propsCompte:[],
+                /////news///////
+                newsProps:{
+                    news:{},
+                    count:""
+                }, 
+
                 keyUserInfo:false,
                 token:"",
                 name:"unknow",
@@ -484,6 +496,10 @@
             mounted: function() {
                 //recuperation du nom
                 this.userCommandAxios();
+                //recuperation des news
+                this.getAllNews();
+                //nombre de news
+                this.numberOfNews();
 
                 //etudions la largeur de la fenetre
                 this.$nextTick(function() {
@@ -554,6 +570,41 @@
                     this.keyUserInfo =! this.keyUserInfo
                    
                 },
+                //commande avec une ancienne commande
+                cartsWithOldCommand(lastCommand){
+                    //vérifions si l'article existe
+                    console.log(this.productsSelected.productList)
+                    console.log(lastCommand)
+                    let newCart = []
+                    this.carts=[]
+                    this.productsSelected.productList.forEach( (data) => {
+                        lastCommand.forEach( (oldCart) => {
+                            if(data.title == oldCart.productName){
+                                newCart = data
+                                newCart.title = oldCart.productName;
+                                console.log(newCart.quantityStock)
+                                console.log(oldCart.productQuantity)
+                                //attention si la quantité est plus grande qu le stock
+                                console.log(newCart.quantityStock + ">" + oldCart.productQuantity)
+                                if(data.quantityStock > oldCart.productQuantity){
+                                    newCart.quantity = newCart.quantityStock
+                                    console.log(newCart.quantity)
+                                } else if(data.quantityStock<oldCart.productQuantity){
+                                    console.log(newCart.quantity)
+                                    newCart.quantity = oldCart.productQuantity
+                                }
+                                newCart.totalPriceProduct = newCart.quantity * newCart.price
+                                
+                                this.carts.push(newCart)
+                                
+                            }
+                        })
+                        console.log(this.carts)
+                    })
+                    this.numbersOfproducts()
+                    this.modal();
+                },
+                //
                 userCommandAxios(){
                     console.log("users")
                     let name = this.nameSession;
@@ -569,6 +620,42 @@
                         }
                     });
                 },
+                // methode de recuperation des news
+                getAllNews() {
+                    console.log("users")
+                    axios.get("proceed.php?action=getAllNews").then(function(response) {
+                        if (response.data.error) {
+                            app.errorMsg = response.data.message;
+                            console.log(app.errorMsg)
+                        } else {
+                            console.log(response.data);
+
+                            app.newsProps.news = response.data
+                            console.log(app.newsProps.news)
+                            console.log("articles news");
+                        }
+                    });
+                },
+                numberOfNews(){
+                    console.log("users")
+                    axios.get("proceed.php?action=countNumberOfNews").then(function(response) {
+                        if (response.data.error) {
+                            app.errorMsg = response.data.message;
+                            console.log(app.errorMsg)
+                        } else {
+                            console.log(response.data);
+
+                            app.newsProps.count = response.data
+                            console.log(app.newsProps.news)
+                            console.log("articles news");
+                        }
+                    });
+
+                },
+
+
+
+
                 //methode de scroll 
                 _scrollToConfirmCart(){
                     // console.log("succesScrollTO")
@@ -878,6 +965,7 @@
                         result = parseInt(result) + parseInt(somme.quantity)
                     })
                     this.numberQuantityCart = result
+                    console.log(result)
                     ////////
 
                 },

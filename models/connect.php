@@ -4,15 +4,15 @@ class ConnectManager
 
     public function connect()
     {
-        //  $host_name = 'db5000508567.hosting-data.io';
-        // $database = 'dbs488109';
-        // $user_name = 'dbu628629';
-        // $password = 'Tfctfc3131@';
+         $host_name = 'db5000508567.hosting-data.io';
+        $database = 'dbs488109';
+        $user_name = 'dbu628629';
+        $password = 'Tfctfc3131@';
         
-        $host_name = 'localhost';
-        $database = 'projet5';
-        $user_name = 'root';
-        $password = '';
+        // $host_name = 'localhost';
+        // $database = 'projet5';
+        // $user_name = 'root';
+        // $password = '';
 
 
 

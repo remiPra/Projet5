@@ -8,8 +8,8 @@
 "description": "A simple Instagram Clone, implementing a lot of PWA love.",
 "dir": "ltr",
 "lang": "en-US", 
-  "Scope": "/",
-  "start_url": "./index.html",
+  "Scope": "./",
+  "start_url": "./index.php?action=index",
   "icons": [
     {
       "src": "./assets/icons/icon-72x72.png",
@@ -52,6 +52,13 @@
       "type": "image/png"
     }
   ],
-  "splash_pages": null
+  "splash_pages": null,
+  "prefer_related_applications": true,
+"related_applications": [
+  {
+    "platform": "play",
+    "id": "com.google.samples.apps.iosched"
+  }
+]
 }
 

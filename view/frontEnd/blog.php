@@ -11,7 +11,12 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
 
-    <!-- integration de la librairie axios -->
+        <!-- integration de la librairie axios -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script>
+    
+
+
+    <!-- integration de la librairie aos -->
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.0/dist/aos.css">
     <script src="https://unpkg.com/aos@2.3.0/dist/aos.js"></script>
     <!-- bootstrap -->
@@ -96,11 +101,7 @@
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <button id="btnCart" @click="modal()">
-                            <i class="fas fa-shopping-cart">{{numberQuantityCart}}</i>
-                        </button>
-                    </div>
+                    
                 </nav>
             </header>
         <!-- section principale de presentation du shop -->
@@ -134,13 +135,13 @@
 
             <section>
                 <div class="container" id="listArticles">
-                    <div v-for="(article,i) in articles.data" :key="i" class="row col-md-9 news">
+                    <div v-for="(article,i) in articles" :key="i" class="row col-md-9 news">
                         <div class="col-md-3"></div>
                         <div class="col-md-9">
                             <h3>{{article.title}}</h3>
 
                             <h4>{{article.date}}</h4>
-                            <p>{{article.sentence}}</p>
+                            <p>{{article.description}}</p>
                             <button @click="articleView=true;sommaire=false;showArticle(i)">Lire la suite</button>
                         </div>
                     </div>
@@ -163,13 +164,13 @@
                     <div class="container-fluid row">
                         <div class="col-xl-6 col-sm-6 m-auto" id="imageArticle">
                             <figure>
-                                <img src="./assets/images/sliderBoutique/a-woman-in-her-shop.jpg" alt="">
+                                <img :src="currentArticle.src" alt="">
                                 <figcaption></figcaption>
                             </figure>
                         </div>
                         <div class="col-xl-6" id="articleViewtext">
                             <h2>{{currentArticle.title}}</h2>
-                            <p>{{currentArticle.content}}</p>
+                            <div v-html="currentArticle.content"></div>
                         </div>
                     </div>
                 </article>
@@ -301,65 +302,44 @@
         // })
 
 
-        new Vue({
+        let app = new Vue({
             el: '#app',
             data: {
                 sommaire: true,
                 articleView: false,
                 currentIndex:0,
-                articles:{
-                    data:[{
-                        id:"1",
-                        title:"la recette des bananes",
-                        date:"11-04_1890",
-                        sentence:"la fabuleuse recette des bananes flambées avec nos produits",
-                        content:`
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus repellendus
-                                temporibus
-                                omnis
-                                aliquid ipsum quod esse dolor! Debitis accusantium corporis velit fuga dicta delectus,
-                                veritatis hic
-                                provident consectetur necessitatibus ratione.
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus repellendus
-                                temporibus
-                                omnis
-                                aliquid ipsum quod esse dolor! Debitis accusantium corporis velit fuga dicta delectus,
-                                veritatis hic
-                                provident consectetur necessitatibus ratione.
-                            `
-                    },
-                    {
-                        id:"1",
-                        title:"la recette des pommes",
-                        date:"11-04_1890",
-                        sentence:"la fabuleuse recette des pommes flambées avec nos produits",
-                        content:`
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus repellendus
-                                temporibus
-                                omnis
-                                aliquid ipsum quod esse dolor! Debitis accusantium corporis velit fuga dicta delectus,
-                                veritatis hic
-                                provident consectetur necessitatibus ratione.
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus repellendus
-                                temporibus
-                                omnis
-                                aliquid ipsum quod esse dolor! Debitis accusantium corporis velit fuga dicta delectus,
-                                veritatis hic
-                                provident consectetur necessitatibus ratione.
-                            `
-                    }]
-                }
+                articles:[],
+               
             }
             ,
+            mounted:function(){
+                this.getAllArticles()
+            },
+
             computed:{
+                
                 currentArticle(){
-                    return this.articles.data[this.currentIndex]
+                    return this.articles[this.currentIndex]
                 }
             },
             methods:{
                 showArticle(id){
                     window.scrollTo(0, 0);
                     this.currentIndex = id;
+                },
+                getAllArticles(){
+                    axios.get("proceed.php?action=getAllArticles").then(function(response) {
+                        if (response.data.error) {
+                            app.errorMsg = response.data.message;
+                            console.log(app.errorMsg)
+                        } else {
+                            console.log(response.data);
+                            app.articles = response.data
+                            console.log(app.articles)
+                            console.log("success");
+                        }
+                    });
+
                 }
             }
         })
