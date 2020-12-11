@@ -4,7 +4,7 @@ Vue.component('news-shop',{
     <section id="routageMenu">
             <div>
                 <div class="container-fluid row ">
-                    <div @click="routageNewsList" class="col-md-4">
+                    <div @click="onGetAllNews();routageNewsList()" class="col-md-4">
                         <div class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
                             <h4>Newss publiées</h4>
                             <p>Liste des newss publiés sur le site</p>
@@ -12,21 +12,21 @@ Vue.component('news-shop',{
                     </div>
     
                     <div class="col-md-4">
-                        <div @click="routageNewsTest" class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
+                        <div @click="onGetAllNews(),routageNewsTest()" class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
                             <h4>Newss en Brouillon</h4>
                             <p>Liste des newss publiés sur le site</p>
                         </div>
                     </div>
     
                     <div class="col-md-4">
-                        <div @click="routageNewsNew" class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
+                        <div @click="onGetAllNews(),routageNewsNew()" class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
                             <h4>Nouvel News</h4>
                             <p>Ajouter un news</p>
                         </div>
                     </div>
     
                     <div class="col-md-4">
-                        <div @click="routageNewsUpdate" class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
+                        <div @click="onGetAllNews(),routageNewsUpdate()" class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
                             <h4>Modifier un News</h4>
                             <p>Faire la modification d'un news</p>
                         </div>
@@ -63,7 +63,7 @@ Vue.component('news-shop',{
                                     
                                         <td>
                                             <div class="actionTableau">
-                                                <a @click="emitModifyNewView(index)" class="LinkAdministration">Modifié </a>
+                                                <a @click="emitModifyNewView(index)" class="LinkAdministration buttonAdministration">Modifié </a>
                                                 
                                             </div>
                                         </td>
@@ -97,11 +97,11 @@ Vue.component('news-shop',{
                                 <td>{{data.date}}</td>
                                         <td>
                                             <div class="actionTableau">
-                                                <a @click="emitModifyNewView(index)" class="LinkAdministration">Modifié </a>
+                                                <a @click="emitModifyNewView(index)" class="LinkAdministration buttonAdministration">Modifié </a>
                                                 
-                                                <form method="POST" action="index.php?action=deleteNews">
+                                                <form class="formWithNoBorder" method="POST" action="index.php?action=deleteNews">
                                                     <input required hidden name="id" :value="data.id">
-                                                    <button type="submit"> Supprimer</button>    
+                                                    <button  type="submit"> Supprimer</button>    
                                                 </form>    
                                             </div>
                                         </td>
@@ -263,6 +263,11 @@ methods: {
         this.routageNewsUpdate()
         console.log(index);
         this.$emit('onmodifynewview',index)
+    },
+    //emit pour les props des news
+    onGetAllNews(){
+        console.log('onGetAllNews')
+        this.$emit('ongetallnews')
     }
 
     

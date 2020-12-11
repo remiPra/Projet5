@@ -65,9 +65,7 @@
                                                     }
                                                     ?> </a> 
                             </li> 
-                            <li class="nav-items">
-                                    <a class="nav-link" href="index.php?action=administration">Administration</a>
-                            </li>
+                            
                         </ul>
                     </div>
                     <div id="togglecontainer">
@@ -88,8 +86,7 @@
                                                     } else {
                                                         echo 'href="index.php?action=connexion">Connexion';
                                                     }
-                                                    ?> </a> <a class="nav-link" href="administrationConnexion.html">Administration</a>
-                                  <a class="nav-link" href="index.php?action=administration">Administration</a>
+                                                    ?> </a> 
                             </div>
                         </div>
                     </div>
@@ -119,10 +116,10 @@
                     </div>
                 </div>
             </section>
-            <section>
-                <div class="col-lg-8 text center buttonBrown">
+            <section class="d-flex justify-content-center">
+                <div class="col-lg-8 justify-content-center text center buttonBrown">
                     <p>
-                        <?php echo $info[0]['name']?>
+                       
                         <?php echo $info[1]['name']?>
                         <?php echo $info[1]['nameUser']?>
                     </p>

@@ -154,7 +154,7 @@
 
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-6">
+                    <div @click="routageMessage" class="col-lg-3 col-md-6">
                         <div class="contentCategory text-center ButtonGreen marginAuto col-md-10 ml-auto mr-auto">
                             <h4>Messages</h4>
 
@@ -193,10 +193,20 @@
                     <div class="traitSeparation"></div>
                     <news-shop 
                     :newsprops="newsProps" 
+                    @ongetallnews = "getAllNews"
                     @onpreviousupdatenews=previousUpdateNews 
                     @onnextupdatenews=nextUpdateNews
                     @onmodifynewview =modifyNewView
                     ></news-shop>
+                </template>
+                
+
+            </section>
+
+            <section>
+                <template v-if="router.message">
+                <div class="traitSeparation"></div>
+                <message-shop @ongetallmessages="getAllMessages" @oncheckreadmessage="checkMessageRead" :messagesprops="messageProps"></message-shop>
                 </template>
             </section>
 
@@ -257,6 +267,7 @@
             </div>
         </footer>
     </div>
+    <script src="./components/backEnd/message-shop.js"></script>
     <script src="./components/backEnd/command-user.js"></script>
     <script src="./components/backEnd/product-shop.js"></script>
     <script src="./components/backEnd/articles-shops.js"></script>
@@ -297,6 +308,7 @@
                     news: [],
                     liveUpdateNews: "0"
                 },
+                messageProps:[],
                 //info des sliders 
 
                 messageError: "",
@@ -309,6 +321,7 @@
                     command: false,
                     articles: false,
                     news: false,
+                    message:false,
                 }
             },
             mounted() {
@@ -316,6 +329,7 @@
                 this.getAllProducts();
                 this.getAllArticles();
                 this.getAllNews();
+                this.getAllMessages();
 
             },
             methods: {
@@ -354,6 +368,23 @@
                     });
                     console.log(this.commandsProps.commands)
                 },
+
+                //axios pour recuperer tous les messages
+                getAllMessages(){
+                    console.log("users")
+                    axios.get("proceed.php?action=getAllMessages").then(function(response) {
+                        if (response.data.error) {
+                            app.errorMsg = response.data.message;
+                            console.log(app.errorMsg)
+                        } else {
+                            console.log(response.data);
+
+                            vm.messageProps = response.data
+                            console.log(vm.messageProps)
+                            console.log("articles get");
+                        }
+                    });
+                },
                 getAllArticles() {
                     console.log("users")
                     axios.get("proceed.php?action=getAllArticles").then(function(response) {
@@ -380,7 +411,7 @@
 
                             vm.newsProps.news = response.data
                             console.log(vm.newsProps.news)
-                            console.log("articles news");
+                            console.log("promos news");
                         }
                     });
                 },
@@ -389,14 +420,14 @@
                     this.router.command = false
                     this.router.articles = false
                     this.router.news = false
-
+                    this.router.message = false
                 },
                 routageProduct() {
                     this.router.product = true
                     this.router.command = false
                     this.router.articles = false
                     this.router.news = false
-
+                    this.router.message = false
                     // setTimeout(this.scrolling("routerProduct"),500)      
                 },
                 routageCommand() {
@@ -404,7 +435,7 @@
                     this.router.command = true
                     this.router.articles = false
                     this.router.news = false
-
+                    this.router.message = false
                     // this.scrolling("routerCommand")      
                 },
                 routageArticles() {
@@ -412,6 +443,7 @@
                     this.router.command = false
                     this.router.articles = true
                     this.router.news = false
+                    this.router.message = false
                     this.scrolling("routerArticles")
                 },
                 routageNews() {
@@ -419,7 +451,19 @@
                     this.router.command = false
                     this.router.articles = false
                     this.router.news = true
+                    this.router.message = false
+
                     this.scrolling("routerArticles")
+                },
+                routageMessage() {
+                    this.router.product = false
+                    this.router.command = false
+                    this.router.articles = false
+                    this.router.news = false
+                    this.router.message = true
+                    console.log('ggj')
+                    this.scrolling("routerArticles")
+                    
                 },
                 //changement du liveSlideupdateProduct depuis la liste des produits 
                 modifyProductView(data) {
@@ -471,6 +515,25 @@
                         this.newsProps.liveUpdateNews = this.newsProps.news.length - 1
                     }
                 },
+
+                //methode pour passer un message en lu par requette http
+                checkMessageRead(id){
+                    console.log(id);
+                    let message=[]
+                    message.push(id)    
+                    let messageId = this.toFormData(message)
+                    axios.post("proceed.php?action=checkMessageRead",messageId).then(function(response) {
+                        if (response.data.error) {
+                            app.errorMsg = response.data.message;
+                            console.log(app.errorMsg)
+                        } else {
+                            console.log(response.data)
+                            console.log("message read");
+                        }
+                    });
+
+                },
+
 
 
                 toFormData(obj) {

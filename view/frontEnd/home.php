@@ -30,6 +30,9 @@
     <!-- integration de font-awesome -->
     <script src="https://kit.fontawesome.com/5a70a7892a.js"></script>
     <link rel="manifest" href="./manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff"> 
+    <meta name="msapplication-TileImage" content="./assets/icons/icon-128x128.png">
+    <meta name="theme-color" content="#ffffff"> 
     <title>Ma ferme Bio</title>
 </head>
 
@@ -143,7 +146,7 @@
                 </section>
                 <!-- section de la partie slider pour la version mobile -->
                 <section>
-                    <slider-new-mobile></slider-new-mobile>
+                    <slider-new-mobile :newsprops="newsProps"></slider-new-mobile>
                 </section>
                 <!-- section de la partie des infos du magasin -->
                 <section class="row">
@@ -237,7 +240,7 @@
                         <p>
                             xxxxxxxxx@gmail.com
                         </p>
-                        <button class="add-button">Add to home screen</button>
+                        
 
                     </div>
                     <div class="col-md-4">
@@ -1087,48 +1090,48 @@
       });
   }
 
-let deferredPrompt;
-const addBtn = document.querySelector('.add-button');
-console.log(addBtn)
+// let deferredPrompt;
+// const addBtn = document.querySelector('.add-button');
+// console.log(addBtn)
 
 
-var _beforeInstallPrompt; if ( "onbeforeinstallprompt" in window ) 
-{ window.addEventListener( "beforeinstallprompt", beforeInstallPrompt ); } 
-function beforeInstallPrompt( evt ) { evt.preventDefault(); 
-    _beforeInstallPrompt = evt;console.log("ok") } 
+// var _beforeInstallPrompt; if ( "onbeforeinstallprompt" in window ) 
+// { window.addEventListener( "beforeinstallprompt", beforeInstallPrompt ); } 
+// function beforeInstallPrompt( evt ) { evt.preventDefault(); 
+//     _beforeInstallPrompt = evt;console.log("ok") } 
 
-//return _beforeInstallPrompt.prompt() .then( function ( evt ) { // Wait for the user to respond to the prompt return _beforeInstallPrompt.userChoice; } ) .then( function ( choiceResult ) { //do stuff here } ) .catch( function ( err ) { if ( err.message.indexOf( "user gesture" ) > -1 ) { //recycle, but make sure there is a user gesture involved } else if ( err.message.indexOf( "The app is already installed" ) > -1 ) { //the app is installed, no need to prompt, but you may need to log or update state values } else { return err; } } ); 
+// //return _beforeInstallPrompt.prompt() .then( function ( evt ) { // Wait for the user to respond to the prompt return _beforeInstallPrompt.userChoice; } ) .then( function ( choiceResult ) { //do stuff here } ) .catch( function ( err ) { if ( err.message.indexOf( "user gesture" ) > -1 ) { //recycle, but make sure there is a user gesture involved } else if ( err.message.indexOf( "The app is already installed" ) > -1 ) { //the app is installed, no need to prompt, but you may need to log or update state values } else { return err; } } ); 
 
-console.log(Window.onbeforeinstallprompt)
-
-
+// console.log(Window.onbeforeinstallprompt)
 
 
-window.addEventListener('beforeinstallprompt', (e) => {
-  // Prevent Chrome 67 and earlier from automatically showing the prompt
- // e.preventDefault();
-  console.log(e)
-  // Stash the event so it can be triggered later.
-  deferredPrompt = e;
 
 
-  addBtn.addEventListener('click', (e) => {
-    // hide our user interface that shows our A2HS button
-    //addBtn.style.display = 'none';
-    // Show the promp
-    deferredPrompt.prompt();
-    console.log(deferredPrompt)
-    // Wait for the user to respond to the prompt
-    deferredPrompt.userChoice.then((choiceResult) => {
-        if (choiceResult.outcome === 'accepted') {
-          console.log('User accepted the A2HS prompt');
-        } else {
-          console.log('User dismissed the A2HS prompt');
-        }
-        deferredPrompt = null;
-      });
-  });
-  });
+// window.addEventListener('beforeinstallprompt', (e) => {
+//   // Prevent Chrome 67 and earlier from automatically showing the prompt
+//  // e.preventDefault();
+//   console.log(e)
+//   // Stash the event so it can be triggered later.
+//   deferredPrompt = e;
+
+
+//   addBtn.addEventListener('click', (e) => {
+//     // hide our user interface that shows our A2HS button
+//     //addBtn.style.display = 'none';
+//     // Show the promp
+//     deferredPrompt.prompt();
+//     console.log(deferredPrompt)
+//     // Wait for the user to respond to the prompt
+//     deferredPrompt.userChoice.then((choiceResult) => {
+//         if (choiceResult.outcome === 'accepted') {
+//           console.log('User accepted the A2HS prompt');
+//         } else {
+//           console.log('User dismissed the A2HS prompt');
+//         }
+//         deferredPrompt = null;
+//       });
+//   });
+//   });
 
 
 

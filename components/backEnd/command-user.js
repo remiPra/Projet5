@@ -324,8 +324,8 @@ Vue.component('command-user', {
                     </table>
                     <div v-if="adminDetailCollect[0].status == 'retrait'">
                         
-                        <form method="POST" action="proceed.php?action=validateCollectCommand">
-                            <input required name="numberCommand" :value="adminDetailCollect[0].numberCommand">
+                        <form class="formWithNoBorder" method="POST" action="proceed.php?action=validateCollectCommand">
+                            <input hidden required name="numberCommand" :value="adminDetailCollect[0].numberCommand">
                             <button type="submit"> Command prete au retrait </button>
                         </form>
                       
@@ -334,8 +334,8 @@ Vue.component('command-user', {
 
                     </div>
                     <template v-if="adminDetailCollect[0].status == 'retraitPret'">
-                        <form method="POST" action="proceed.php?action=checkCommand">
-                        <input :value="adminDetailCollect[0].numberCommand" name="numberCommand" required>
+                        <form class="formWithNoBorder" method="POST" action="proceed.php?action=checkCommand">
+                        <input hidden :value="adminDetailCollect[0].numberCommand" name="numberCommand" required>
                         <button type="submit">
                             Commande Récupéré
                         </button>

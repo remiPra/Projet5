@@ -257,3 +257,19 @@ function updateTestProduct(){
     $productManagerBack = new productManagerBack;
     $deleteProduct = $productManagerBack-> updateTestProduct($id);
 }
+
+function getAllMessages(){
+    require 'models/backEnd/contactManager.php';
+    $messageManager = new ContactManager;
+    $messageList = $messageManager-> getAllMessages();   
+    echo json_encode($messageList);
+}
+
+// axios pour mettre un message lu 
+function checkMessageRead(){
+    $id = $_POST[0]; 
+    require 'models/backEnd/contactManager.php';
+    echo $id;
+    $messageManager = new ContactManager;
+    $checkMessageRead = $messageManager->checkMessageRead($id);
+}

@@ -11,7 +11,7 @@ if ($_SESSION == false and isset($_GET['action'])) {
 
     switch (($_GET['action'])) {
 
-        
+
         case 'contact':
             contact();
             break;
@@ -62,6 +62,12 @@ if ($_SESSION == false and isset($_GET['action'])) {
         case 'home':
             index();
             break;
+        case 'blog':
+            blog();
+            break;
+        case 'contact':
+            contact();
+            break;
         case 'cart':
             cart();
             break;
@@ -71,6 +77,7 @@ if ($_SESSION == false and isset($_GET['action'])) {
         case 'paiementSuccess':
             paiementSuccess();
             break;
+
 
 
         case 'stepOrder':
@@ -116,7 +123,7 @@ if ($_SESSION == false and isset($_GET['action'])) {
             break;
 
 
-        // administration des articles 
+            // administration des articles 
         case 'sendNewArticle':
             sendNewArticle();
             break;
@@ -130,10 +137,10 @@ if ($_SESSION == false and isset($_GET['action'])) {
             break;
         case 'updateNews':
             updateNews();
-        break;
+            break;
         case 'deleteNews':
             deleteNews();
-        break;
+            break;
 
         case 'addStockProduct':
             addStockProduct();
@@ -143,11 +150,18 @@ if ($_SESSION == false and isset($_GET['action'])) {
             break;
         case 'validateCollectCommand':
             validateCollectCommand();
-            break;      
+            break;
         case 'updateCommand':
             updateCommand();
-            break;      
-        
+            break;
+            //administration des messages
+        case 'deleteMessage':
+            deleteMessage();
+            break;
+        case 'sendAnswer':
+            sendAnswer();
+            break;
+
         default:
             index();
             break;

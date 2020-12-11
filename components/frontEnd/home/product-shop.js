@@ -21,10 +21,10 @@ Vue.component('shop-products', {
             <img src="assets/images/category/fresh-vegetables-flatlay.jpg">
         </div>
         <div class="content">
-            <h2>Title</h2>
+            <h2>Produits Bio</h2>
             <p class="cardColor">Selection des produits
             <p class="contentShow">Cliquez sur le bouton pour pouvoir decouvrir nos différents produits disponible en magasin</p>
-            <button  class="buttonBrown" @click="scrolling">Commencez votre Sélection</button>
+            <button  class="buttonBrown" @click="scrolling('goShop')">Commencez votre Sélection</button>
         </div>
         
     </div>
@@ -51,7 +51,7 @@ Vue.component('shop-products', {
                 this.$emit('onshowcartoftheweek')
                 console.log("ok")
             },
-            scrolling(){
+            scrolling(element){
                 const id = element;
                 const yOffset = -100; 
                 const elements = document.getElementById(id);

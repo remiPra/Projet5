@@ -33,11 +33,13 @@ function blog()
 }
 
 //routage de la page du formulaire de contact
-function contact(){
+function contact()
+{
     require 'view/frontEnd/contact.php';
 }
 //routage de l'envoie d'un message de contact
-function contactSend(){
+function contactSend()
+{
     // Controlleur de la page de l'envoie d'un message contact si envoyé
 
     if (($_POST['pseudo'] != null) and ($_POST['email'] != null)
@@ -51,12 +53,10 @@ function contactSend(){
         $message = 'Votre message a bien été envoyé';
         //affichag de la page qui montre que le contact est recu
         echo "<script type='text/javascript'>document.location.replace('index.php?action=contact&messageSuccess=" . $message . "');</script>";
-
     } else {
 
         $message = 'vous n\'avez pas remplis tous les champs';
         echo "<script type='text/javascript'>document.location.replace('index.php?action=contact&messageError=" . $message . "');</script>";
-
     }
 }
 
@@ -161,38 +161,37 @@ function cart()
     $cartManager = new CartManager();
     $orderNumberCommand = $cartManager->cartAddList($userId);
     echo '<br/>';
-    var_dump("134 ".$orderNumberCommand);
-    echo '<br/>'; 
+    var_dump("134 " . $orderNumberCommand);
+    echo '<br/>';
 
 
 
 
-    
-    
+
+
     require 'models/frontEnd/productsManager.php';
     $productsManager = new ProductsManager();
 
     //modification des stocks dans la data
-    for($i=0;$i < count($_POST['productName']);$i++){
-        
+    for ($i = 0; $i < count($_POST['productName']); $i++) {
+
         $productName = htmlspecialchars($_POST['productName'][$i], ENT_QUOTES, 'UTF-8', false);
         echo '<br/>';
         echo '<br/>';
-        var_dump("148 ".$productName);
-        echo '<br/>'; 
-        echo '<br/>'; 
+        var_dump("148 " . $productName);
+        echo '<br/>';
+        echo '<br/>';
 
 
-        $stock = $productsManager-> getStockFromProduct($productName);
+        $stock = $productsManager->getStockFromProduct($productName);
 
         echo '<br/>';
         echo '<br/>';
         var_dump($stock);
-        echo '<br/>'; 
-        echo '<br/>'; 
+        echo '<br/>';
+        echo '<br/>';
 
-        $updateStock = $cartManager->substractProductFromCartToStock($productName,$stock);
-
+        $updateStock = $cartManager->substractProductFromCartToStock($productName, $stock);
     }
     //enregistrement de toute la lliste des produits
     $cart = $cartManager->cartAddProduct($orderNumberCommand);
@@ -223,11 +222,10 @@ function curl()
     echo "<br>";
     echo "<br>";
     var_dump(count($Alltokens));
-    
-    for($i=0;$i<count($Alltokens);$i++){
-        $curlPromotion = $curlManager->sendPromotionsAllTokens($Alltokens[$i],$articles);      
-     }
-    
+
+    for ($i = 0; $i < count($Alltokens); $i++) {
+        $curlPromotion = $curlManager->sendPromotionsAllTokens($Alltokens[$i], $articles);
+    }
 }
 
 //fonction pour les passwords oubliées 
@@ -260,19 +258,41 @@ function administrationPasswordForgotCheck()
             $subject = "lien pour vous reconnecter";
 
 
-            $message = '<h1> ' . $firstname . ' </h1>
-            <p> veuillez cliquez sur ce lien 
-            <a href="http://www.remi-pradere.com/projet5/index.php?action=initializePassword&name=' . $firstname . '&link=' . $link . '"> 
-            cliquez ici
-            
-            <p>';
+            $message = '
+            <html>
+                <body>
+                    <header style="text-align: center;
+                        background-color: green;
+                        width: 259px;
+                         color: white;
+                        padding: 11px;
+                        margin: 20px auto;
+                        border: 2px solid white;
+                        border-radius: 39px;">
+                            <h1>Ma ferme Bio</h1>
+                            <p>12 impasse octave sage</p>
+                            <p>31100 TOULOUSE</p>
+                            <p>06.06.06.06.06</p>
+                    </header>
+
+            <div class="d-flex justify-content-center" style="border:2px solid green;padding:20px">
+                <h1> ' . $firstname . ' </h1>
+                    <p> veuillez cliquez sur ce lien 
+                        <a href="http://www.remi-pradere.com/projet5/index.php?action=initializePassword&name=' . $firstname . '&link=' . $link . '"> 
+                        cliquez ici
+                    <p>
+
+            </div>
+                </body>
+            </html>
+            ';
             mail($to, $subject, $message, $headers);
 
             // ENVOYER UN EMAIL
 
-            $notificationError =  'votre mot de passe vous a été envoyé sur votre mail';
-            var_dump($notificationError);
-            // require 'views/frontEnd/contactRecuView.php';
+            $messageMail =  'votre mot de passe vous a été envoyé sur votre mail '.$to.'';
+            echo "<script type='text/javascript'>document.location.replace('index.php?action=connexion&mailPassword=".$messageMail."');</script>";
+            
         } else {
             $notificationError = "name invalid";
             var_dump($notificationError);
@@ -424,24 +444,17 @@ function paiementSuccess()
     /////////Variables
     $status = $info[0]['status'];
     $dateDeliveryOrder = $info[0]['dateDeliveryOrder'];
-    $date=strtotime($dateDeliveryOrder);
-    $format = date("Ymd",$date);
+    $date = strtotime($dateDeliveryOrder);
+    $format = date("Ymd", $date);
     //booleen pour verifier si retrait date a les heures
-    if($status=="retrait"){
+    if ($status == "retrait") {
         global $formatA;
-        $formatA = date("His",$date);
+        $formatA = date("His", $date);
     } else {
         global $formatA;
-        $format="120000";
+        $format = "120000";
     }
-//echo $format;
-//echo $formatA;
-    // echo '<a href="https://calendar.google.com/calendar/r/eventedit?text='.$status.'+de+la+commande+n'
-    //     .$numberCommand.'&dates='
-    //     .$format.'T'
-    //     .$formatA.'Z/'
-    //     .$format.'T'
-    //     .$formatA.'Z&details&location&trp=false">button</a>'; 
+
 
 
 
@@ -450,8 +463,8 @@ function paiementSuccess()
     $headers .= "From: remipradere@gmail.com\r\n";
 
 
-    $subject = "Votre commande".$numberCommand." a été validé " ;
-    $to=$info[1]['email'];
+    $subject = "Votre commande" . $numberCommand . " a été validé ";
+    $to = $info[1]['email'];
 
     $message = '
     <html>
@@ -470,24 +483,25 @@ function paiementSuccess()
         <p>06.06.06.06.06</p>
     </header>
     
+    <div class="d-flex justify-content-center" style="border:2px solid green;padding:20px">
     <div>
-        <h1> ' .$info[1]['name']. ' </h1>
-        <h2>'.$info[0]['dateDeliveryDay'].'</h2>
+        <h1> ' . $info[1]['name'] . ' </h1>
+        <h2>' . $info[0]['dateDeliveryDay'] . '</h2>
     <div>
     <div>
         <p>
-        '.$info[1]['name'].'
-        '.$info[1]['nameUser'].'
+        ' . $info[1]['name'] . '
+        ' . $info[1]['nameUser'] . '
         </p>
         <p>
-        '.$info[1]['adress'].'
+        ' . $info[1]['adress'] . '
         </p>
         <p>
-        '.$info[1]['postalCode'].'
-        '.$info[1]['town'].'
+        ' . $info[1]['postalCode'] . '
+        ' . $info[1]['town'] . '
         </p>
         <p>
-        date de '.$info[0]['status'].' : '.$info[0]['collectTimeAndDay'].'
+        date de ' . $info[0]['status'] . ' : ' . $info[0]['collectTimeAndDay'] . '
         </p>
     <p>
     <p> creer un rappel sur votre google agenda? <p>
@@ -500,7 +514,7 @@ function paiementSuccess()
             font-size: 20px;
             display: flex;" 
     
-    href="https://calendar.google.com/calendar/r/eventedit?text=Ma+Ferme+Bio'.$status.'+de+la+commande+n°'.$numberCommand.'&dates='.$format.'T'.$formatA.'/'.$format.'T'.$formatA.'&details&location=12+impasse+octave+sage+31100+TOULOUSE&ctz=Europe/Brussels&trp=false">button</a>
+    href="https://calendar.google.com/calendar/r/eventedit?text=Ma+Ferme+Bio' . $status . '+de+la+commande+n°' . $numberCommand . '&dates=' . $format . 'T' . $formatA . '/' . $format . 'T' . $formatA . '&details&location=12+impasse+octave+sage+31100+TOULOUSE&ctz=Europe/Brussels&trp=false">button</a>
     
     </button>
 
@@ -517,21 +531,22 @@ function paiementSuccess()
     <tbody>";
     ';
     // utilisaton de foreach
-    foreach($info[2] as $data){
+    foreach ($info[2] as $data) {
         $message .=
-        "<tr>
-                            <td>" .$data['productName']."</td>
-                            <td>".$data['productQuantity']."</td>
-                            <td>".$data['typeOfQuantity']."</td>
-                            <td>".$data['productQuantity']*$data['price']."</td>
+            "<tr>
+                            <td>" . $data['productName'] . "</td>
+                            <td>" . $data['productQuantity'] . "</td>
+                            <td>" . $data['typeOfQuantity'] . "</td>
+                            <td>" . $data['productQuantity'] * $data['price'] . "</td>
         </tr>";
     }
     $message .= "</tbody>
     </table>
+    </div>
     </body>
         </html>";
-   
-   
+
+
 
 
     mail($to, $subject, $message, $headers);
@@ -543,56 +558,57 @@ function paiementSuccess()
     require 'view/frontEnd/paiementSuccess.php';
 }
 
-function newProduct(){
-    
+function newProduct()
+{
+
     require  'models/backEnd/imageManager.php';
     $imagemanager =  new imageManager();
     $imageUpload = $imagemanager->uploadImage();
 
     require 'models/backEnd/productManager.php';
     $productManagerBack = new productManagerBack;
-    $newProduct = $productManagerBack-> addNewProduct();
+    $newProduct = $productManagerBack->addNewProduct();
 
     //notifications $get msg bien rajouté
-    $msg= " votre produit a bien été créé ";
+    $msg = " votre produit a bien été créé ";
     require 'view/backEnd/administrationHome.php';
-
-
 }
-function updateProduct(){
+function updateProduct()
+{
     $data = basename($_FILES['avatar']['name']);
-    if($data != null){
-    require  'models/backEnd/imageManager.php';
-    $imagemanager =  new imageManager();
-    $imageUpload = $imagemanager->uploadImage();
+    if ($data != null) {
+        require  'models/backEnd/imageManager.php';
+        $imagemanager =  new imageManager();
+        $imageUpload = $imagemanager->uploadImage();
     }
 
     require 'models/backEnd/productManager.php';
     $productManagerBack = new productManagerBack;
-    $updateProduct = $productManagerBack-> updateProduct();
+    $updateProduct = $productManagerBack->updateProduct();
 
     //notifications $_GET msg bien rajouté
-    $message= " votre produit a bien été modifié ";
-    echo "<script type='text/javascript'>document.location.replace('index.php?action=administrationHome&message=".$message."');</script>";
-
+    $message = " votre produit a bien été modifié ";
+    echo "<script type='text/javascript'>document.location.replace('index.php?action=administrationHome&message=" . $message . "');</script>";
 }
 
-function deleteProduct(){
-    
+function deleteProduct()
+{
+
     // require  'models/backEnd/imageManager.php';
     // $imagemanager =  new imageManager();
     // $imageUpload = $imagemanager->uploadImage();
     $id = $_POST['id'];
     require 'models/backEnd/productManager.php';
     $productManagerBack = new productManagerBack;
-    $deleteProduct = $productManagerBack-> deleteProduct($id);
+    $deleteProduct = $productManagerBack->deleteProduct($id);
 }
 
-function updateDeleteProduct(){
+function updateDeleteProduct()
+{
     $id = $_POST['id'];
     require 'models/backEnd/productManager.php';
     $productManagerBack = new productManagerBack;
-    $deleteProduct = $productManagerBack-> updateDeleteProduct($id);
+    $deleteProduct = $productManagerBack->updateDeleteProduct($id);
 }
 
 
@@ -600,21 +616,22 @@ function updateDeleteProduct(){
 
 
 // controller qui envoie le nouvel article 
-function sendNewArticle(){
+function sendNewArticle()
+{
     require 'models/backEnd/articlesManager.php';
     $articlesManager = new ArticlesManager();
     $sendArticle = $articlesManager->sendNewArticleModel();
-    
+
     $title = htmlspecialchars($_POST['title']);
     $description = htmlspecialchars($_POST['description']);
-    $articles['title'] = str_replace("'","\'",$title);
-    $articles['description'] = str_replace("'","\'",$description);
+    $articles['title'] = str_replace("'", "\'", $title);
+    $articles['description'] = str_replace("'", "\'", $description);
 
     require 'models/frontEnd/tokenManager.php';
     $tokenManager = new TokenManager();
     $Alltokens = $tokenManager->getAllTokens();
 
-    
+
     require 'models/frontEnd/curlManager.php';
     $curlManager = new CurlManager();
     var_dump($Alltokens);
@@ -625,15 +642,16 @@ function sendNewArticle(){
     echo "<br>";
     echo "<br>";
     var_dump(count($Alltokens));
-    
-    for($i=0;$i<count($Alltokens);$i++){
-        $curlPromotion = $curlManager->sendPromotionsAllTokens($Alltokens[$i],$articles);      
-     }
+
+    for ($i = 0; $i < count($Alltokens); $i++) {
+        $curlPromotion = $curlManager->sendPromotionsAllTokens($Alltokens[$i], $articles);
+    }
 }
 
 //router pour supprimer un article
-function deleteArticle(){
-    
+function deleteArticle()
+{
+
     // require  'models/backEnd/imageManager.php';
     // $imagemanager =  new imageManager();
     // $imageUpload = $imagemanager->uploadImage();
@@ -641,7 +659,7 @@ function deleteArticle(){
     var_dump($id);
     require 'models/backEnd/articlesManager.php';
     $articlesManagerBack = new ArticlesManager;
-    $deleteArticle = $articlesManagerBack-> deleteArticle($id);
+    $deleteArticle = $articlesManagerBack->deleteArticle($id);
     //echo "<script type='text/javascript'>document.location.replace('index.php?action=administrationHome');</script>";    
 }
 
@@ -649,11 +667,12 @@ function deleteArticle(){
 
 
 //router pour envoyer une nouvelle promo ou news
-function sendNewNews(){
+function sendNewNews()
+{
     // envoie du nouvel article
     require 'models/backEnd/newsManager.php';
     $newsManager = new newsManager();
-    $sendnews = $newsManager->sendNewNewsModel();    
+    $sendnews = $newsManager->sendNewNewsModel();
     //on recupere l'ensemble des tokens
     require 'models/frontEnd/tokenManager.php';
     $tokenManager = new TokenManager();
@@ -664,46 +683,47 @@ function sendNewNews(){
     $news['description'] = htmlspecialchars($_POST['description']);
     require 'models/frontEnd/curlManager.php';
     $curlManager = new CurlManager();
-    
-    
-    for($i=0;$i<count($Alltokens);$i++){
-        $curlPromotion = $curlManager->sendNewsAllTokens($Alltokens[$i],$news);      
-     }
-
-     $message = "votre news a bien été publié";
-    
-    echo "<script type='text/javascript'>document.location.replace('index.php?action=administrationHome&message=".$message."');</script>";
-         
 
 
+    for ($i = 0; $i < count($Alltokens); $i++) {
+        $curlPromotion = $curlManager->sendNewsAllTokens($Alltokens[$i], $news);
+    }
+
+    $message = "votre news a bien été publié";
+
+    echo "<script type='text/javascript'>document.location.replace('index.php?action=administrationHome&message=" . $message . "');</script>";
 }
 //router pour modifier une promo ou news existante 
-function updateNews(){
+function updateNews()
+{
     require 'models/backEnd/newsManager.php';
     $newsManager = new newsManager();
     $sendnews = $newsManager->updateNewsModel();
     $message = "votre news a bien été modifier";
-    
-    echo "<script type='text/javascript'>document.location.replace('index.php?action=administrationHome&message=".$message."');</script>";
-         
+    echo "<script type='text/javascript'>document.location.replace('index.php?action=administrationHome&message=" . $message . "');</script>";
 }
 
-function deleteNews(){
+function deleteNews()
+{
     $id = $_POST['id'];
     var_dump($id);
     require 'models/backEnd/newsManager.php';
     $newsManager = new newsManager();
     $sendnews = $newsManager->deleteNewsModel($id);
+    $message = "votre news a bien été supprimer";
+    echo "<script type='text/javascript'>document.location.replace('index.php?action=administrationHome&message=" . $message . "');</script>";
+
 }
 
-function test(){
+function test()
+{
     require 'models/backEnd/productManager.php';
     $productManager = new productManagerBack();
-    $cartUser=$productManager->findAllProductOfNumberCommandUser();
-   
+    $cartUser = $productManager->findAllProductOfNumberCommandUser();
 }
 //function pour ajouter ou supprime du stock depuis l'adminitration
-function addStockProduct(){
+function addStockProduct()
+{
     $data = $_POST[0];
     $stock = $_POST[1] + 1;
     var_dump($stock);
@@ -711,11 +731,10 @@ function addStockProduct(){
 
     require 'models/backEnd/productManager.php';
     $productManagerBack = new productManagerBack();
-    $addStock = $productManagerBack->addStockProduct($data,$stock);
-
-
+    $addStock = $productManagerBack->addStockProduct($data, $stock);
 }
-function substractStockProduct(){
+function substractStockProduct()
+{
     $data = $_POST[0];
     $stock = $_POST[1] - 1;
     var_dump($stock);
@@ -723,29 +742,29 @@ function substractStockProduct(){
 
     require 'models/backEnd/productManager.php';
     $productManagerBack = new productManagerBack();
-    $substractStock = $productManagerBack->substrackStockProduct($data,$stock);
-
-
+    $substractStock = $productManagerBack->substrackStockProduct($data, $stock);
 }
 
-function validateCollectCommand(){
+function validateCollectCommand()
+{
     $post = json_decode($_POST);
     var_dump($post['numberCommand']);
     $numberCommand = $post['numberCommand'];
     require 'models/backEnd/cartManager.php';
     $cartManagerBack = new CartManagerBack();
     $updateStatusCollectReady = $cartManagerBack->updateStatusCollectReady($numberCommand);
-    
-    
+
+
     // require 'models/backEnd/cartManager.php';
     // $cartManagerBack = new CartManagerBack();
-    
+
 }
 
-function updateCommand(){
-    $id=$_POST['id'];
+function updateCommand()
+{
+    $id = $_POST['id'];
     $data = basename($_FILES['avatar']['name']);
-    if($data != null){
+    if ($data != null) {
         require  'models/backEnd/imageManager.php';
         $imagemanager =  new imageManager();
         $imageUpload = $imagemanager->uploadImage();
@@ -753,8 +772,64 @@ function updateCommand(){
 
     require 'models/backEnd/articlesManager.php';
     $articlesManager = new ArticlesManager;
-    $updateCommand = $articlesManager-> updateCommand($id);
-    $message = "votre article a bien été modifié" ;
-    echo "<script type='text/javascript'>document.location.replace('index.php?action=administrationHome&message=".$message."');</script>";
+    $updateCommand = $articlesManager->updateCommand($id);
+    $message = "votre article a bien été modifié";
+    echo "<script type='text/javascript'>document.location.replace('index.php?action=administrationHome&message=" . $message . "');</script>";
+}
+//fonction pour effacer le message 
+function deleteMessage()
+{
+    $id = $_POST['id'];
+    require 'models/backEnd/contactManager.php';
+    $ContactManager = new ContactManager;
+    $deleteMessage = $ContactManager->deleteMessage($id);
+    $message = "votre message a bien été supprimer";
+    echo "<script type='text/javascript'>document.location.replace('index.php?action=administrationHome&message=" . $message . "');</script>";
+}
 
+// fonction pour envoyer une reponse a un utilisateur 
+function sendAnswer()
+{
+    $id = $_POST['id'];
+    $myAnswer = $_POST['myAnswer'];
+    require 'models/backEnd/contactManager.php';
+    $ContactManager = new ContactManager;
+    $changeStatusAnswer = $ContactManager->changeStatusAnswer($id, $myAnswer);
+    // envoyer les mails
+    $headers = "MIME-Version: 1.0" . "\r\n";
+    $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+    $headers .= "From: remipradere@gmail.com\r\n";
+    // More headers
+
+    $subject = $_POST['subject'];
+    $to = "remipradere@gmail.com";
+    $myAnswer = $_POST['myAnswer'];
+    $message = ' 
+    <html>
+        <body>
+        <header style="text-align: center;
+            background-color: green;
+            width: 259px;
+            color: white;
+            padding: 11px;
+            margin: 20px auto;
+            border: 2px solid white;
+            border-radius: 39px;">
+                <h1>Ma ferme Bio</h1>
+                <p>12 impasse octave sage</p>
+                <p>31100 TOULOUSE</p>
+                <p>06.06.06.06.06</p>
+        </header>
+
+
+            <h2>' . $subject . ' </h2>
+            <h3>  Madame Monsieur </h3>
+            <p>' . $myAnswer . '</p>;
+            <h3> Message d origine : </h3>
+        </body>
+    </html>
+    ';
+    mail($to, $subject, $message, $headers);
+    $message = "votre message a bien été envoyé";
+    echo "<script type='text/javascript'>document.location.replace('index.php?action=administrationHome&message=" . $message . "');</script>";
 }

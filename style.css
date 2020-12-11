@@ -4,6 +4,9 @@
   box-shadow: 0 7px 20px -10px #000;
 }
 
+.maxWidth200 {
+  max-width: 200px;
+}
 .marginAuto{
   margin:30px auto;
 }

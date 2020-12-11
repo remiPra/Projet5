@@ -73,9 +73,7 @@
                                                     } else {
                                                         echo 'href="index.php?action=connexion">Connexion';
                                                     }
-                                                    ?> </a> </li> <li class="nav-items">
-                                    <a class="nav-link" href="administrationConnexion.html">Administration</a>
-                            </li>
+                                                    ?> </a> </li> 
                         </ul>
                     </div>
                     <div id="togglecontainer">
@@ -96,7 +94,7 @@
                                                     } else {
                                                         echo 'href="index.php?action=connexion">Connexion';
                                                     }
-                                                    ?> </a> <a class="nav-link" href="administrationConnexion.html">Administration</a>
+                                                    ?> ></a> 
 
                             </div>
                         </div>

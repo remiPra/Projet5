@@ -26,68 +26,90 @@
 
 <body>
     <div id="app">
-        <header class="d-flex fixed-top justify-content-between">
-            <div>
-                <a id="logo" class="pl-4 ">
-                    Ma Ferme bio
-                </a>
-                <span id="nameSession">
-                    <?php if (isset($_SESSION['name'])) {
-                        echo 'bienvenue ' . htmlspecialchars($_SESSION['name']) . '';
-                    }; ?> </p>
-                </span>
+    <header class="d-flex fixed-top justify-content-between">
+                <div>
+                    <a id="logo" class="pl-4 ">
+                        Ma Ferme bio
+                    </a>
+                   
 
 
-            </div>
-            <nav class="d-flex navbar navbar-light pr-2">
-                <div id="navLargeScreen">
-                    <ul class="navbar-nav d-flex flex-row">
-                        <li class="nav-items">
-                            <a class="nav-link" href="index.php?action=index">Accueil</a>
-                        </li>
-                        <li class="nav-items">
-                            <a class="nav-link" href="index.php?action=contact">Contact</a>
-                        </li>
-                        <li class="nav-items">
-                            <a class="nav-link" href="index.php?action=blog">Actualités</a>
-                        </li>
-                        <li class="nav-items">
-                            <a class="nav-link" <?php if (isset($_SESSION['name'])) {
-                                                    echo 'href="index.php?action=deconnexion">Deconnexion';
-                                                } else {
-                                                    echo 'href="index.php?action=connexion">Connexion';
-                                                }
-                                                ?> </a> </li> <li class="nav-items">
-                                <a class="nav-link" href="administrationConnexion.html">Administration</a>
-                        </li>
-                    </ul>
                 </div>
-                <div id="togglecontainer">
-                    <button class="navbar-toggler navbar-light toggleMenu" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                        <span class="navbar-toggler-icon text-light"></span>
-                    </button>
-                    <div id="collapseExample" class="collapse">
-                        <div>
-
-                            <a class="nav-link" href="index.php?action=index">Accueil</a>
-
-                            <a class="nav-link" href="index.php?action=contact">Contact</a>
-
-                            <a class="nav-link" href="index.php?action=blog">Actualités</a>
-
-                            <a class="nav-link" <?php if (isset($_SESSION['name'])) {
-                                                    echo 'href="index.php?action=deconnexion">Deconnexion';
-                                                } else {
-                                                    echo 'href="index.php?action=connexion">Connexion';
-                                                }
-                                                ?> </a> <a class="nav-link" href="administrationConnexion.html">Administration</a>
-
-                        </div>
+                <nav class="d-flex navbar navbar-light pr-2">
+                    <div id="navLargeScreen">
+                        <ul class="navbar-nav d-flex flex-row">
+                            <li class="nav-items">
+                                <a class="nav-link" href="index.php?action=index">Accueil</a>
+                            </li>
+                            <li class="nav-items">
+                                <a class="nav-link" href="index.php?action=contact">Contact</a>
+                            </li>
+                            <li class="nav-items">
+                                <a class="nav-link" href="index.php?action=blog">Actualités</a>
+                            </li>
+                            <li class=" nav-items">
+                                <?php if (isset($_SESSION['name'])) {
+                                    echo '
+                                    <button @click="keyUserModal"> <i class="far fa-user"></i></button>
+                                    <span>'.$_SESSION['name'].'</span>
+                                    <template v-if="keyUserInfo">
+                                        <div class="d-flex flex-column">
+                                            <a href="index.php?action=deconnexion">
+                                                <i class="fas fa-sign-out-alt"></i>
+                                            </a>
+                                            <button @click="userInfoShowCommand">Mon Compte</button>
+                                        </div>
+                                    </template>
+                                                    '
+                                    ;} else {
+                                                        echo '<a class="nav-link" href="index.php?action=connexion">Connexion</a> ';
+                                                                                                        
+                                                    }
+                                                        ?> 
+                            
+                            </li> 
+                            
+                        </ul>
                     </div>
-                </div>
+                    <div id="togglecontainer">
+                        <template v-if="keyToggle">
+                        <button class="navbar-toggler navbar-light toggleMenu" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                            <span class="navbar-toggler-icon text-light"></span>
+                        </button>
+                        <div id="collapseExample" class="collapse">
+                            <div>
 
-            </nav>
-        </header>
+                            <a class="nav-link" href="index.php?action=index">Accueil</a>
+                                
+                            <a class="nav-link" href="index.php?action=contact">Contact</a>
+
+                                <a class="nav-link" href="index.php?action=blog">Actualités</a>
+
+                                <?php if (isset($_SESSION['name'])) {
+                                    echo '
+                                    <button @click="keyUserModal"> <i class="far fa-user"></i></button>
+                                    <template v-if="keyUserInfo">
+                                        <div class="d-flex flex-column">
+                                            <a href="index.php?action=deconnexion">
+                                                <i class="fas fa-sign-out-alt"></i>
+                                            </a>
+                                            <button @click="userInfoShowCommand">Mon Compte</button>
+                                        </div>
+                                    </template>
+                                                    '
+                                    ;} else {
+                                                        echo '<a class="nav-link" href="index.php?action=connexion">Connexion</a> ';
+                                                                                                        
+                                                    }
+                                                        ?>
+                                  <a class="nav-link" href="index.php?action=administration">Administration</a>
+                            </div>
+                        </div>
+                        </template>
+                    </div>
+                   
+                </nav>
+            </header>
         <!-- section principale de presentation du shop -->
         <section id="mainPositionAbsolute">
             <picture id="imageParrallax">

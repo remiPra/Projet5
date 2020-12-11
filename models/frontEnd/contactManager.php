@@ -8,11 +8,13 @@ class ContactManager
         $email = htmlspecialchars($_POST['email'], ENT_QUOTES, 'UTF-8', false);
         $message = htmlspecialchars($_POST['message'], ENT_QUOTES, 'UTF-8', false);
         $subject = htmlspecialchars($_POST['subject'], ENT_QUOTES, 'UTF-8', false);
-        
+        $status = "noRead";
+        $answerStatus = "notAnswer";
+        $myAnswer = "unknow";
         // possibilité de stocker dans la BDD
          global $bdd;
-        $req = $bdd->prepare('INSERT INTO contact (pseudo,subject, email,message) VALUES(?, ?, ?, ?)');
-        $req->execute(array($pseudo, $email, $message, $subject));
+        $req = $bdd->prepare('INSERT INTO contact (pseudo,subject, email,message,status,answerStatus,myAnswer) VALUES(?, ?, ?, ?,?,?,?)');
+        $req->execute(array($pseudo, $email, $message, $subject,$status,$answerStatus,$myAnswer));
         //possibilité d'enovoyer par mail
         $email = $_POST['email'];
         $firstname = $_POST['pseudo'];

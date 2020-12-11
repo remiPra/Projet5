@@ -1,26 +1,18 @@
 Vue.component('slider-new-mobile', {
+    props:['newsprops'],
     data() {
         return {
             liveSlide: 0,
-            marginLeft: "",
-            slides: [
-                {
-                    title: "Promotion de 50%",
-                    paragraphe: "du lundi 30 Janvier au samedi 27 Janvier , nous vous proposons un grand stock de cerises a 50%"
-                },
-                { title: "title2", paragraphe: "title2" },
-                { title: "title3", paragraphe: "title2" },
-                { title: "title4", paragraphe: "title2" },
-            ]
+            marginLeft: ""
         }
     },
     template: `
     <div class="col-md-6" id="sliderNewsMobile">
         <div class="carroussel">
             <div class="carrousselcontainer" :style="{marginLeft : marginLeft}">
-                <div class="slideNews" v-for="slide in slides">
-                    <h3>{{slide.title}}</h3>
-                    <p>{{slide.paragraphe}}</p>
+                <div class="slideNews" v-for="slide in newsprops.news">
+                    <h3 class="maxWidth200">{{slide.title}}</h3>
+                    <p class="maxWidth200">{{slide.description}}</p>
                 </div>
             </div>
         </div>
@@ -31,16 +23,17 @@ Vue.component('slider-new-mobile', {
     </div>`,
     methods: {
         next() {
-            if (this.liveSlide === 3) {
+            if (this.liveSlide === this.newsprops.count[0][0] - 1) {
                 this.liveSlide = 0
             } else { this.liveSlide++; }
             console.log(this.liveSlide);
+            console.log(this.newsprops.count[0])
 
             this.marginLeft = - this.liveSlide * 300 + "px";
         },
         previous() {
             if (this.liveSlide === 0) {
-                this.liveSlide = this.slides.length - 1
+                this.liveSlide = this.newsprops.count[0][0] - 1
             } else { this.liveSlide--; }
             console.log(this.liveSlide);
 

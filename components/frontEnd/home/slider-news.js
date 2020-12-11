@@ -4,15 +4,6 @@ Vue.component('slider-news', {
         return {
             liveSlide: 0,
             marginLeft: "",
-            slides: [
-                {
-                    title: "Promotion de 50%",
-                    paragraphe: "du lundi 30 Janvier au samedi 27 Janvier , nous vous proposons un grand stock de cerises a 50%"
-                },
-                { title: "title2", paragraphe: "title2" },
-                { title: "title3", paragraphe: "title2" },
-                { title: "title4", paragraphe: "title2" },
-            ]
         }
     },
     template: `<div data-aos="zoom-in" class="col-sm-6" id="sliderNews">

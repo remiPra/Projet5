@@ -104,6 +104,9 @@
                     <div class="container px-md-3 shopTitle">
                         <h1 class="text-light">Ma ferme Bio</h1>
                         <h2>Connexion</h2>
+                        <p class="text-success"><?php if (isset($_GET['mailPassword'])) {
+                                echo htmlspecialchars($_GET['mailPassword']);
+                            }; ?> </p>
                         <p id="textIntroConnexion">Pour pouvoir passer une commande , connectez vous où inscrivez vous pour nous rejoindre </p>
                         <p><?php if (isset($_GET['msgError'])) {
                                 echo htmlspecialchars($_GET['msgError']);
