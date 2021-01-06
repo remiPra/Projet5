@@ -130,7 +130,7 @@
                     <div @click="routageProduct" class="col-lg-3 col-md-6">
                         <div class="contentCategory ButtonGreen text-center marginAuto marginAuto col-md-10 ml-auto mr-auto">
                             <h4>
-                        <a class="text-dark" href="#routerCommand">
+                        <a class="text-dark">
                             Produits
                         </a>
                             </h4>

@@ -6,6 +6,7 @@ Vue.component('message-shop', {
                 MessageNoReadList:false,
                 MessageReadList:false,
                 MessageNotAnswerList:false,
+                MessageOpen:false
             },
             liveMessage:0    
             }
@@ -16,35 +17,43 @@ Vue.component('message-shop', {
                 this.$emit("ongetallmessages")
             },
             routageMessageNoReadList(){
+                this.router.MessageOpen = false
                 this.router.MessageNoReadList = true
                 this.router.MessageReadList = false
                 this.router.MessageNotAnswerList = false
                 this.scrolling("MessageNoReadList")
             },
             routageMessageReadList(){
+                this.router.MessageOpen = false
                 this.router.MessageReadList = true
                 this.router.MessageNoReadList = false
                 this.router.MessageNotAnswerList = false
                 this.scrolling("MessageReadList")
             },
             routageMessageNotAnswerList(){
+                this.router.MessageOpen = false
                 this.router.MessageNotAnswerList = true
                 this.router.MessageNoReadList = false
                 this.router.MessageReadList = false
                 this.scrolling("MessageNotAnswerList")
             },
             liveMessageContainer(data,id){
+                this.router.MessageOpen = true 
                 this.$emit('oncheckreadmessage',id)
                 console.log(data)
                 this.liveMessage = data;
+                this.scrolling('messageOpen')
             },
             scrolling(element) {
-                const id = element;
-                const yOffset = -100; 
-                const elements = document.getElementById(id);
-                const y = elements.getBoundingClientRect().top + window.pageYOffset + yOffset;
-                
-                window.scrollTo({top: y, behavior: 'smooth'});
+                setTimeout(()=>{
+
+                    const id = element;
+                    const yOffset = -100; 
+                    const elements = document.getElementById(id);
+                    const y = elements.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                    
+                    window.scrollTo({top: y, behavior: 'smooth'});
+                },500)
             },    
             
         },    
@@ -133,6 +142,7 @@ Vue.component('message-shop', {
                                     <td>{{data.id}}</td>
                                 <td>
                                     <div class="actionTableau">
+                                    <button @click="liveMessageContainer(index,data.id)"  class="buttonAdmin"> Lire </button>
                                         <form  class="formAdmin formWithNoBorder" action="index.php?action=deleteMessage" method="POST"> 
                                             <input name="id" :value="data.id" hidden>      
                                             <button  class="buttonAdmin " type="submit">Supprimer</button>
@@ -185,6 +195,9 @@ Vue.component('message-shop', {
             </transition>
             </div>
 
+        <div id="MessageOpen">
+        <transition name="fade">
+        <template v-if="router.MessageOpen">
             <div class="col-md-8 m-auto tableAdministration" >
                     <h3>{{messagesprops[liveMessage].id}}</h3>
                     <p>{{messagesprops[liveMessage].pseudo}}</p>
@@ -192,12 +205,14 @@ Vue.component('message-shop', {
                     <p>{{messagesprops[liveMessage].message}}</p>
 
                     <form  class="formAdmin formWithNoBorder" action="index.php?action=sendAnswer" method="POST"> 
-                                            <input name="id" :value="messagesprops[liveMessage].id" hidden>      
-                                            <textarea name="myAnswer"></textarea>      
-                                            <button  class="buttonAdmin " type="submit">Envoyer</button>
-                                        </form>   
+                        <input name="id" :value="messagesprops[liveMessage].id" hidden>      
+                        <textarea name="myAnswer"></textarea>      
+                        <button  class="buttonAdmin " type="submit">Envoyer</button>
+                    </form>   
 
             </div>
-
+        </template>
+        </transition>
+        </div>
 
         </section>`})

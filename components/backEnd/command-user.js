@@ -575,12 +575,15 @@ Vue.component('command-user', {
             this.router.detailCommandLivraison = false;    
         },
         scrolling(element) {
-            const id = element;
-            const yOffset = -100;
-            const elements = document.getElementById(id);
-            const y = elements.getBoundingClientRect().top + window.pageYOffset + yOffset;
+            setTimeout(()=>{
 
-            window.scrollTo({top: y, behavior: 'smooth'});
+                const id = element;
+                const yOffset = -100; 
+                const elements = document.getElementById(id);
+                const y = elements.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                
+                window.scrollTo({top: y, behavior: 'smooth'});
+            },500)
         },
    
         onProblemCommand(data){

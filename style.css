@@ -7,18 +7,17 @@
 .maxWidth200 {
   max-width: 200px;
 }
-.marginAuto{
-  margin:30px auto;
+.marginAuto {
+  margin: 30px auto;
 }
 
 .marginTop {
-  margin-top:50px!important;
+  margin-top: 50px !important;
 }
 
 .marginTopAdmin {
-  margin-top:100px!important;
+  margin-top: 100px !important;
 }
-
 
 /* Stylisation de la police  */
 /* Regles  pour le site et pour bootstrap  */
@@ -50,7 +49,7 @@ h1 {
 }
 main {
   background-color: rgba(0, 0, 0, 0.6);
-  padding:20px 2px; 
+  padding: 20px 2px;
 }
 
 body,
@@ -79,7 +78,7 @@ header {
   font-family: "CairoExtended-Regular" !important;
   /* font-family: 'Oswald', sans-serif; */
 }
-.displayGrey{
+.displayGrey {
   background-color: #4a4848;
 }
 a {
@@ -101,9 +100,10 @@ a:hover {
 #articleViewtext,
 form,
 .buttonBrown,
-.tableAdministration,.tableAdmin,
+.tableAdministration,
+.tableAdmin,
 .buttonMain1 {
-  color: white;
+  color: white!important;
   background-color: #d9a679;
   border: 6px solid #26802e;
   border-radius: 19px;
@@ -115,7 +115,7 @@ form,
 }
 
 #administrationShop {
-  padding-bottom:20px;
+  padding-bottom: 20px;
 }
 
 form input[type="submit"],
@@ -124,10 +124,14 @@ input[type="button"],
 button {
   background-color: white;
   border: 6px solid #26802e;
-  border-radius: 19px!important;
+  border-radius: 19px !important;
   cursor: pointer;
-  color: #284010!important;
+
   padding: 6px 11px 10px 11px;
+}
+
+.ButtonGreen {
+  color: #284010 !important;
 }
 
 .onButtonGreen {
@@ -139,15 +143,13 @@ button {
   border: 6px solid #26802e;
 }
 
-
-
 /* Stylisation du menu */
 #togglecontainer {
   display: none;
 }
 
 #nameSession {
-  color:white;
+  color: white;
 }
 .toggleMenu {
   border-color: white !important;
@@ -172,17 +174,17 @@ header {
 
 .arrowCartSlide {
   text-align: center;
-    position: relative;
-  }  
-  .arrowCartSlideIcon {
-    animation: arrowSlide 0.8s;
+  position: relative;
+}
+.arrowCartSlideIcon {
+  animation: arrowSlide 0.8s;
   position: absolute;
-    font-size: 27px;
-    z-index: 222222222222222222222222222222;
-    color:#cea176;
-    top: -16px;
-    left: 24px;
-    opacity:0;
+  font-size: 27px;
+  z-index: 222222222222222222222222222222;
+  color: #cea176;
+  top: -16px;
+  left: 24px;
+  opacity: 0;
 }
 /* Stylisation du main de l'index */
 #main {
@@ -201,12 +203,11 @@ header {
 }
 
 #nameSessionStyle {
-  color:white;
-  font-size:40px;
-  animation : colorh1 4s ease-in-out;
+  color: white;
+  font-size: 40px;
+  animation: colorh1 4s ease-in-out;
   display: block;
 }
-
 
 .shopTitle {
   margin-top: 20px;
@@ -218,7 +219,6 @@ header {
 .shopTitle h3 {
   padding-top: 20px;
 }
-
 
 .shopTitle button {
   /* margin-top: 0px !important; */
@@ -368,7 +368,7 @@ header {
   left:0;
   bottom:0;
   right:0; */
-  }
+}
 
 /* modal de confirmation */
 #confirmationModal {
@@ -396,17 +396,17 @@ header {
   right: 0px;
 }
 .classSlider {
-  background-color: #faf3eb; 
+  background-color: #faf3eb;
 }
 .cartSlider {
   display: none !important;
 }
 
 .horizontalLine {
-  width:80%;
-  min-width:200px;
+  width: 80%;
+  min-width: 200px;
   margin: 37px auto;
-  border:1px solid white;
+  border: 1px solid white;
 }
 
 .cardColor {
@@ -416,19 +416,16 @@ header {
 }
 
 .formWithNoBorder {
-  border:0px!important
+  border: 0px !important;
 }
-
-
 
 .buttonAdministration {
-  color: black!important;
-    background-color: white;
-    padding: 7px;
-    border-radius: 20px;
-    border: 6px solid green;
+  color: black !important;
+  background-color: white;
+  padding: 7px;
+  border-radius: 20px;
+  border: 6px solid green;
 }
-
 
 .buttonAdd,
 .buttoncontainer button,
@@ -567,7 +564,7 @@ header {
 }
 /* stylisation de la partie contact */
 
-.widthButtonMobile{
+.widthButtonMobile {
   width: 250px;
 }
 #presentationShopAdministration {
@@ -597,7 +594,7 @@ textarea {
 }
 
 #productTinymce {
-  color:white!important;
+  color: white !important;
   background-color: seagreen;
 }
 /* Stylisation de la partie blog */
@@ -607,8 +604,8 @@ textarea {
 }
 
 .padding-case button {
-  width:200px;
-  margin:10px
+  width: 200px;
+  margin: 10px;
 }
 #articleView {
   background-color: green;
@@ -616,8 +613,6 @@ textarea {
 #articleView h1 {
   margin-top: 70px;
 }
-
-
 
 .fa-search {
   vertical-align: bottom;
@@ -630,26 +625,24 @@ textarea {
   display: none !important;
 }
 .displayRed {
-  background-color: red!important;
+  background-color: red !important;
 }
 /* stylisation de la partie productDetail */
 .imageProductDetail {
   position: relative;
 }
 .fa-info-circle {
-  cursor:pointer;
+  cursor: pointer;
   font-size: 22px;
-  color:green;
+  color: green;
 }
 
 .imageProductDetail figcaption {
-  position : absolute;
+  position: absolute;
   top: 52%;
   text-align: center;
-  width:100%;
+  width: 100%;
 }
-
-
 
 /* footer */
 footer {
@@ -680,16 +673,16 @@ footer i {
 }
 
 .traitSeparation {
-  content:" ";
+  content: " ";
   background-color: white;
   border: 2px solid white;
   width: 80%;
-  height:2px;
-  margin:100px auto
+  height: 2px;
+  margin: 100px auto;
 }
 
 .articleTitle {
-  min-width:200px;
+  min-width: 200px;
 }
 /* stylisation des formulaires d'administration */
 #adminForm label {
@@ -727,8 +720,9 @@ footer i {
   animation: accordeonClose 0.5s forwards;
 }
 
-#Paypal,#CreditCard {
-  width:100%
+#Paypal,
+#CreditCard {
+  width: 100%;
 }
 /* stylisation de la partie recupitulatif du cart */
 .cartConfirm tbody,
@@ -755,22 +749,23 @@ footer i {
   height: 100px;
 }
 .headerOrder button {
-  width:180px;
+  width: 180px;
   margin: 6px 0;
 }
 
 /* stylisation de l'information de l'user dans l'accueil */
-.infoUserTable,.infoUserDetailTable {
-  width:100%;
+.infoUserTable,
+.infoUserDetailTable {
+  width: 100%;
   border: 4px solid white;
   /* border-radius: 43px!important; */
 }
 
-.infoUserTable td,.infoUserDetailTable td {
+.infoUserTable td,
+.infoUserDetailTable td {
   border: 4px solid white;
-  padding:4px;
+  padding: 4px;
 }
-
 
 @keyframes accordeonOpen {
   0% {
@@ -792,25 +787,21 @@ footer i {
   }
 }
 /* creation des differentes animations */
-@keyframes arrowSlide{
-  0%{
+@keyframes arrowSlide {
+  0% {
     opacity: 0;
-    top:+3px;
+    top: +3px;
   }
-  
-  20%{
-    top:+2px;
-    opacity:1;
+
+  20% {
+    top: +2px;
+    opacity: 1;
   }
-  100%{
-    opacity:0;
-    top:-16px
+  100% {
+    opacity: 0;
+    top: -16px;
   }
 }
-
-
-
-
 
 @keyframes color {
   0% {
@@ -866,11 +857,11 @@ footer i {
   }
 
   #headerButton {
-    width:200px
+    width: 200px;
   }
 
   form {
-    width:250px;
+    width: 250px;
   }
   .categoryContainer .box {
     width: 220px;
@@ -913,7 +904,7 @@ footer i {
     min-width: 200px;
   }
   /* stylisation des products details */
- 
+
   .productImage {
     width: 150px;
   }
@@ -927,28 +918,27 @@ footer i {
     color: whitesmoke;
     justify-content: center;
   }
-  tbody tr{
+  tbody tr {
     margin-bottom: 100px;
     /* width: 100%!important; */
-    border:3px green solid;
+    border: 3px green solid;
   }
 
   .administrationFlex {
-    width:100%
+    width: 100%;
   }
 
-  .administrationFlex tr{
-    border:3px solid white;
+  .administrationFlex tr {
+    border: 3px solid white;
   }
-  .administrationFlex th,.administrationFlex td {
-    display:inline-block;
+  .administrationFlex th,
+  .administrationFlex td {
+    display: inline-block;
   }
-
-  
 }
 @media screen and (max-width: 570px) {
   .administrationFlex th {
-    display:none;
+    display: none;
   }
 
   #sliderNews {
@@ -966,15 +956,14 @@ footer i {
   #adminForm {
     width: 300px;
   }
-  
-   .administrationFlex {
-     margin:20px auto;
-   }
+
+  .administrationFlex {
+    margin: 20px auto;
+  }
 
   .administrationFlex td {
     padding: 5px 20px 5px 20px;
-    width:200px;
-
+    width: 200px;
   }
   /* stylisation des boutons du slider du cart */
   .cartSlider {

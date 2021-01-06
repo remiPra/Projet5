@@ -67,7 +67,7 @@ Vue.component('articles-shop', {
     
                                         <td>
                                             <div class="actionTableau">
-                                                <a @click="emitMofifyArticleView(index)" class="LinkAdministration">Modifié </a>
+                                                <a @click="emitMofifyArticleView(index)" class="LinkAdministration ButtonGreen">Modifié </a>
                                                
                                             </div>
                                         </td>

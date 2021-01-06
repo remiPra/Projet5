@@ -246,12 +246,15 @@ methods: {
         this.scrolling("routageMenu")
     },
     scrolling(element) {
-        const id = element;
-        const yOffset = -100; 
-        const elements = document.getElementById(id);
-        const y = elements.getBoundingClientRect().top + window.pageYOffset + yOffset;
-        
-        window.scrollTo({top: y, behavior: 'smooth'});
+        setTimeout(()=>{
+
+            const id = element;
+            const yOffset = -100; 
+            const elements = document.getElementById(id);
+            const y = elements.getBoundingClientRect().top + window.pageYOffset + yOffset;
+            
+            window.scrollTo({top: y, behavior: 'smooth'});
+        },500)
     },
     onPreviousUpdateNews(){
         this.$emit('onpreviousupdatenews')
