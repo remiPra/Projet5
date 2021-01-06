@@ -126,7 +126,7 @@ button {
   border: 6px solid #26802e;
   border-radius: 19px!important;
   cursor: pointer;
-  color: #284010;
+  color: #284010!important;
   padding: 6px 11px 10px 11px;
 }
 

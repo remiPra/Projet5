@@ -4,7 +4,17 @@ importScripts('https://www.gstatic.com/firebasejs/7.2.1/firebase-messaging.js');
 importScripts('https://www.gstatic.com/firebasejs/7.2.1/firebase-analytics.js');
 
 
-self.addEventListener('fetch', function(event) {});
+self.addEventListener('install',function(event){
+  console.log('[serviceWorker] installing service Worker....',event)
+})
+
+self.addEventListener('activate',function(event){
+  console.log('[serviceWorker] activate service Worker....',event)
+})
+self.addEventListener('fetch',function(event){
+  console.log('[serviceWorker] fetch service Worker....',event)
+  event.respondWith(fetch(event.request))
+})
 
 // Initialize the Firebase app in the service worker by passing in the
 // messagingSenderId.

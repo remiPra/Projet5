@@ -55,13 +55,13 @@
                             <a href="#routerArticles" @click="routageArticles" class="nav-link">Articles</a>
                         </li>
                         <li class="nav-items">
-                            <a class="nav-link">News</a>
+                            <a  @click="routageNews" class="nav-link">News</a>
                         </li>
                         <li class="nav-items">
-                            <a class="nav-link">Messages</a>
+                            <a @click="routageMessage" class="nav-link">Messages</a>
                         </li>
                         <li class="nav-items">
-                            <a class="nav-link">Administration</a>
+                            <a href="index.php?action=administrationHome"class="nav-link">Administration</a>
                         </li>
                     </ul>
                 </div>
@@ -73,16 +73,13 @@
                         <div>
                             <a href="#routerCommand" @click="routageCommand" class="nav-link text-light">Commandes</a>
                             <a href="#routerProduct" @click="routageProduct" class="nav-link text-light">Produits</a>
-                            <a href="#routerArticles" @click="routageArticles" class="nav-link text-light">News</a>
-                            <a class="nav-link text-light">Messages</a>
+                            <a href="#routerArticles" @click="routageArticles" class="nav-link text-light">Articles</a>
+                            <a  @click="routageNews" class="nav-link text-light">News</a>
+                            <a @click="routageMessage" class="nav-link text-light">Messages</a>
                         </div>
                     </div>
                 </div>
-                <div>
-                    <button>
-                        <i class="fas fa-shopping-cart"></i>
-                    </button>
-                </div>
+                
             </nav>
         </header>
         <main>
@@ -117,13 +114,13 @@
                 </div>
             </section>
             <section class="buttonBrown" id="routerMain">
-                <h3> Retouvez toutes les sections de l'administration</h3>
+                <h3 class="text-align-center"> Retouvez toutes les sections de l'administration</h3>
                 <!-- section pour la partie des differentes categories de l'administration -->
                 <div class=" container-fluid marginTop row ">
                     <div @click="routageCommand" class="col-lg-3 col-md-6">
                         <div class="contentCategory text-center ButtonGreen marginAuto col-md-10 ml-auto mr-auto">
                             <h4>
-                                <a href="#routerCommand">
+                                <a class="text-dark" href="#routerCommand">
                                     Commandes
                                 </a>
                             </h4>
@@ -133,7 +130,7 @@
                     <div @click="routageProduct" class="col-lg-3 col-md-6">
                         <div class="contentCategory ButtonGreen text-center marginAuto marginAuto col-md-10 ml-auto mr-auto">
                             <h4>
-                        <a href="#routerCommand">
+                        <a class="text-dark" href="#routerCommand">
                             Produits
                         </a>
                             </h4>

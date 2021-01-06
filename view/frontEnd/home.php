@@ -274,7 +274,7 @@
 
         </template>
     </div>
-
+    <script src="app.js"></script>
     <!-- vue composant du header -->
     <script src="components/frontEnd/home/header-home.js"></script>
     <!-- vue composant des infos de slider  -->
@@ -1079,16 +1079,7 @@
     AOS.init();
 </script>
 <script>
-    if ('serviceWorker' in navigator) {
-    console.log("Will the service worker register?");
-    navigator.serviceWorker.register('../firebase-messaging-sw.js')
-      .then(function(reg){
-        console.log("Yes, it did.")
-        ;
-      }).catch(function(err) {
-        console.log("No it didn't. This happened: ", err)
-      });
-  }
+  
 
 // let deferredPrompt;
 // const addBtn = document.querySelector('.add-button');
