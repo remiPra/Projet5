@@ -5,7 +5,7 @@ Vue.component('shop-products-details', {
             keyChange:true,
             category: [{ name: "all" }, { name: "legumes" }, { name: "fruits" }],
             h2: "Selection des produits",
-            text: "Retouvez la selection de nos plus beaux produits disponible dans notre magasin",
+            text: "Retrouvez la selection de nos plus beaux produits disponible dans notre magasin",
             searchProduct: "",
             productsListShow: true,
             liveCategory: 0,

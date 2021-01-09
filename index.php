@@ -154,6 +154,8 @@ if ($_SESSION == false and isset($_GET['action'])) {
         case 'updateCommand':
             updateCommand();
             break;
+        case 'deleteCommand':
+            deleteCommand();
             //administration des messages
         case 'deleteMessage':
             deleteMessage();

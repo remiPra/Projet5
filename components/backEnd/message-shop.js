@@ -53,7 +53,7 @@ Vue.component('message-shop', {
                     const y = elements.getBoundingClientRect().top + window.pageYOffset + yOffset;
                     
                     window.scrollTo({top: y, behavior: 'smooth'});
-                },500)
+                },400)
             },    
             
         },    
@@ -199,14 +199,14 @@ Vue.component('message-shop', {
         <transition name="fade">
         <template v-if="router.MessageOpen">
             <div class="col-md-8 m-auto tableAdministration" >
-                    <h3>{{messagesprops[liveMessage].id}}</h3>
-                    <p>{{messagesprops[liveMessage].pseudo}}</p>
-                    <p>{{messagesprops[liveMessage].subject}}</p>
-                    <p>{{messagesprops[liveMessage].message}}</p>
+                    <h3>Pseudo : {{messagesprops[liveMessage].pseudo}}</h3>
+                    <p>Sujet : {{messagesprops[liveMessage].subject}}</p>
+                    <p>Son message : {{messagesprops[liveMessage].message}}</p>
 
                     <form  class="formAdmin formWithNoBorder" action="index.php?action=sendAnswer" method="POST"> 
                         <input name="id" :value="messagesprops[liveMessage].id" hidden>      
-                        <textarea name="myAnswer"></textarea>      
+                        <h4> Votre réponse : </h4>
+                        <textarea class="pt-10 pb-10" name="myAnswer"></textarea>      
                         <button  class="buttonAdmin " type="submit">Envoyer</button>
                     </form>   
 

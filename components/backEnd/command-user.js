@@ -5,51 +5,54 @@ Vue.component('command-user', {
     <section id="routageMenu">
         <div>
             <div class="container-fluid row ">
-                <div @click="routageCommandLivraison" class="col-md-4">
+                <div  class="col-md-4">
                     <div class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
                         <h4>Commandes a Livrer</h4>
                         <p>Commande a preparer a la livraison </p>
-                       
+                        <button class="w-100" @click="routageCommandLivraison">Voir</button>
                     </div>
                 </div>
 
                 <div class="col-md-4">
-                    <div @click="routageCommandCollect" class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
-
-
+                    <div  class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
                         <h4>Commandes en magasin</h4>
                         <p>Commandes qui doit etre prete a etre retirer</p>
+                        <button class="w-100" @click="routageCommandCollect">Voir</button>
                     </div>
                 </div>
 
                 <div class="col-md-4">
-                    <div @click="routageCommandCollectLast"
+                    <div 
                         class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
                         <h4>Retraits prêts</h4>
                         <p>Commande faite pour le retrait</p>
+                        <button class="w-100" @click="routageCommandCollectLast">Voir</button>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div @click="routageCommandLivraisonLast"
+                    <div 
                         class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
                         <h4>Livraisons pretes</h4>
                         <p>Commande où la livraison est prête </p>
+                        <button class="w-100" @click="routageCommandLivraisonLast">Voir</button>
                     </div>
                 </div>
 
                 <div class="col-md-4">
-                    <div @click="routageCommandCheck"
+                    <div 
                         class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
                         <h4>Commande effectué </h4>
                         <p>Commande terminé avec succées</p>
+                        <button  class="w-100" @click="routageCommandCheck">Voir</button>
                     </div>
                 </div>
                 
                 <div class="col-md-4">
-                    <div @click="routageCommandProblem"
+                    <div 
                         class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
                         <h4>Commande problemes </h4>
                         <p>Commande problemes</p>
+                        <button class="w-100" @click="routageCommandProblem">Voir</button>
                     </div>
                 </div>
             </div>
@@ -201,10 +204,9 @@ Vue.component('command-user', {
                                     <td v-if="data.status=='livraisonPrete'">{{data.deliveryDay}}</td>
                                     <td v-if="data.status=='livraisonPrete'">
                                         <div class="actionTableau">
-                                            <a class="LinkAdministration"
-                                                @click="onDetailCommandLivraison(data.numberCommand)">Voir </a>
-                                            <a class="LinkAdministration">Effectué </a>
-                                            <a class="LinkAdministration">Supprimer </a>
+                                            <button class="LinkAdministration"
+                                                @click="onDetailCommandLivraison(data.numberCommand)">Voir </button>
+                                           
                                         </div>
                                     </td>
                                 </tr>
@@ -237,9 +239,14 @@ Vue.component('command-user', {
                                     <td v-if="data.statusCommand=='400'">{{data.deliveryDay}}</td>
                                     <td v-if="data.statusCommand=='400'">
                                         <div class="actionTableau">
-                                            <a class="LinkAdministration ButtonGreen"
-                                                @click="onDetailCommandLivraison(data.numberCommand)">Voir </a>
-                                            <a class="LinkAdministration ButtonGreen">Supprimer </a>
+                                            <button class="LinkAdministration ButtonGreen"
+                                                @click="onDetailCommandLivraison(data.numberCommand)">Voir </button>
+                                            
+                                            <form class="formWithNoBorder formButton" method="POST" action="index.php?action=deleteCommand"">
+                                                <input hidden required name="id" :value="data.numberCommand">
+                                                <button type="submit"> Supprimer </button>
+                                            </form>                                          
+
                                         </div>
                                     </td>
                                 </tr>
@@ -272,9 +279,13 @@ Vue.component('command-user', {
                                     <td v-if="data.statusCommand=='500'">{{data.dateDeliveryOrder}}</td>
                                     <td v-if="data.statusCommand=='500'">
                                         <div class="actionTableau">
-                                            <a class="LinkAdministration"
-                                                @click="onDetailCommandLivraison(data.numberCommand)">Voir </a>
-                                            <a class="LinkAdministration">Supprimer </a>
+                                            <button class="LinkAdministration"
+                                                @click="onDetailCommandLivraison(data.numberCommand)">Voir </button>
+
+                                            <form class="formWithNoBorder formButton" method="POST" action="index.php?action=deleteCommand"">
+                                                <input hidden required name="id" :value="data.numberCommand">
+                                                <button  type="submit"> Supprimer </button>
+                                            </form>  
                                         </div>
                                     </td>
                                 </tr>
@@ -393,8 +404,8 @@ Vue.component('command-user', {
                     <template v-if="adminDetailLivraison[0].status == 'livraisonPrete'">
                         
 
-                    <form method="POST" action="proceed.php?action=checkCommand">
-                        <input :value="adminDetailLivraison[0].numberCommand" name="numberCommand" required>
+                    <form class="formWithNoBorder" method="POST" action="proceed.php?action=checkCommand">
+                        <input hidden :value="adminDetailLivraison[0].numberCommand" name="numberCommand" required>
                         <button type="submit">
                             Commande Livré
                         </button>

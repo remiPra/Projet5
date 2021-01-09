@@ -41,7 +41,7 @@ class newsManager{
 
     public function getAllNews(){
         global $bdd;
-        $req = $bdd->prepare('SELECT * FROM news');
+        $req = $bdd->prepare('SELECT * FROM news ORDER BY id DESC');
         $req->execute();
         $data = $req->fetchAll();
         return $data;

@@ -776,6 +776,21 @@ function updateCommand()
     $message = "votre article a bien été modifié";
     echo "<script type='text/javascript'>document.location.replace('index.php?action=administrationHome&message=" . $message . "');</script>";
 }
+//fonction pour effacer definitivement une commande 
+function deleteCommand(){
+    $id = $_POST['id'];
+    require "models/backEnd/cartManager.php";
+    $cartManager = new CartManagerBack();
+    $deleteCommand = $cartManager->deleteCommandClient($id);
+    $message = "votre commande a bien été supprimer";
+    var_dump($id);
+    //echo "<script type='text/javascript'>document.location.replace('index.php?action=administrationHome&message=" . $message . "');</script>";
+
+
+}
+
+
+
 //fonction pour effacer le message 
 function deleteMessage()
 {

@@ -453,7 +453,7 @@
                         const y = elements.getBoundingClientRect().top + window.pageYOffset + yOffset;
                         
                         window.scrollTo({top: y, behavior: 'smooth'});
-                    },500)
+                    },200)
                 },
                 //click pour modifier produit depuis la liste des produits 
                 modifyProductView(data){

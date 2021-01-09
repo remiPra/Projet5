@@ -6,29 +6,29 @@ Vue.component('news-shop',{
                 <div class="container-fluid row ">
                     <div @click="onGetAllNews();routageNewsList()" class="col-md-4">
                         <div class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
-                            <h4>Newss publiées</h4>
-                            <p>Liste des newss publiés sur le site</p>
+                            <h4>News publiées</h4>
+                            <p>Liste des news publiés sur le site</p>
                         </div>
                     </div>
     
                     <div class="col-md-4">
                         <div @click="onGetAllNews(),routageNewsTest()" class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
-                            <h4>Newss en Brouillon</h4>
-                            <p>Liste des newss publiés sur le site</p>
+                            <h4>Actualités en Brouillon</h4>
+                            <p>Liste des news publiés sur le site</p>
                         </div>
                     </div>
     
                     <div class="col-md-4">
                         <div @click="onGetAllNews(),routageNewsNew()" class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
-                            <h4>Nouvel News</h4>
-                            <p>Ajouter un news</p>
+                            <h4>Nouvelle actualité</h4>
+                            <p>Ajouter une nouvelle actualité</p>
                         </div>
                     </div>
     
                     <div class="col-md-4">
                         <div @click="onGetAllNews(),routageNewsUpdate()" class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
-                            <h4>Modifier un News</h4>
-                            <p>Faire la modification d'un news</p>
+                            <h4>Modifier une Actualité</h4>
+                            <p>Faire la modification d'une actualité</p>
                         </div>
                     </div>
                 </div>
@@ -254,7 +254,7 @@ methods: {
             const y = elements.getBoundingClientRect().top + window.pageYOffset + yOffset;
             
             window.scrollTo({top: y, behavior: 'smooth'});
-        },500)
+        },200)
     },
     onPreviousUpdateNews(){
         this.$emit('onpreviousupdatenews')

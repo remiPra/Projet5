@@ -160,4 +160,10 @@ class CartManagerBack
         ));
     }
 
+    public function deleteCommandClient($id){
+        global $bdd;
+        $req = $bdd->prepare('DELETE FROM command WHERE numberCommand = ?') or die(print_r($bdd->errorInfo()));
+        $req->execute(array($id));
+    }
+
 }

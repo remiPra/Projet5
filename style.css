@@ -863,6 +863,10 @@ footer i {
   form {
     width: 250px;
   }
+
+  .formButton {
+    max-width:150px!important;
+  }
   .categoryContainer .box {
     width: 220px;
     height: 330px;

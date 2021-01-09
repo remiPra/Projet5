@@ -49,7 +49,7 @@ Vue.component('articles-shop', {
             <div>
                 <transition name="fade">
                     <template v-if="router.shopArticleList">
-                        <div class="col-md-8 m-auto">
+                        <div class="col-md-11 m-auto">
                             <table class="table table-bordere">
                                 <thead>
                                     <th>Titre</th>
@@ -82,7 +82,7 @@ Vue.component('articles-shop', {
                 <transition name="fade">
                     <template v-if="router.shopArticleTest">
                     
-                        <div class="col-md-8 m-auto">
+                        <div class="col-md-11 m-auto">
                             <table class="table table-bordere">
                                 <thead>
 
@@ -101,7 +101,7 @@ Vue.component('articles-shop', {
                                         <td>{{data.date}}</td>
                                         <td>
                                             <div class="actionTableau">
-                                               <form method="POST" action="index.php?action=deleteArticle">
+                                               <form class="formWithNoBorder formButton" method="POST" action="index.php?action=deleteArticle">
                                                     <input required hidden name="id" :value="data.id">
                                                     <button type="submit"> Supprimer</button>    
                                                 </form>    
@@ -116,7 +116,7 @@ Vue.component('articles-shop', {
 
                 <transition name="fade">
                     <template v-if="router.shopArticleNew"> 
-                        <form class="col-md-8 text-light" enctype="multipart/form-data"
+                        <form class="col-md-11 text-light" enctype="multipart/form-data"
                             action="index.php?action=sendNewArticle" method="POST">
                             <div class="form-group">
                                 <label for="title"> Titre de l'article :
@@ -170,7 +170,7 @@ Vue.component('articles-shop', {
                             </div>
                         </div>
                         <p>{{articlesprops.liveUpdateArticles}}</p>
-                        <form class="col-md-8 text-light" enctype="multipart/form-data"
+                        <form class="col-md-11 text-light" enctype="multipart/form-data"
                             action="index.php?action=updateCommand" method="POST">
                             
                             <div class="form-group">
@@ -306,12 +306,15 @@ Vue.component('articles-shop', {
             this.scrolling("routageMenu")
         },
         scrolling(element) {
-            const id = element;
-            const yOffset = -100;
-            const elements = document.getElementById(id);
-            const y = elements.getBoundingClientRect().top + window.pageYOffset + yOffset;
+            setTimeout(()=>{
 
-            window.scrollTo({ top: y, behavior: 'smooth' });
+                const id = element;
+                const yOffset = -100; 
+                const elements = document.getElementById(id);
+                const y = elements.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                
+                window.scrollTo({top: y, behavior: 'smooth'});
+            },200)
         },
         // modifier un article 
         emitMofifyArticleView(index){
