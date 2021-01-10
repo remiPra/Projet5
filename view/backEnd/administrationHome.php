@@ -114,7 +114,7 @@
                 </div>
             </section>
             <section class="buttonBrown" id="routerMain">
-                <h3 class="text-center"> Retrouvez toutes les sections de l'administration</h3>
+                <h3 class="text-center mt-3"> Retrouvez toutes les sections de l'administration</h3>
                 <!-- section pour la partie des differentes categories de l'administration -->
                 <div class=" container-fluid marginTop row ">
                     <div @click="routageCommand" class="col-lg-3 col-md-6">

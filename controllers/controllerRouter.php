@@ -807,6 +807,7 @@ function sendAnswer()
 {
     $id = $_POST['id'];
     $myAnswer = $_POST['myAnswer'];
+    $lastMessage = $_POST['lastMessage'];
     require 'models/backEnd/contactManager.php';
     $ContactManager = new ContactManager;
     $changeStatusAnswer = $ContactManager->changeStatusAnswer($id, $myAnswer);
@@ -821,27 +822,38 @@ function sendAnswer()
     $myAnswer = $_POST['myAnswer'];
     $message = ' 
     <html>
-        <body>
-        <header style="text-align: center;
-            background-color: green;
-            width: 259px;
-            color: white;
-            padding: 11px;
-            margin: 20px auto;
-            border: 2px solid white;
-            border-radius: 39px;">
-                <h1>Ma ferme Bio</h1>
-                <p>12 impasse octave sage</p>
-                <p>31100 TOULOUSE</p>
-                <p>06.06.06.06.06</p>
-        </header>
+    <body>
+    <header style="text-align: center;
+        background-color: green;
+        width: 259px;
+        color: white;
+        padding: 11px;
+        margin: 20px auto;
+        border: 2px solid white;
+        border-radius: 39px;">
+            <h1>Ma ferme Bio</h1>
+            <p>12 impasse octave sage</p>
+            <p>31100 TOULOUSE</p>
+            <p>06.06.06.06.06</p>
+    </header>
 
-
-            <h2>' . $subject . ' </h2>
-            <h3>  Madame Monsieur </h3>
-            <p>' . $myAnswer . '</p>;
-            <h3> Message d origine : </h3>
-        </body>
+    <div style="
+    border: 6px solid green;
+    border-radius: 19px;
+        background-color: #d9a679;
+        border: 2px solid green;
+        color : white;
+        padding: 20px">
+        <h2>' . $subject . ' </h2>
+        <h3> Message d origine : '.$lastMessage.'  </h3>
+        <h3
+            style="
+                margin-top: 37px;
+            "
+        >  Madame Monsieur </h3>
+        <p>' . $myAnswer . '</p>
+    </div>
+    </body>
     </html>
     ';
     mail($to, $subject, $message, $headers);

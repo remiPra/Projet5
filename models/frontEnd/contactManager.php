@@ -13,7 +13,7 @@ class ContactManager
         $myAnswer = "unknow";
         // possibilité de stocker dans la BDD
          global $bdd;
-        $req = $bdd->prepare('INSERT INTO contact (pseudo,subject, email,message,status,answerStatus,myAnswer) VALUES(?, ?, ?, ?,?,?,?)');
+        $req = $bdd->prepare('INSERT INTO contact (pseudo, email,message,subject,status,answerStatus,myAnswer) VALUES(?, ?, ?, ?,?,?,?)');
         $req->execute(array($pseudo, $email, $message, $subject,$status,$answerStatus,$myAnswer));
         //possibilité d'enovoyer par mail
         $email = $_POST['email'];

@@ -70,15 +70,15 @@ Vue.component('message-shop', {
     
                     <div class="col-md-4">
                         <div @click="getAllMessages(),routageMessageReadList()" class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
-                            <h4>Messages Lu</h4>
+                            <h4>Messages Lus</h4>
                             <p>Voici la liste des messages lu</p>
                         </div>
                     </div>
     
                     <div class="col-md-4">
                         <div @click="getAllMessages();routageMessageNotAnswerList()" class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
-                            <h4>Message Non répondu</h4>
-                            <p>Voici la liste des messages non répondus</p>
+                            <h4>Message lus et répondus</h4>
+                            <p>Voici la liste des messages répondus</p>
                         </div>
                     </div>
                 </div>
@@ -91,9 +91,9 @@ Vue.component('message-shop', {
                     <h3> Liste des Messages Non lues </h3>
                     <table class="table table-bordere">
                         <thead>
-                            <th>Titre</th>
+                            <th>Email</th>
                             <th>Description</th>
-                            <th>Date</th>
+                            <th>Pseudo</th>
                             <th>Action</th>
                         </thead>
                         <!-- tableau des articles publiés -->
@@ -102,8 +102,8 @@ Vue.component('message-shop', {
                             <tr v-for="(data,index) in messagesprops">
                                 <template v-if="data.status == 'noRead' && data.answerStatus == 'notAnswer'  ">
                                 <td>{{data.email}}</td>
+                                <td>{{data.subject}}</td>
                                 <td>{{data.pseudo}}</td>
-                                <td>{{data.id}}</td>
 
                                 <td>
                                     <div class="actionTableau">
@@ -124,12 +124,12 @@ Vue.component('message-shop', {
             <transition name="fade">
             <template v-if="router.MessageReadList==true">
                 <div class="col-md-8 m-auto tableAdministration" >
-                    <h3> Liste des Messages Lues et non répondues </h3>
+                    <h3> Liste des Messages Lues et répondues </h3>
                     <table class="table table-bordere">
                         <thead>
-                            <th>Titre</th>
+                            <th>Email</th>
                             <th>Description</th>
-                            <th>Date</th>
+                            <th>Pseudo</th>
                             <th>Action</th>
                         </thead>
                         <!-- tableau des articles publiés -->
@@ -138,8 +138,8 @@ Vue.component('message-shop', {
                             <tr v-for="(data,index) in messagesprops">
                                 <template v-if="data.status == 'read' && data.answerStatus == 'notAnswer'">
                                     <td>{{data.email}}</td>
+                                    <td>{{data.subject}}</td>
                                     <td>{{data.pseudo}}</td>
-                                    <td>{{data.id}}</td>
                                 <td>
                                     <div class="actionTableau">
                                     <button @click="liveMessageContainer(index,data.id)"  class="buttonAdmin"> Lire </button>
@@ -165,9 +165,9 @@ Vue.component('message-shop', {
                     <h3> Liste des Messages lu et répondues </h3>
                     <table class="table table-bordere">
                         <thead>
-                            <th>Titre</th>
-                            <th>Description</th>
-                            <th>Date</th>
+                            <th>Email</th>
+                            <th>Subject</th>
+                            <th>Pseudo</th>
                             <th>Action</th>
                         </thead>
                         <!-- tableau des articles publiés -->
@@ -176,8 +176,8 @@ Vue.component('message-shop', {
                             <tr v-for="(data,index) in messagesprops">
                                 <template v-if="data.status == 'read' && data.answerStatus == 'answer'">
                                     <td>{{data.email}}</td>
+                                    <td>{{data.subject}}</td>
                                     <td>{{data.pseudo}}</td>
-                                    <td>{{data.id}}</td>
                                 <td>
                                     <div class="actionTableau"> 
                                         <form  class="formAdmin formWithNoBorder" action="index.php?action=deleteMessage" method="POST"> 
@@ -205,6 +205,7 @@ Vue.component('message-shop', {
 
                     <form  class="formAdmin formWithNoBorder" action="index.php?action=sendAnswer" method="POST"> 
                         <input name="id" :value="messagesprops[liveMessage].id" hidden>      
+                        <input name="lastMessage" :value="messagesprops[liveMessage].message" hidden>      
                         <h4> Votre réponse : </h4>
                         <textarea class="pt-10 pb-10" name="myAnswer"></textarea>      
                         <button  class="buttonAdmin " type="submit">Envoyer</button>
