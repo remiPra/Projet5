@@ -275,7 +275,13 @@ function administrationPasswordForgotCheck()
                             <p>06.06.06.06.06</p>
                     </header>
 
-            <div class="d-flex justify-content-center" style="border:2px solid green;padding:20px">
+            <div class="d-flex justify-content-center" style="
+            border: 6px solid green;
+            border-radius: 19px;
+            background-color: #d9a679;
+            border: 2px solid green;
+            color : white;
+            padding: 20px">
                 <h1> ' . $firstname . ' </h1>
                     <p> veuillez cliquez sur ce lien 
                         <a href="http://www.remi-pradere.com/projet5/index.php?action=initializePassword&name=' . $firstname . '&link=' . $link . '"> 
@@ -483,7 +489,14 @@ function paiementSuccess()
         <p>06.06.06.06.06</p>
     </header>
     
-    <div class="d-flex justify-content-center" style="border:2px solid green;padding:20px">
+    <div class="d-flex justify-content-center" style="
+    border: 6px solid green;
+    border-radius: 19px;
+    background-color: #d9a679;
+    border: 2px solid green;
+    color : white;
+    padding: 20px">
+    
     <div>
         <h1> ' . $info[1]['name'] . ' </h1>
         <h2>' . $info[0]['dateDeliveryDay'] . '</h2>
@@ -660,7 +673,8 @@ function deleteArticle()
     require 'models/backEnd/articlesManager.php';
     $articlesManagerBack = new ArticlesManager;
     $deleteArticle = $articlesManagerBack->deleteArticle($id);
-    //echo "<script type='text/javascript'>document.location.replace('index.php?action=administrationHome');</script>";    
+    $message = 'l\'article '.$id.' a bien été supprimé'; 
+    echo "<script type='text/javascript'>document.location.replace('index.php?action=administrationHome&message='.$message.');</script>";    
 }
 
 

@@ -114,8 +114,8 @@
                 </div>
             </section>
             <section class="buttonBrown" id="routerMain">
-                <h3 class="text-center mt-3"> Retrouvez toutes les sections de l'administration</h3>
-                <!-- section pour la partie des differentes categories de l'administration -->
+                <h3 class="text-center mt-3"> {{name}} Retrouvez toutes les sections de l'administration</h3>
+                <!-- section pour la partie des differentes categories de l'administration -->       
                 <div class=" container-fluid marginTop row ">
                     <div @click="routageCommand" class="col-lg-3 col-md-6">
                         <div class="contentCategory text-center ButtonGreen marginAuto col-md-10 ml-auto mr-auto">
@@ -127,6 +127,8 @@
 
                         </div>
                     </div>
+                    <!-- si on est dans l'administration -->
+                    <template v-if="name=='administration'">
                     <div @click="routageProduct" class="col-lg-3 col-md-6">
                         <div class="contentCategory ButtonGreen text-center marginAuto marginAuto col-md-10 ml-auto mr-auto">
                             <h4>
@@ -157,6 +159,7 @@
 
                         </div>
                     </div>
+                    </template>
                 </div>
             </section>
 
@@ -290,7 +293,8 @@
                 productsSelected: [],
                 commandsProps: {
                     commands: [],
-                    liveUpdateCommand: "0"
+                    liveUpdateCommand: "0",
+                    name:"<?php if(isset($_SESSION['name'])){echo  $_SESSION['name']; } else {echo "";}?>"
                 },
                 //props a passer dasn product-shop
                 productsProps: {
@@ -319,7 +323,9 @@
                     articles: false,
                     news: false,
                     message:false,
-                }
+                },
+                name:"<?php if(isset($_SESSION['name'])){echo  $_SESSION['name']; } else {echo "";}?>"
+
             },
             mounted() {
                 this.getAllCommands();
@@ -327,7 +333,7 @@
                 this.getAllArticles();
                 this.getAllNews();
                 this.getAllMessages();
-
+                
             },
             methods: {
 

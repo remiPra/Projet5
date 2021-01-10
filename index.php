@@ -56,7 +56,7 @@ if ($_SESSION == false and isset($_GET['action'])) {
             index();
             break;
     }
-} else if (isset($_SESSION) and isset($_GET['action']) and ($_SESSION['name'] != "administration")) {
+} else if (isset($_SESSION) and isset($_GET['action']) and ($_SESSION['name'] != "administration") and ($_SESSION['name'] != "livreur") ) {
     switch (($_GET['action'])) {
 
         case 'home':
@@ -102,7 +102,7 @@ if ($_SESSION == false and isset($_GET['action'])) {
     }
 } else if (
     isset($_SESSION) and isset($_GET['action'])
-    and ($_SESSION['name'] == "administration")
+    and (($_SESSION['name'] == "administration") OR ($_SESSION['name'] == "livreur"))
 ) {
     switch (($_GET['action'])) {
 

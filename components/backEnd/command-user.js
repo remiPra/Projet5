@@ -5,7 +5,7 @@ Vue.component('command-user', {
     <section id="routageMenu">
         <div>
             <div class="container-fluid row ">
-                <div  class="col-md-4">
+                <div v-if="commandsprops.name=='administration'" class="col-md-4">
                     <div class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
                         <h4>Commandes a Livrer</h4>
                         <p>Commande a preparer a la livraison </p>
@@ -13,7 +13,7 @@ Vue.component('command-user', {
                     </div>
                 </div>
 
-                <div class="col-md-4">
+                <div v-if="commandsprops.name=='administration'" class="col-md-4">
                     <div  class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
                         <h4>Commandes en magasin</h4>
                         <p>Commandes qui doit etre prete a etre retirer</p>
@@ -21,7 +21,7 @@ Vue.component('command-user', {
                     </div>
                 </div>
 
-                <div class="col-md-4">
+                <div v-if="commandsprops.name=='administration'" class="col-md-4">
                     <div 
                         class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
                         <h4>Retraits prêts</h4>
@@ -38,7 +38,7 @@ Vue.component('command-user', {
                     </div>
                 </div>
 
-                <div class="col-md-4">
+                <div v-if="commandsprops.name=='administration'" class="col-md-4">
                     <div 
                         class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
                         <h4>Commande effectué </h4>
@@ -47,7 +47,7 @@ Vue.component('command-user', {
                     </div>
                 </div>
                 
-                <div class="col-md-4">
+                <div v-if="commandsprops.name=='administration'" class="col-md-4">
                     <div 
                         class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
                         <h4>Commande problemes </h4>

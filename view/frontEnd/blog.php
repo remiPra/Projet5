@@ -124,8 +124,8 @@
                 <div class="col-md-12 container text-center" id="presentationShopAdministration">
                     <div class="text-light container px-md-3 shopTitle">
                         <h1 class="text-light">Ma ferme Bio</h1>
-                        <h2>Contact </h2>
-                        <p>Si vous désirez nous contacter , vous pouvez remplir ce formulaire</p>
+                        <h2>Blog de la ferme bio </h2>
+                        <p>Listes des différents articles publiées sur le site</p>
                     </div>
                 </div>
             </section>
