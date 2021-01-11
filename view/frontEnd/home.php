@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+   
+    
     <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-messaging.js"></script>
     <!-- For an optimal experience using Cloud Messaging, also add the Firebase SDK for Analytics. -->
@@ -274,7 +276,7 @@
 
         </template>
     </div>
-    <script src="app.js"></script>
+   
     <!-- vue composant du header -->
     <script src="components/frontEnd/home/header-home.js"></script>
     <!-- vue composant des infos de slider  -->
@@ -1072,61 +1074,11 @@
 
         });
     </script>
-
 </body>
 <!-- script de la librairie d'animation aos -->
 <script>
     AOS.init();
 </script>
-<script>
-  
-
-// let deferredPrompt;
-// const addBtn = document.querySelector('.add-button');
-// console.log(addBtn)
-
-
-// var _beforeInstallPrompt; if ( "onbeforeinstallprompt" in window ) 
-// { window.addEventListener( "beforeinstallprompt", beforeInstallPrompt ); } 
-// function beforeInstallPrompt( evt ) { evt.preventDefault(); 
-//     _beforeInstallPrompt = evt;console.log("ok") } 
-
-// //return _beforeInstallPrompt.prompt() .then( function ( evt ) { // Wait for the user to respond to the prompt return _beforeInstallPrompt.userChoice; } ) .then( function ( choiceResult ) { //do stuff here } ) .catch( function ( err ) { if ( err.message.indexOf( "user gesture" ) > -1 ) { //recycle, but make sure there is a user gesture involved } else if ( err.message.indexOf( "The app is already installed" ) > -1 ) { //the app is installed, no need to prompt, but you may need to log or update state values } else { return err; } } ); 
-
-// console.log(Window.onbeforeinstallprompt)
-
-
-
-
-// window.addEventListener('beforeinstallprompt', (e) => {
-//   // Prevent Chrome 67 and earlier from automatically showing the prompt
-//  // e.preventDefault();
-//   console.log(e)
-//   // Stash the event so it can be triggered later.
-//   deferredPrompt = e;
-
-
-//   addBtn.addEventListener('click', (e) => {
-//     // hide our user interface that shows our A2HS button
-//     //addBtn.style.display = 'none';
-//     // Show the promp
-//     deferredPrompt.prompt();
-//     console.log(deferredPrompt)
-//     // Wait for the user to respond to the prompt
-//     deferredPrompt.userChoice.then((choiceResult) => {
-//         if (choiceResult.outcome === 'accepted') {
-//           console.log('User accepted the A2HS prompt');
-//         } else {
-//           console.log('User dismissed the A2HS prompt');
-//         }
-//         deferredPrompt = null;
-//       });
-//   });
-//   });
-
-
-
-
-</script>
+    <script src="app.js"></script>
 
 </html>

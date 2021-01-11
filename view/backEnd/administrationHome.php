@@ -15,9 +15,7 @@
 
     <!-- integration de la librairie axios -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script>
-    <!-- integration de la librairie aos -->
-    <!-- <link rel="stylesheet" href="https://unpkg.com/aos@2.3.0/dist/aos.css">
-    <script src="https://unpkg.com/aos@2.3.0/dist/aos.js"></script> -->
+    
     <!-- bootstrap -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -124,9 +122,7 @@
                     <div @click="routageCommand" class="col-lg-3 col-md-6">
                         <div class="contentCategory text-center ButtonGreen marginAuto col-md-10 ml-auto mr-auto">
                             <h4>
-                                <a class="text-dark" href="#routerCommand">
                                     Commandes
-                                </a>
                             </h4>
 
                         </div>
@@ -136,9 +132,7 @@
                         <div @click="routageProduct" class="col-lg-3 col-md-6">
                             <div class="contentCategory ButtonGreen text-center marginAuto marginAuto col-md-10 ml-auto mr-auto">
                                 <h4>
-                                    <a class="text-dark">
                                         Produits
-                                    </a>
                                 </h4>
 
                             </div>
@@ -289,12 +283,7 @@
                 commandsProps: {
                     commands: [],
                     liveUpdateCommand: "0",
-                    name: "<?php if (isset($_SESSION['name'])) {
-                                echo  $_SESSION['name'];
-                            } else {
-                                echo "";
-} ;?>"
-                },
+                    name: "<?php if (isset($_SESSION['name'])) {echo $_SESSION['name'];} else {echo "";} ;?>"},
                 //props a passer dasn product-shop
                 productsProps: {
                     products: [],
@@ -323,12 +312,7 @@
                     news: false,
                     message: false,
                 },
-                name: "<?php if (isset($_SESSION['name'])) {
-                            echo  $_SESSION['name'];
-                        } else {
-                            echo "";
-                        } ?>"
-
+                name: "<?php if (isset($_SESSION['name'])) {echo  $_SESSION['name'];} else {echo "";} ?>"
             },
             mounted() {
                 this.getAllCommands();
@@ -339,8 +323,6 @@
 
             },
             methods: {
-
-
                 //methode pour recuperer les produits
                 getAllCommands() {
                     console.log("users")
@@ -357,6 +339,7 @@
                         }
                     });
                 },
+                // Methodes pour recuperer tous les produits
                 getAllProducts() {
                     console.log("users")
                     axios.get("proceed.php?action=getAllProducts").then(function(response) {
@@ -374,8 +357,7 @@
                     });
                     console.log(this.commandsProps.commands)
                 },
-
-                //axios pour recuperer tous les messages
+                //methodes  pour recuperer tous les messages
                 getAllMessages() {
                     console.log("users")
                     axios.get("proceed.php?action=getAllMessages").then(function(response) {
@@ -391,6 +373,7 @@
                         }
                     });
                 },
+                //méthodes pour recuperer tous les articles 
                 getAllArticles() {
                     console.log("users")
                     axios.get("proceed.php?action=getAllArticles").then(function(response) {
@@ -406,6 +389,7 @@
                         }
                     });
                 },
+                // methodes pour recuperer toutes les news
                 getAllNews() {
                     console.log("users")
                     axios.get("proceed.php?action=getAllNews").then(function(response) {
@@ -421,6 +405,7 @@
                         }
                     });
                 },
+                //router
                 routageReset() {
                     this.router.product = false
                     this.router.command = false
@@ -434,7 +419,7 @@
                     this.router.articles = false
                     this.router.news = false
                     this.router.message = false
-                    // setTimeout(this.scrolling("routerProduct"),500)      
+                    this.scrolling("routerProduct")      
                 },
                 routageCommand() {
                     this.router.product = false
@@ -442,7 +427,7 @@
                     this.router.articles = false
                     this.router.news = false
                     this.router.message = false
-                    // this.scrolling("routerCommand")      
+                    this.scrolling("routerCommand")      
                 },
                 routageArticles() {
                     this.router.product = false
@@ -539,9 +524,7 @@
                     });
 
                 },
-
-
-
+                //conversion d'une donnée javascript
                 toFormData(obj) {
                     // conversion d'une données javascript 
                     let fd = new FormData();
@@ -645,15 +628,16 @@
                     });
                 },
                 scrolling(element) {
-                    const id = element;
-                    const yOffset = -100;
-                    const elements = document.getElementById(id);
-                    const y = elements.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                    //on utilise un setTimeout car probleme avec le scroll
+                    setTimeout(()=>{
 
-                    window.scrollTo({
-                        top: y,
-                        behavior: 'smooth'
-                    });
+                            const id = element;
+                            const yOffset = -100; 
+                            const elements = document.getElementById(id);
+                            const y = elements.getBoundingClientRect().top + window.pageYOffset + yOffset;
+
+                            window.scrollTo({top: y, behavior: 'smooth'});
+                                },200)
                 },
 
             }

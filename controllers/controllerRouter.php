@@ -160,15 +160,7 @@ function cart()
     require "models/frontEnd/cartManager.php";
     $cartManager = new CartManager();
     $orderNumberCommand = $cartManager->cartAddList($userId);
-    echo '<br/>';
-    var_dump("134 " . $orderNumberCommand);
-    echo '<br/>';
-
-
-
-
-
-
+   
     require 'models/frontEnd/productsManager.php';
     $productsManager = new ProductsManager();
 
@@ -184,13 +176,6 @@ function cart()
 
 
         $stock = $productsManager->getStockFromProduct($productName);
-
-        echo '<br/>';
-        echo '<br/>';
-        var_dump($stock);
-        echo '<br/>';
-        echo '<br/>';
-
         $updateStock = $cartManager->substractProductFromCartToStock($productName, $stock);
     }
     //enregistrement de toute la lliste des produits
@@ -218,12 +203,13 @@ function curl()
 
     require 'models/frontEnd/curlManager.php';
     $curlManager = new CurlManager();
-    var_dump($Alltokens);
-    echo "<br>";
-    echo "<br>";
+    //var_dump($Alltokens);
     var_dump(count($Alltokens));
+    echo "<br>";
+    echo "<br>";
 
     for ($i = 0; $i < count($Alltokens); $i++) {
+        sleep(2);
         $curlPromotion = $curlManager->sendPromotionsAllTokens($Alltokens[$i], $articles);
     }
 }
