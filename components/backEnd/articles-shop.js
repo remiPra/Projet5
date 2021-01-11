@@ -67,8 +67,7 @@ Vue.component('articles-shop', {
     
                                         <td>
                                             <div class="actionTableau">
-                                                <a @click="emitMofifyArticleView(index)" class="LinkAdministration ButtonGreen">Modifié </a>
-                                               
+                                                <a @click="emitMofifyArticleView(index)" class="LinkAdministration ButtonGreen">Modifié </a>  
                                             </div>
                                         </td>
                                     </tr>
@@ -101,7 +100,8 @@ Vue.component('articles-shop', {
                                         <td>{{data.date}}</td>
                                         <td>
                                             <div class="actionTableau">
-                                               <form class="formWithNoBorder formButton" method="POST" action="index.php?action=deleteArticle">
+                                                <a @click="emitMofifyArticleView(index)" class="LinkAdministration ButtonGreen">Modifié </a>
+                                                <form class="formWithNoBorder formButton" method="POST" action="index.php?action=deleteArticle">
                                                     <input required hidden name="id" :value="data.id">
                                                     <button type="submit"> Supprimer</button>    
                                                 </form>    

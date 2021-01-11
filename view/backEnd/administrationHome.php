@@ -28,7 +28,7 @@
     <!-- integration de font-awesome -->
     <script src="https://kit.fontawesome.com/5a70a7892a.js"></script>
     <script src="https://cdn.tiny.cloud/1/6ztoevx7at9ej6dibcvmhjeda1slkeqw64zucs9bcodphk4p/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-   
+
     <title>Ma ferme Bio</title>
 </head>
 
@@ -43,7 +43,7 @@
                 <div id="navLargeScreen">
                     <ul class="navbar-nav d-flex flex-row">
                         <li class="nav-items">
-                            <a class="nav-link">Accueil</a>
+                            <a href="index.php?action=administrationHome" class="nav-link">Accueil</a>
                         </li>
                         <li class="nav-items">
                             <a href="#routerCommand" @click="routageCommand" class="nav-link">Commandes</a>
@@ -55,13 +55,15 @@
                             <a href="#routerArticles" @click="routageArticles" class="nav-link">Articles</a>
                         </li>
                         <li class="nav-items">
-                            <a  @click="routageNews" class="nav-link">News</a>
+                            <a @click="routageNews" class="nav-link">News</a>
                         </li>
                         <li class="nav-items">
                             <a @click="routageMessage" class="nav-link">Messages</a>
                         </li>
                         <li class="nav-items">
-                            <a href="index.php?action=administrationHome"class="nav-link">Administration</a>
+                            <a href="index.php?action=deconnexion">
+                                <i class="fas fa-sign-out-alt"></i>
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -74,12 +76,12 @@
                             <a href="#routerCommand" @click="routageCommand" class="nav-link text-light">Commandes</a>
                             <a href="#routerProduct" @click="routageProduct" class="nav-link text-light">Produits</a>
                             <a href="#routerArticles" @click="routageArticles" class="nav-link text-light">Articles</a>
-                            <a  @click="routageNews" class="nav-link text-light">News</a>
+                            <a @click="routageNews" class="nav-link text-light">News</a>
                             <a @click="routageMessage" class="nav-link text-light">Messages</a>
                         </div>
                     </div>
                 </div>
-                
+
             </nav>
         </header>
         <main>
@@ -101,21 +103,23 @@
                         <h3 id="Message" class="text-danger">{{messageError}}</h3>
                         <h3 id="Message" class="text-success">{{messageSuccess}}</h3>
                         <h3 class="text-success">
-                            <?php if(isset($_GET['message']))
-                                    {echo htmlspecialchars($_GET['message']);}
-                                    else {echo "";}
+                            <?php if (isset($_GET['message'])) {
+                                echo htmlspecialchars($_GET['message']);
+                            } else {
+                                echo "";
+                            }
                             ?>
                         </h3>
 
 
-                        
-                        <h3 class="text-success"><?php echo $msg;?></h3>
+
+                        <h3 class="text-success"><?php echo $msg; ?></h3>
                     </div>
                 </div>
             </section>
             <section class="buttonBrown" id="routerMain">
-                <h3 class="text-center mt-3"> {{name}} Retrouvez toutes les sections de l'administration</h3>
-                <!-- section pour la partie des differentes categories de l'administration -->       
+                <h3 class="text-center mt-3"> {{name}}<br /> Retrouvez toutes les sections de l'administration</h3>
+                <!-- section pour la partie des differentes categories de l'administration -->
                 <div class=" container-fluid marginTop row ">
                     <div @click="routageCommand" class="col-lg-3 col-md-6">
                         <div class="contentCategory text-center ButtonGreen marginAuto col-md-10 ml-auto mr-auto">
@@ -129,36 +133,36 @@
                     </div>
                     <!-- si on est dans l'administration -->
                     <template v-if="name=='administration'">
-                    <div @click="routageProduct" class="col-lg-3 col-md-6">
-                        <div class="contentCategory ButtonGreen text-center marginAuto marginAuto col-md-10 ml-auto mr-auto">
-                            <h4>
-                        <a class="text-dark">
-                            Produits
-                        </a>
-                            </h4>
+                        <div @click="routageProduct" class="col-lg-3 col-md-6">
+                            <div class="contentCategory ButtonGreen text-center marginAuto marginAuto col-md-10 ml-auto mr-auto">
+                                <h4>
+                                    <a class="text-dark">
+                                        Produits
+                                    </a>
+                                </h4>
 
+                            </div>
                         </div>
-                    </div>
 
-                    <div @click="routageArticles" class="col-lg-3 col-md-6">
-                        <div class="contentCategory text-center ButtonGreen marginAuto col-md-10 ml-auto mr-auto">
-                            <h4>Articles</h4>
+                        <div @click="routageArticles" class="col-lg-3 col-md-6">
+                            <div class="contentCategory text-center ButtonGreen marginAuto col-md-10 ml-auto mr-auto">
+                                <h4>Articles</h4>
 
+                            </div>
                         </div>
-                    </div>
 
-                    <div @click="routageNews" class="col-lg-3 col-md-6">
-                        <div class="contentCategory text-center ButtonGreen marginAuto col-md-10 ml-auto mr-auto">
-                            <h4>Promos</h4>
+                        <div @click="routageNews" class="col-lg-3 col-md-6">
+                            <div class="contentCategory text-center ButtonGreen marginAuto col-md-10 ml-auto mr-auto">
+                                <h4>Promos</h4>
 
+                            </div>
                         </div>
-                    </div>
-                    <div @click="routageMessage" class="col-lg-3 col-md-6">
-                        <div class="contentCategory text-center ButtonGreen marginAuto col-md-10 ml-auto mr-auto">
-                            <h4>Messages</h4>
+                        <div @click="routageMessage" class="col-lg-3 col-md-6">
+                            <div class="contentCategory text-center ButtonGreen marginAuto col-md-10 ml-auto mr-auto">
+                                <h4>Messages</h4>
 
+                            </div>
                         </div>
-                    </div>
                     </template>
                 </div>
             </section>
@@ -166,7 +170,7 @@
             <section class="marginTopAdmin" id="routerCommand">
                 <template v-if="router.command">
                     <div class="traitSeparation"></div>
-                    <command-user @onproblemcommand="problemCommand"  :commandsprops="commandsProps"></command-user>
+                    <command-user @onproblemcommand="problemCommand" :commandsprops="commandsProps"></command-user>
                 </template>
             </section>
             <section class="marginTopAdmin">
@@ -182,31 +186,22 @@
                 <template v-if="router.articles">
                     <div class="traitSeparation"></div>
 
-                    <articles-shop :articlesprops="articlesProps"
-                    @onmodifyarticleview="modifyArticleView"
-                    @onpreviousupdatearticle="previousUpdateArticle" 
-                    @onnextupdatearticle="nextUpdateArticle"></articles-shop>
+                    <articles-shop :articlesprops="articlesProps" @onmodifyarticleview="modifyArticleView" @onpreviousupdatearticle="previousUpdateArticle" @onnextupdatearticle="nextUpdateArticle"></articles-shop>
                 </template>
             </section>
             <section class="marginTopAdmin" id="newsArticles">
                 <template v-if="router.news">
                     <div class="traitSeparation"></div>
-                    <news-shop 
-                    :newsprops="newsProps" 
-                    @ongetallnews = "getAllNews"
-                    @onpreviousupdatenews=previousUpdateNews 
-                    @onnextupdatenews=nextUpdateNews
-                    @onmodifynewview =modifyNewView
-                    ></news-shop>
+                    <news-shop :newsprops="newsProps" @ongetallnews="getAllNews" @onpreviousupdatenews=previousUpdateNews @onnextupdatenews=nextUpdateNews @onmodifynewview=modifyNewView></news-shop>
                 </template>
-                
+
 
             </section>
 
             <section>
                 <template v-if="router.message">
-                <div class="traitSeparation"></div>
-                <message-shop @ongetallmessages="getAllMessages" @oncheckreadmessage="checkMessageRead" :messagesprops="messageProps"></message-shop>
+                    <div class="traitSeparation"></div>
+                    <message-shop @ongetallmessages="getAllMessages" @oncheckreadmessage="checkMessageRead" :messagesprops="messageProps"></message-shop>
                 </template>
             </section>
 
@@ -294,7 +289,11 @@
                 commandsProps: {
                     commands: [],
                     liveUpdateCommand: "0",
-                    name:"<?php if(isset($_SESSION['name'])){echo  $_SESSION['name']; } else {echo "";}?>"
+                    name: "<?php if (isset($_SESSION['name'])) {
+                                echo  $_SESSION['name'];
+                            } else {
+                                echo "";
+} ;?>"
                 },
                 //props a passer dasn product-shop
                 productsProps: {
@@ -309,7 +308,7 @@
                     news: [],
                     liveUpdateNews: "0"
                 },
-                messageProps:[],
+                messageProps: [],
                 //info des sliders 
 
                 messageError: "",
@@ -322,9 +321,13 @@
                     command: false,
                     articles: false,
                     news: false,
-                    message:false,
+                    message: false,
                 },
-                name:"<?php if(isset($_SESSION['name'])){echo  $_SESSION['name']; } else {echo "";}?>"
+                name: "<?php if (isset($_SESSION['name'])) {
+                            echo  $_SESSION['name'];
+                        } else {
+                            echo "";
+                        } ?>"
 
             },
             mounted() {
@@ -333,11 +336,11 @@
                 this.getAllArticles();
                 this.getAllNews();
                 this.getAllMessages();
-                
+
             },
             methods: {
 
-            
+
                 //methode pour recuperer les produits
                 getAllCommands() {
                     console.log("users")
@@ -373,7 +376,7 @@
                 },
 
                 //axios pour recuperer tous les messages
-                getAllMessages(){
+                getAllMessages() {
                     console.log("users")
                     axios.get("proceed.php?action=getAllMessages").then(function(response) {
                         if (response.data.error) {
@@ -418,7 +421,7 @@
                         }
                     });
                 },
-                routageReset(){
+                routageReset() {
                     this.router.product = false
                     this.router.command = false
                     this.router.articles = false
@@ -466,18 +469,18 @@
                     this.router.message = true
                     console.log('ggj')
                     this.scrolling("routerArticles")
-                    
+
                 },
                 //changement du liveSlideupdateProduct depuis la liste des produits 
                 modifyProductView(data) {
                     this.productsProps.liveUpdateProduct = data
                 },
                 //changement du liveArticle depuis la liste des articles 
-                modifyArticleView(data){
+                modifyArticleView(data) {
                     this.articlesProps.liveUpdateArticles = data
                 },
                 //changement du live New depuis la liste des news
-                modifyNewView(data){
+                modifyNewView(data) {
                     this.newsProps.liveUpdateNews = data
                 },
                 //changement du productsProps.liveUpdateProduct pour l'update
@@ -520,12 +523,12 @@
                 },
 
                 //methode pour passer un message en lu par requette http
-                checkMessageRead(id){
+                checkMessageRead(id) {
                     console.log(id);
-                    let message=[]
-                    message.push(id)    
+                    let message = []
+                    message.push(id)
                     let messageId = this.toFormData(message)
-                    axios.post("proceed.php?action=checkMessageRead",messageId).then(function(response) {
+                    axios.post("proceed.php?action=checkMessageRead", messageId).then(function(response) {
                         if (response.data.error) {
                             app.errorMsg = response.data.message;
                             console.log(app.errorMsg)
@@ -549,7 +552,7 @@
                     // retourne le resultat
                     return fd;
                 },
-           
+
                 deleteProduct(data) {
                     let post = data
                     this.post = post.title
@@ -572,7 +575,7 @@
                     });
                     this.routageReset();
                     this.getAllProducts();
-                    
+
                 },
                 updateDeleteProduct(data) {
                     let post = data
@@ -657,7 +660,7 @@
 
         })
     </script>
-    
+
 </body>
 
 </html>
