@@ -12,6 +12,7 @@ Vue.component('articles-shop', {
                         <div class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
                             <h4>Articles publiées</h4>
                             <p>Liste des articles publiés sur le site</p>
+                            <button class="w-100" @click="routageArticleList">Voir</button>
                         </div>
                     </div>
     
@@ -19,6 +20,7 @@ Vue.component('articles-shop', {
                         <div @click="routageArticleTest" class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
                             <h4>Articles en Brouillon</h4>
                             <p>Liste des articles publiés sur le site</p>
+                            <button class="w-100" @click="routageArticleTest">Voir</button>
                         </div>
                     </div>
     
@@ -26,6 +28,7 @@ Vue.component('articles-shop', {
                         <div @click="routageArticleNew" class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
                             <h4>Nouvel Article</h4>
                             <p>Ajouter un article</p>
+                            <button class="w-100" @click="routageArticleNew">Voir</button>
                         </div>
                     </div>
     
@@ -33,6 +36,7 @@ Vue.component('articles-shop', {
                         <div @click="routageArticleUpdate" class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
                             <h4>Modifier un Article</h4>
                             <p>Faire la modification d'un article</p>
+                            <button class="w-100" @click="routageArticleUpdate">Voir</button>
                         </div>
                     </div>
                 </div>

@@ -53,7 +53,7 @@ Vue.component('message-shop', {
                     const y = elements.getBoundingClientRect().top + window.pageYOffset + yOffset;
                     
                     window.scrollTo({top: y, behavior: 'smooth'});
-                },400)
+                },600)
             },    
             
         },    
@@ -65,6 +65,7 @@ Vue.component('message-shop', {
                         <div class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
                             <h4>Messages Non Lu</h4>
                             <p>Voici la liste des messages non lu</p>
+                            <button class="w-100" @click="routageMessageNoReadList">Voir</button>
                         </div>
                     </div>
     
@@ -72,6 +73,7 @@ Vue.component('message-shop', {
                         <div @click="getAllMessages(),routageMessageReadList()" class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
                             <h4>Messages Lus</h4>
                             <p>Voici la liste des messages lu</p>
+                            <button class="w-100" @click="routageMessageReadList">Voir</button>
                         </div>
                     </div>
     
@@ -79,12 +81,13 @@ Vue.component('message-shop', {
                         <div @click="getAllMessages();routageMessageNotAnswerList()" class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
                             <h4>Message lus et répondus</h4>
                             <p>Voici la liste des messages répondus</p>
+                            <button class="w-100" @click="routageMessageNotAnswerList">Voir</button>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <div id="MessageNoReadList">
+            <div class="marginTop" id="MessageNoReadList">
             <transition name="fade">
             <template v-if="router.MessageNoReadList==true">
                 <div class="col-md-8 m-auto tableAdministration" >
@@ -120,7 +123,7 @@ Vue.component('message-shop', {
             </transition>
             </div>
             
-            <div id="MessageReadList">
+            <div class="marginTop" id="MessageReadList">
             <transition name="fade">
             <template v-if="router.MessageReadList==true">
                 <div class="col-md-8 m-auto tableAdministration" >
@@ -158,7 +161,7 @@ Vue.component('message-shop', {
             </transition>
             </div>
 
-            <div id="MessageNotAnswerList">
+            <div class="marginTop" id="MessageNotAnswerList">
             <transition name="fade">
             <template v-if="router.MessageNotAnswerList==true">
                 <div class="col-md-8 m-auto tableAdministration" >

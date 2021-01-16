@@ -8,6 +8,7 @@ Vue.component('news-shop',{
                         <div class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
                             <h4>Promotions publiées</h4>
                             <p>Liste des promotions publiés sur le site</p>
+                            <button class="w-100" @click="routageNewsList">Voir</button>
                         </div>
                     </div>
     
@@ -15,6 +16,7 @@ Vue.component('news-shop',{
                         <div @click="onGetAllNews(),routageNewsTest()" class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
                             <h4>Promotions en Brouillon</h4>
                             <p>Liste des promotions publiés sur le site</p>
+                            <button class="w-100" @click="routageNewsTest">Voir</button>
                         </div>
                     </div>
     
@@ -22,6 +24,7 @@ Vue.component('news-shop',{
                         <div @click="onGetAllNews(),routageNewsNew()" class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
                             <h4>Nouvelle promotion</h4>
                             <p>Ajouter une nouvelle promotion</p>
+                            <button class="w-100" @click="routageNewsNew">Voir</button>
                         </div>
                     </div>
     
@@ -29,6 +32,7 @@ Vue.component('news-shop',{
                         <div @click="onGetAllNews(),routageNewsUpdate()" class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
                             <h4>Modifier une Promotion</h4>
                             <p>Faire la modification d'une promotion</p>
+                            <button class="w-100" @click="routageNewsUpdate">Voir</button>
                         </div>
                     </div>
                 </div>

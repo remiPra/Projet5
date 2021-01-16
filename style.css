@@ -669,10 +669,10 @@ footer i {
 /*stylisation de la partie administration*/
 
 .buttonMain1 h4 {
-  height: 60px;
+  height: 80px;
 }
 .buttonMain1 p {
-  height: 54px;
+  height: 82px;
 }
 
 .traitSeparation {
@@ -692,6 +692,10 @@ footer i {
   padding-top: 30px;
   margin-bottom: 3px;
 }
+
+
+
+
 /* stylisation des animations vuejs */
 .fade-enter-active,
 .fade-leave-active {
@@ -868,7 +872,8 @@ footer i {
   }
 
   .formButton {
-    max-width:150px!important;
+    max-width:190px!important;
+    margin:2px auto;
   }
   .categoryContainer .box {
     width: 220px;
