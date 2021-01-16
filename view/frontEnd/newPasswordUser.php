@@ -183,7 +183,7 @@
                     <input type="password" v-model="password1" name="password" id="password" required>
                     <label> retaper votre nouveau mot de passe ?</label>
                     <input @keyup="checkPassword" v-model="password2" type="password" name="passwordConfirm" id="passwordConfirm">
-                    <input class="displayNone" :value="name" type="text" name="name" id="name">
+                    <input hidden required :value="name" type="text" name="name" id="name">
                 </div>
                 <div class="form-group">
                     <input class="formButton" :type="button" value="Envoyer" name="btnGetPassword">

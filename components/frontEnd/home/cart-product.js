@@ -8,13 +8,13 @@ Vue.component('cart-product', {
     
 </div>
 <form  action="index.php?action=cart" id="cart" class="col-md-8 text-light"  method="POST">
-<div>
-    <div class="form-group">
-        <h3 v-if="cartkeyweek==false">Votre Panier </h3>
-        <h3 v-if="cartkeyweek==true">Voici le panier préparé que vous pouvez commander : </h3>
-
+    <div>
+        <div class="form-group">
+            <h3 v-if="cartkeyweek==false">Votre Panier </h3>
+            <h3 v-if="cartkeyweek==true">Voici le panier préparé que vous pouvez commander : </h3>
+        </div>
     </div>
-</div>
+    
     <template v-if='this.carts==""''>
     <div class="d-flex" >
         <div id="formCart" class="form-group">
@@ -67,7 +67,7 @@ Vue.component('cart-product', {
 <div id="confirmationModal" v-if="confirmationModal">
     <div class="form-group">
         <h3>Voulez vous confirmez votre choix?</h3>
-        <button type="submit">Oui</button>  
+        <button @click="localStorage.clear()" type="submit">Oui</button>  
         <button @click="confirmationModal=false">Non</button>  
     </div>
 </div>
@@ -117,11 +117,6 @@ Vue.component('cart-product', {
                         result = parseInt(result) + parseInt(somme.totalPriceProduct)
                     })
                     this.totalPriceCart = result;
-            // const totalPrice = this.carts.reduce((acc, curr) => {
-            //     return acc + curr.totalPriceProduct;
-            // }, 0);
-            // console.log(totalPrice)
-            
         }
 
     },

@@ -53,7 +53,7 @@
                             <a href="#routerArticles" @click="routageArticles" class="nav-link">Articles</a>
                         </li>
                         <li class="nav-items">
-                            <a @click="routageNews" class="nav-link">News</a>
+                            <a @click="routageNews" class="nav-link">Promotions</a>
                         </li>
                         <li class="nav-items">
                             <a @click="routageMessage" class="nav-link">Messages</a>
@@ -74,8 +74,9 @@
                             <a href="#routerCommand" @click="routageCommand" class="nav-link text-light">Commandes</a>
                             <a href="#routerProduct" @click="routageProduct" class="nav-link text-light">Produits</a>
                             <a href="#routerArticles" @click="routageArticles" class="nav-link text-light">Articles</a>
-                            <a @click="routageNews" class="nav-link text-light">News</a>
+                            <a @click="routageNews" class="nav-link text-light">Promotions</a>
                             <a @click="routageMessage" class="nav-link text-light">Messages</a>
+                            <a href="index.php?action=deconnexion"><i class="fas fa-sign-out-alt"></i></a>
                         </div>
                     </div>
                 </div>
@@ -128,7 +129,7 @@
                         </div>
                     </div>
                     <!-- si on est dans l'administration -->
-                    <template v-if="name=='administration'">
+                    <template v-if="name!='livreur'">
                         <div @click="routageProduct" class="col-lg-3 col-md-6">
                             <div class="contentCategory ButtonGreen text-center marginAuto marginAuto col-md-10 ml-auto mr-auto">
                                 <h4>

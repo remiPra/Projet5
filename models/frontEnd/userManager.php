@@ -12,7 +12,7 @@ class userManager
         $req = $bdd->prepare('SELECT * FROM user WHERE name=?');
         $req->execute(array($namePost));
         $data = $req->fetch();
-        var_dump($data['id']);
+        //var_dump($data['id']);
         return $data['id'];
     }
     public function findUser($id){
@@ -52,7 +52,7 @@ class userManager
         ));
     }
 
-    public function changePassword($name,$password){
+    public function changePassword($password,$name){
         global $bdd;
         $req = $bdd->prepare('UPDATE user SET password = :password WHERE name =:name');
         $req->execute(array(

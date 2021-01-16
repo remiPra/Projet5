@@ -9,6 +9,7 @@
                         <div class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
                             <h4>Produits en magasin</h4>
                             <p>Trier selon le stock</p>
+                            <button class="w-100" @click="routageProductList">Voir</button>
                         </div>
                     </div>
     
@@ -16,6 +17,7 @@
                         <div @click="routageProductTest" class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
                             <h4>Produits en brouillon</h4>
                             <p>Produits non mis en ligne </p>
+                            <button class="w-100" @click="routageProductTest">Voir</button>
                         </div>
                     </div>
 
@@ -24,6 +26,7 @@
                         <div @click="routageProductNew" class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
                             <h4>Nouveau produit</h4>
                             <p>Ajouter un produit</p>
+                            <button class="w-100" @click="routageProductNew">Voir</button>
                         </div>
                     </div>
     
@@ -31,6 +34,7 @@
                         <div @click="routageProductUpdate" class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
                             <h4>Modifier un produit</h4>
                             <p>Faire la modification d'un produit</p>
+                            <button class="w-100" @click="routageProductUpdate">Voir</button>
                         </div>
                     </div>
                 </div>
@@ -243,10 +247,10 @@
                         <template v-if="router.productShopUpdate">
                             <div class="row text-center">
                                 <div class="d-flex text-center marginAuto">
-                                    <button @click="onPreviousUpdateProduct">
+                                    <button class="hoverGreenEffect" @click="onPreviousUpdateProduct">
                                         <- </button>
                                             <p>{{productsprops.products[productsprops.liveUpdateProduct].title}}</p>
-                                            <button @click="onNextUpdateProduct"> -> </button>
+                                            <button class="hoverGreenEffect" @click="onNextUpdateProduct"> -> </button>
                                 </div>
                             </div>
                             <p>{{productsprops.liveUpdateProduct}}</p>

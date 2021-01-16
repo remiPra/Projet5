@@ -53,23 +53,23 @@ function getTheToken($id){
     require "models/frontEnd/tokenManager.php";
     $tokenManager =  new TokenManager();
     $allTokens = $tokenManager->getAllTokens();
-    //var_dump($id);
-    //var_dump($Alltokens);
+    ////var_dump($id);
+    ////var_dump($Alltokens);
     //mise en place d'une super variable si deja token
     $GLOBALS['count'] = 0;
     for($i=0;$i<count($allTokens);$i++){
         if($allTokens[$i] == $id){
-            //var_dump("remi");
+            ////var_dump("remi");
             $GLOBALS['count'] = 2;
-            //var_dump($count);
+            ////var_dump($count);
         }
     }
     //verification si il n'existe pas , on envoie
-    //var_dump($GLOBALS['count']);
+    ////var_dump($GLOBALS['count']);
     if($GLOBALS['count']<1){
         $tokenPost = $tokenManager->getTheToken($id);        
     } else {
-       // var_dump("pas envoyé");
+       // //var_dump("pas envoyé");
     }
 }
 
@@ -136,7 +136,7 @@ function userCommand(){
     array_push($data,$productDetailCommand);
     $data=json_encode($data);
     echo $data;
-    //var_dump($data);
+    ////var_dump($data);
 }
 //fonction recuperant tous les articles 
 function getAllArticles(){
@@ -190,7 +190,7 @@ function allRetraitCommand(){
 
 function validateCollectCommand(){
     $numberCommand = $_POST['numberCommand'];
-    var_dump($numberCommand);
+    //var_dump($numberCommand);
     require 'models/backEnd/cartManager.php';
     $cartManagerBack = new CartManagerBack();
     $updateStatusCollectReady = $cartManagerBack->updateStatusCollectReady($numberCommand);  
@@ -201,7 +201,7 @@ function validateCollectCommand(){
 //cvalidation de la commande prete pour la livraison
 function validateLivraisonCommand(){
     $numberCommand = $_POST['numberCommand'];
-    var_dump($numberCommand);
+    //var_dump($numberCommand);
     require 'models/backEnd/cartManager.php';
     $cartManagerBack = new CartManagerBack();
     $updateStatusCollectReady = $cartManagerBack->updateStatusLivraisonReady($numberCommand); 
@@ -212,8 +212,8 @@ function validateLivraisonCommand(){
 function checkCommand(){
     $numberCommand = $_POST['numberCommand'];
 
-    var_dump("check");
-    var_dump($numberCommand);
+    //var_dump("check");
+    //var_dump($numberCommand);
     require 'models/backEnd/cartManager.php';
     $cartManagerBack = new CartManagerBack();
     $updateStatusCollectReady = $cartManagerBack->updateStatusCheckCommand($numberCommand);  
@@ -222,7 +222,7 @@ function checkCommand(){
 }
 function problemCommand(){
     $numberCommand = $_POST['numberCommand'];
-    var_dump($numberCommand);
+    //var_dump($numberCommand);
     require 'models/backEnd/cartManager.php';
     $cartManagerBack = new CartManagerBack();
     $updateStatusCollectReady = $cartManagerBack->updateStatusProblemCommand($numberCommand);  
@@ -236,7 +236,7 @@ function deleteProduct(){
     // $imagemanager =  new imageManager();
     // $imageUpload = $imagemanager->uploadImage();
     $id = $_POST['id'];
-    var_dump($_POST['id']);
+    //var_dump($_POST['id']);
     require 'models/backEnd/productManager.php';
     $productManagerBack = new productManagerBack;
     $deleteProduct = $productManagerBack-> deleteProduct($id);

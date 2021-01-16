@@ -234,70 +234,7 @@
     </footer>
 
     <script>
-        // Définition d'un nouveau composant appelé `button-counter`
-        // Vue.component('button-counter', {
-        //     props:{
-        //         tire:{
-        //             type:Object
-        //         }
-        //     },
-        //     data() {
-        //         return {
-        //             remi: "pradere"
-        //         }
-        //     },
-        //     template: `<h2><p>{{remi}}</p>
-        //     nouvel article <p v-for="t in tire">{{t.title}}</p> </h2>`
-        // })
-
-    // composant local de lecture de l'un des articles.
-        // Vue.component('menu-article',{
-        //     template:`
-        // <div>
-        //     <section id="mainPositionAbsolute">
-        //         <picture id="imageParrallax">
-        //             <source srcset="assets/images/basket-for-apple-picking-in-fruit-orchard.mobile.jpg"
-        //                 media="(max-width: 480px)">
-        //             <source srcset="assets/images/basket-for-apple-picking-in-fruit-orchard.Ipad.jpg"
-        //                 media="(max-width: 1000px)">
-        //             <img src="assets/images/basket-for-apple-picking-in-fruit-orchard.jpg"
-        //                 alt="panier en osier se situant sur la gauche dans un champ vert ">
-        //         </picture>
-        //     </section>
-
-        //     <section>
-        //         <div class="col-md-12 container text-center" id="presentationShopAdministration">
-        //             <div class="text-light container px-md-3 shopTitle">
-        //                 <h1 class="text-light">Ma ferme Bio</h1>
-        //                 <h2>Contact </h2>
-        //                 <p>Si vous désirez nous contacter , vous pouvez remplir ce formulaire</p>
-        //             </div>
-        //         </div>
-        //     </section>
-
-        //     <section>
-        //         <div class="container" id="listArticles">
-        //             <div class="row col-md-9 news">
-        //                 <div class="col-md-3"></div>
-        //                 <div class="col-md-9">
-        //                     <h3>la recette des bannanes</h3>
-
-        //                     <h4>Publié le 12-12-2019</h4>
-        //                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus corporis cum nesciunt
-        //                         rerum
-        //                         consectetur debitis, perferendis quae maiores quisquam culpa harum autem iusto
-        //                         voluptate,
-        //                         deserunt quidem sunt distinctio nostrum inventore.</p>
-        //                     <button @click="articleView=true;
-        //                                     sommaire=false";
-        //                                     pageDetail()
-        //                                                     >Lire la suite</button>
-        //                 </div>
-        //             </div>
-        //         </div>
-        //     </section>
-        // <div>`,
-        // })
+        
 
 
         let app = new Vue({
@@ -311,11 +248,10 @@
             }
             ,
             mounted:function(){
-                this.getAllArticles()
+                this.getAllArticles()        
             },
 
             computed:{
-                
                 currentArticle(){
                     return this.articles[this.currentIndex]
                 }
@@ -333,10 +269,96 @@
                         } else {
                             console.log(response.data);
                             app.articles = response.data
+                            app.changeMonthArticles()
                             console.log(app.articles)
                             console.log("success");
                         }
                     });
+
+                },
+                changeMonthArticles(){
+                    console.log('charged changemontharticle')
+                    this.articles.forEach( (article) => {
+                        //trasformation en chaine de caracteres    
+                        let articleString = article.date.split(" ")
+                            console.log(articleString)
+                        
+
+                        //changement du mois
+                        switch(articleString[2]){
+                            case "January":
+                                articleString[2] = "Janvier"
+                                break;
+                            case "February":
+                                articleString[2] = "Février"
+                                break;
+                            case "March":
+                                articleString[2] = "Mars"
+                                break;
+                            case "April":
+                                articleString[2] = "Avril"
+                                break;
+                            case "May":
+                                articleString[2] = "Mai"
+                                break;
+                            case "June":
+                                articleString[2] = "Juin"
+                                break;
+                            case "July":
+                                articleString[2] = "Juillet"
+                                break;
+                            case "August":
+                                articleString[2] = "Aout"
+                                break;
+                            case "September":
+                                articleString[2] = "Septembre"
+                                break;
+                            case "October":
+                                articleString[2] = "Octobre"
+                                break;
+                            case "November":
+                                articleString[2] = "Novembre"
+                                break;
+                            case "December":
+                                articleString[2] = "Decembre"
+                                break;
+                            default : 
+                                console.log(article.date);
+                                break;
+                        }
+
+                        // changement du jour
+                        switch(articleString[0]){
+                            case "Monday":
+                                articleString[0] = "Lundi"
+                                break;
+                            case "Tuesday":
+                                articleString[0] = "Mardi"
+                                break;
+                            case "Wednesday":
+                                articleString[0] = "Mercredi"
+                                break;
+                            case "Thurday":
+                                articleString[0] = "Jeudi"
+                                break;
+                            case "Friday":
+                                articleString[0] = "Vendredi"
+                                break;
+                            case "Saturday":
+                                articleString[0] = "Samedi"
+                                break;
+                            case "Sunday":
+                                articleString[0] = "Dimanche"
+                                break;
+                            default : 
+                                console.log(article.date);
+                                break;
+                        }
+                        //on retransforme en string 
+                        article.date = articleString[0] + " " + articleString[1] + " " + articleString[2] + " " + articleString[3] + " " ;
+
+
+                    })
 
                 }
             }

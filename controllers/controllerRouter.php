@@ -82,12 +82,12 @@ function signIn()
     }
     if ($error == 1) {
         $errorMsg = "ce mail est deja utilisé";
-        var_dump("ouf");
+        //var_dump("ouf");
         // require "view/frontEnd/connexion.php";
         echo "<script type='text/javascript'>document.location.replace('index.php?action=connexion&msgError=" . $errorMsg . "');</script>";
     } else if ($error == 2) {
         $errorMsg = "ce pseudo est deja utilisé";
-        var_dump("ouf");
+        //var_dump("ouf");
         // require "view/frontEnd/connexion.php";
         echo "<script type='text/javascript'>document.location.replace('index.php?action=connexion&msgError=" . $errorMsg . "');</script>";
     } else {
@@ -123,7 +123,7 @@ function checkPassword()
         //maintenant on verifie le password
         $isPasswordCorrect = password_verify($_POST['password'], $userFind['password']);
         if ($isPasswordCorrect == true) {
-            var_dump("connexion assurée");
+            //var_dump("connexion assurée");
             $_SESSION['connect'] = true;
             echo $_SESSION['connect'];
             $_SESSION['name'] = $userFind['name'];
@@ -143,17 +143,17 @@ function checkPassword()
 
 function cart()
 {
-    var_dump($_POST);
+    //var_dump($_POST);
     $dataReceive = $_POST;
-    var_dump($dataReceive);
-    var_dump($_SESSION['name']);
+    //var_dump($dataReceive);
+    //var_dump($_SESSION['name']);
 
     //recherche de l'id de l'user
     require "models/frontEnd/userManager.php";
     $userManager = new userManager();
     $userId = $userManager->findUserId();
     echo '<br/>';
-    var_dump($userId);
+    //var_dump($userId);
     echo '<br/>';
 
     //enregistrement  de toutes les infos du cart
@@ -170,7 +170,7 @@ function cart()
         $productName = htmlspecialchars($_POST['productName'][$i], ENT_QUOTES, 'UTF-8', false);
         echo '<br/>';
         echo '<br/>';
-        var_dump("148 " . $productName);
+        //var_dump("148 " . $productName);
         echo '<br/>';
         echo '<br/>';
 
@@ -203,13 +203,7 @@ function curl()
 
     require 'models/frontEnd/curlManager.php';
     $curlManager = new CurlManager();
-    //var_dump($Alltokens);
-    var_dump(count($Alltokens));
-    echo "<br>";
-    echo "<br>";
-
-    for ($i = 0; $i < count($Alltokens); $i++) {
-        sleep(2);
+    for ($i = 0; $i < count($Alltokens); $i++) {     
         $curlPromotion = $curlManager->sendPromotionsAllTokens($Alltokens[$i], $articles);
     }
 }
@@ -218,7 +212,7 @@ function curl()
 function administrationPasswordForgotCheck()
 {
     if ($_POST['email'] != null) {
-        var_dump($_POST['email']);
+        //var_dump($_POST['email']);
         require 'models/frontEnd/userManager.php';
         $userManager = new userManager();
         $pseudoMail = $_POST['email'];
@@ -232,7 +226,7 @@ function administrationPasswordForgotCheck()
             //mise en place d'un lien aléatoire
             $v = rand(1, 10);
             $link = password_hash($v, PASSWORD_DEFAULT);
-            var_dump($firstname);
+            //var_dump($firstname);
             $userLinkCode = $userManager->alertPassword($link, $firstname);
             // Always set content-type when sending HTML email
             $headers = "MIME-Version: 1.0" . "\r\n";
@@ -287,13 +281,13 @@ function administrationPasswordForgotCheck()
             
         } else {
             $notificationError = "name invalid";
-            var_dump($notificationError);
+            //var_dump($notificationError);
             //require 'views/frontEnd/administrationPasswordForgotView.php';
         }
     } else {
         $notificationError = "vous n'avez pas rempli tous les champs";
         // require 'views/frontEnd/administrationPasswordForgotView.php';
-        var_dump($notificationError);
+        //var_dump($notificationError);
     }
 }
 
@@ -318,9 +312,9 @@ function initializePassword()
         $link = password_hash($v, PASSWORD_DEFAULT);
         $user = $userManager->changeLinkProtect($name, $link);
 
-        var_dump("reinitilaisation link réussi");
+        //var_dump("reinitilaisation link réussi");
         require 'view/frontEnd/newPasswordUser.php';
-        //echo "<script type='text/javascript'>document.location.replace('index.php?action=index.php');</script>";
+       
     } else {
         echo "<script type='text/javascript'>document.location.replace('index.php?action=index.php');</script>";
     }
@@ -329,11 +323,12 @@ function initializePassword()
 function newPasswordValue()
 {
     $_SESSION['name'] = $_POST['name'];
-    echo $_SESSION['name'];
+    var_dump($_SESSION['name']);
+    $name = $_SESSION['name'];
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-    var_dump($_POST['name']);
-    var_dump($_POST['password']);
-    var_dump($_SESSION['connect']);
+    var_dump($name);
+    var_dump($password);
+    //var_dump($_SESSION['connect']);
     require 'models/frontEnd/userManager.php';
     $userManager = new userManager();
     $user = $userManager->changePassword($name, $password);
@@ -369,12 +364,12 @@ function administrationCheck()
         //maintenant on verifie le password
         $isPasswordCorrect = password_verify($_POST['password'], $userFind['password']);
         if ($isPasswordCorrect == true) {
-            var_dump("connexion assurée");
+            //var_dump("connexion assurée");
             $_SESSION['connect'] = true;
             echo $_SESSION['connect'];
             $_SESSION['name'] = $userFind['name'];
             echo $_SESSION['name'];
-            var_dump($_SESSION['name']);
+            //var_dump($_SESSION['name']);
             echo "<script type='text/javascript'>document.location.replace('index.php?action=administrationHome');</script>";
         } else {
             $errorMsg = "erreur dans les indentifiants de connexion!";
@@ -398,7 +393,7 @@ function paiement()
 
     $numberCommand = $_POST['numberCommand'];
 
-    var_dump($numberCommand);
+    //var_dump($numberCommand);
     require 'models/backEnd/cartManager.php';
     $cartManager = new CartManagerBack();
     $paiement = $cartManager->numberCommandPaiement($numberCommand);
@@ -460,6 +455,11 @@ function paiementSuccess()
 
     $message = '
     <html>
+    <style>
+    td {
+        border:1px solid white
+    }
+    </style>
     <body>
     <header style="text-align: center;
     background-color: green;
@@ -518,7 +518,9 @@ function paiementSuccess()
     </button>
 
     <p> vous avez reçu un mail avec tous ce recapitulatif </p>
-    <table> 
+    <table style="
+    border: 3px solid white;
+    padding: 6px;"> 
     <thead>
         <tr>
             <th>ID</th>
@@ -527,7 +529,7 @@ function paiementSuccess()
             <th>Quantity</th>
         </tr>    
     </thead>
-    <tbody>";
+    <tbody>
     ';
     // utilisaton de foreach
     foreach ($info[2] as $data) {
@@ -553,23 +555,24 @@ function paiementSuccess()
 
 
 
-    //var_dump($info);
+    ////var_dump($info);
     require 'view/frontEnd/paiementSuccess.php';
 }
 
 function newProduct()
 {
-
+    // mise en place de la fonction pour envoyer l'image
     require  'models/backEnd/imageManager.php';
     $imagemanager =  new imageManager();
     $imageUpload = $imagemanager->uploadImage();
 
+    //mise en place pour creer le nouveau produit
     require 'models/backEnd/productManager.php';
     $productManagerBack = new productManagerBack;
     $newProduct = $productManagerBack->addNewProduct();
 
     //notifications $get msg bien rajouté
-    $msg = " votre produit a bien été créé ";
+    $msg = "Votre produit a bien été créé ";
     require 'view/backEnd/administrationHome.php';
 }
 function updateProduct()
@@ -633,18 +636,14 @@ function sendNewArticle()
 
     require 'models/frontEnd/curlManager.php';
     $curlManager = new CurlManager();
-    var_dump($Alltokens);
-    echo "<br>";
-    echo "<br>";
-    var_dump($articles);
-    echo "<br>";
-    echo "<br>";
-    echo "<br>";
-    var_dump(count($Alltokens));
+    
+    // //annulation car je ne comprends pourquoi il y a un var dump
+    // for ($i = 0; $i < count($Alltokens); $i++) {
+    //     $curlPromotion = $curlManager->sendPromotionsAllTokens($Alltokens[$i], $articles);
+    // }
 
-    for ($i = 0; $i < count($Alltokens); $i++) {
-        $curlPromotion = $curlManager->sendPromotionsAllTokens($Alltokens[$i], $articles);
-    }
+    //$message = 'votre nouvel article a bien été créer';
+    require 'view/backEnd/administrationHome.php';
 }
 
 //router pour supprimer un article
@@ -655,12 +654,17 @@ function deleteArticle()
     // $imagemanager =  new imageManager();
     // $imageUpload = $imagemanager->uploadImage();
     $id = $_POST['id'];
-    var_dump($id);
+  
+
     require 'models/backEnd/articlesManager.php';
     $articlesManagerBack = new ArticlesManager;
     $deleteArticle = $articlesManagerBack->deleteArticle($id);
-    $message = 'l\'article '.$id.' a bien été supprimé'; 
-    echo "<script type='text/javascript'>document.location.replace('index.php?action=administrationHome&message='.$message.');</script>";    
+    $message = 'l\'article '.$id.' a bien été supprimé';
+   
+
+    require 'view/backEnd/administrationHome.php';
+    
+   // echo "<script type='text/javascript'>document.location.replace('index.php?action=administrationHome&message=" . $message . "');</script>";
 }
 
 
@@ -706,7 +710,7 @@ function updateNews()
 function deleteNews()
 {
     $id = $_POST['id'];
-    var_dump($id);
+    //var_dump($id);
     require 'models/backEnd/newsManager.php';
     $newsManager = new newsManager();
     $sendnews = $newsManager->deleteNewsModel($id);
@@ -726,8 +730,8 @@ function addStockProduct()
 {
     $data = $_POST[0];
     $stock = $_POST[1] + 1;
-    var_dump($stock);
-    var_dump($data);
+    //var_dump($stock);
+    //var_dump($data);
 
     require 'models/backEnd/productManager.php';
     $productManagerBack = new productManagerBack();
@@ -737,8 +741,8 @@ function substractStockProduct()
 {
     $data = $_POST[0];
     $stock = $_POST[1] - 1;
-    var_dump($stock);
-    var_dump($data);
+    //var_dump($stock);
+    //var_dump($data);
 
     require 'models/backEnd/productManager.php';
     $productManagerBack = new productManagerBack();
@@ -748,7 +752,7 @@ function substractStockProduct()
 function validateCollectCommand()
 {
     $post = json_decode($_POST);
-    var_dump($post['numberCommand']);
+    //var_dump($post['numberCommand']);
     $numberCommand = $post['numberCommand'];
     require 'models/backEnd/cartManager.php';
     $cartManagerBack = new CartManagerBack();
@@ -783,7 +787,7 @@ function deleteCommand(){
     $cartManager = new CartManagerBack();
     $deleteCommand = $cartManager->deleteCommandClient($id);
     $message = "votre commande a bien été supprimer";
-    var_dump($id);
+    //var_dump($id);
     //echo "<script type='text/javascript'>document.location.replace('index.php?action=administrationHome&message=" . $message . "');</script>";
 
 

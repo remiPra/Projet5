@@ -22,13 +22,13 @@ class CartManager
 
         echo '<br/>';
         echo '<br/>';
-        var_dump($date);
-        var_dump($name);
-        var_dump($totalPrice);
-        var_dump($idUser);
-        var_dump($numberCommand);
-        var_dump($dateDeliveryOrder);
-        var_dump($statusCommand);
+        //var_dump($date);
+        //var_dump($name);
+        //var_dump($totalPrice);
+        //var_dump($idUser);
+        //var_dump($numberCommand);
+        //var_dump($dateDeliveryOrder);
+        //var_dump($statusCommand);
         echo '<br/>';
         echo '<br/>';
 
@@ -40,7 +40,7 @@ class CartManager
         $req = $bdd->prepare('INSERT INTO command (status,collectTime,deliveryDay,collectTimeAndDay,idClient ,name,dateCommand,numberCommand,dateDeliveryOrder,statusCommand,totalPrice)
          VALUES(?,?,?,?,?,?,?,?,?,?,?)');
         $req->execute(array($status,$collectTime,$deliveryDay,$collectTimeAndDay,$idUser,$name,$date,$numberCommand,$dateDeliveryOrder,$statusCommand,$totalPrice)) or die(print_r($req ->errorInfo(), TRUE));    
-        var_dump($numberCommand);
+        //var_dump($numberCommand);
         
         return $numberCommand;
     }
@@ -48,11 +48,11 @@ class CartManager
     //function pour ajouter les produits de la commande 
     public function cartAddProduct($orderNumberCommand)
     {
-        var_dump($_POST);
+        //var_dump($_POST);
        
         for($i=0;$i < count($_POST['productName']);$i++){
             //différentes variables a rentrer
-            var_dump($_POST['productName'][$i]);
+            //var_dump($_POST['productName'][$i]);
             
             $namePost=$_SESSION['name'];
            
@@ -66,7 +66,7 @@ class CartManager
             global $bdd;
             $req = $bdd->prepare('INSERT INTO cartproduct (name,productName,productQuantity,numberCommand) VALUES(?,?,?,?)');
             $req->execute(array($name,$productName,$productQuantity,$orderNumberCommand)) or die(print_r($req->errorInfo(), TRUE));    
-            var_dump($orderNumberCommand);
+            //var_dump($orderNumberCommand);
         }    
     }
 
@@ -75,9 +75,9 @@ class CartManager
         for($i=0;$i < count($_POST['productName']);$i++){
             //différentes variables a rentrer
             echo '<br/>';
-            var_dump($_POST['productName'][$i]);
+            //var_dump($_POST['productName'][$i]);
             echo '<br/>';
-            var_dump($quantityStock);
+            //var_dump($quantityStock);
             echo '<br/>';
             echo '<br/>';
             echo '82';

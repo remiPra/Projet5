@@ -41,7 +41,7 @@
 <body>
     <div id="app">
         <template>
-            <!-- section de l'header comprenant le logo et menu -->
+            <!-- header comprenant le logo et menu -->
             <header class="d-flex fixed-top justify-content-between">
                 <div>
                     <a id="logo" class="pl-4 ">
@@ -118,7 +118,7 @@
                                                                                                         
                                                     }
                                                         ?>
-                                  <a class="nav-link" href="index.php?action=administration">Administration</a>
+                                  
                             </div>
                         </div>
                         </template>
@@ -127,14 +127,14 @@
                         <button id="btnCart" @click="modal()">
                             <i class="fas fa-shopping-cart">{{numberQuantityCart}}</i>
                         </button>
-                        <div class="arrowCartSlide">
-                             <i :class="arrowSlide"class="fas fa-arrow-circle-up"></i>
+                        <div class=" arrowCartSlide">
+                             <i :class="arrowSlide" class="fas fa-arrow-circle-up"></i>
                         </div>
                     </div>
                 </nav>
             </header>
             <div v-if="router.main">
-                <!-- section principale de presentation du shop -->
+                <!-- partie principale de presentation du shop -->
                 <section id="main">
                     <picture id="imageParrallax">
                         <source srcset="assets/images/basket-for-apple-picking-in-fruit-orchard.mobile.jpg" media="(max-width: 480px)">
@@ -163,7 +163,9 @@
                 </section>
                 <!-- section de la partie de la categorie des produits -->
                 <section id="products">
-                    <shop-products @onshowcartoftheweek="showCartOfTheWeek"></shop-products>
+                    <shop-products 
+                        @onshowcartoftheweek="showCartOfTheWeek">
+                    </shop-products>
                 </section>
                 <!-- details des différents produits -->
                 <section id="productsList">
@@ -172,7 +174,7 @@
                 </section>
                 <section class="classSlider">
                     <shop-products-details-mobile @liveslidenextproduct="liveSlideProductItemNext" @liveslidepreviousproduct="liveSlideProductItemPrevious" @searchproduct="searchProduct" @resetproduct="resetProduct" :elements="productsSelected" @onsubstractcart="substractCart" @onaddcart="addCart" @onselectedcategory="selectedCategory" @onsearchproductchange="changeProductSelected" @onseeproductdetail="seeProductDetail">
-                        </shop-products-details>
+                    </shop-products-details-mobile>
                 </section>
             </div>
             <div id="cartDirection">
@@ -260,13 +262,13 @@
                     </div>
                     <div class="col-md-4">
                         <h3>Réseaux Sociaux</h3>
-                        <div>
+                        <div class="shopTitle">
                             <a href=""><i class="fab fa-facebook"></i></a>
                             <a href=""><i class="fab fa-instagram"></i></a>
                             <a href=""><i class="fab fa-pinterest"></i></a>
                         </div>
                         <div>
-                            <a class="nav-link" href="index.php?action=administration">Administration</a>
+                            <a class="box-shadow  buttonBrown " href="index.php?action=administration">Administration</a>
                         </div>
                     </div>
 
@@ -942,7 +944,7 @@
                     this.productsSelected.productList = [...this.products.productList];
                     console.log(this.productsSelected.productList);
                     console.log(this.products.productList);
-                    if (data == "all") {
+                    if (data == "Toutes catégories") {
                         this.productsSelected.productList = this.memory
                     } else {
                         let category = []
@@ -991,10 +993,7 @@
                 window.removeEventListener('resize', this.getWindowHeight);
             }
         })
-    </script>
-
-    <script>
-
+   
 
 
 
@@ -1073,12 +1072,13 @@
             });
 
         });
-    </script>
+
+
+        </script>
+       <script> AOS.init();</script>    
+    <script src="app.js"></script>
 </body>
 <!-- script de la librairie d'animation aos -->
-<script>
-    AOS.init();
-</script>
-    <script src="app.js"></script>
+<!-- <script> AOS.init();</script> -->
 
 </html>

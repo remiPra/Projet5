@@ -28,10 +28,10 @@ class ProductsManager
             $data = $req->fetchAll();
             echo '<br/>';
             echo '<br/>';
-            var_dump("31 productsmanager ".$data);
+            //var_dump("31 productsmanager ".$data);
             echo '<br/>';
             echo '<br/>';
-            var_dump("32 productsmanager[0]['quantityStock'] ".$data[0]['quantityStock']);
+            //var_dump("32 productsmanager[0]['quantityStock'] ".$data[0]['quantityStock']);
             echo '<br/>';
             return $data[0]['quantityStock'];
     

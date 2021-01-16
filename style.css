@@ -110,6 +110,12 @@ form,
   padding: 6px 11px 10px 11px;
   margin-top: 20px;
 }
+
+a.buttonBrown:hover,.hoverGreenEffect:hover {
+  color:#26802e!important;
+  background-color: white;
+  text-decoration: none;
+}
 #textShop {
   background-color: white !important;
 }
@@ -261,7 +267,7 @@ header {
 
 .slideNews {
   min-width: 300px;
-  padding: 20px;
+  padding: 25px;
   color: white;
 }
 
@@ -327,13 +333,10 @@ header {
   color: #5a7336 !important;
 }
 #productsList input {
-  /* margin-bottom: 49px; */
-  /* border: 2px solid green; */
-  /* width: 80%; */
+  
   padding: 15px;
   height: 30px;
-  /* overflow: hidden; */
-  /* margin: 0px auto; */
+  
 }
 
 .containerInput {
@@ -888,7 +891,7 @@ footer i {
     overflow: hidden;
     width: 280px;
     height: 280px;
-    padding: 61px auto;
+    padding: 6px;
   }
   #navLargeScreen {
     display: none;

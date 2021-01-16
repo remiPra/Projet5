@@ -56,7 +56,7 @@ if ($_SESSION == false and isset($_GET['action'])) {
             index();
             break;
     }
-} else if (isset($_SESSION) and isset($_GET['action']) and ($_SESSION['name'] != "administration") and ($_SESSION['name'] != "livreur")) {
+} else if (isset($_SESSION) and isset($_GET['action']) and ($_SESSION['name'] != "administration") and ($_SESSION['name'] != "livreur") and ($_SESSION['name'] != "administrationPascal")) {
     switch (($_GET['action'])) {
 
         case 'home':
@@ -105,15 +105,12 @@ if ($_SESSION == false and isset($_GET['action'])) {
     }
 } else if (
     isset($_SESSION) and isset($_GET['action'])
-    and (($_SESSION['name'] == "administration") or ($_SESSION['name'] == "livreur"))
+    and (($_SESSION['name'] == "administration") or ($_SESSION['name'] == "livreur") or ($_SESSION['name'] == "administrationPascal"))
 ) {
     switch (($_GET['action'])) {
 
         case 'administrationHome':
             administrationHome();
-            break;
-        case 'home':
-            index();
             break;
         case 'deconnexion':
             deconnexion();
@@ -121,6 +118,7 @@ if ($_SESSION == false and isset($_GET['action'])) {
         case 'updateProduct':
             updateProduct();
             break;
+        //création d'un nouveau produit 
         case 'newProduct':
             newProduct();
             break;
@@ -168,7 +166,7 @@ if ($_SESSION == false and isset($_GET['action'])) {
             break;
 
         default:
-            index();
+            administrationHome();
             break;
     }
 } else {

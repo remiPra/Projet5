@@ -49,7 +49,7 @@ class ArticlesManager{
         }
         
         $src= $GLOBALS['src'];
-        var_dump("on y est dans articlesmanager update");
+        //var_dump("on y est dans articlesmanager update");
         $date = date("l j F Y");       
       
 

@@ -109,7 +109,7 @@
                     </div>
                    
                 </nav>
-            </header>
+    </header>
         <!-- section principale de presentation du shop -->
         <section id="mainPositionAbsolute">
             <picture id="imageParrallax">

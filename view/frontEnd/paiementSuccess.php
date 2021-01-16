@@ -38,7 +38,7 @@
             <!-- section de l'header comprenant le logo et menu -->
             <header class="d-flex fixed-top justify-content-between">
                 <div>
-                    <a id="logo" class="pl-4 ">
+                    <a href="index.php?action=index" id="logo" class="pl-4 ">
                         Ma Ferme bio
                     </a>
                    
@@ -229,6 +229,10 @@
         new Vue({
             el:"#app",
             mounted(){
+                //reinitialisation du cart
+                console.log(localStorage.getItem("carts"));
+                localStorage.clear();
+                console.log(localStorage);
 
             },
             data:{    

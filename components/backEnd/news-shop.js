@@ -6,29 +6,29 @@ Vue.component('news-shop',{
                 <div class="container-fluid row ">
                     <div @click="onGetAllNews();routageNewsList()" class="col-md-4">
                         <div class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
-                            <h4>News publiées</h4>
-                            <p>Liste des news publiés sur le site</p>
+                            <h4>Promotions publiées</h4>
+                            <p>Liste des promotions publiés sur le site</p>
                         </div>
                     </div>
     
                     <div class="col-md-4">
                         <div @click="onGetAllNews(),routageNewsTest()" class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
-                            <h4>Actualités en Brouillon</h4>
-                            <p>Liste des news publiés sur le site</p>
+                            <h4>Promotions en Brouillon</h4>
+                            <p>Liste des promotions publiés sur le site</p>
                         </div>
                     </div>
     
                     <div class="col-md-4">
                         <div @click="onGetAllNews(),routageNewsNew()" class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
-                            <h4>Nouvelle actualité</h4>
-                            <p>Ajouter une nouvelle actualité</p>
+                            <h4>Nouvelle promotion</h4>
+                            <p>Ajouter une nouvelle promotion</p>
                         </div>
                     </div>
     
                     <div class="col-md-4">
                         <div @click="onGetAllNews(),routageNewsUpdate()" class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
-                            <h4>Modifier une Actualité</h4>
-                            <p>Faire la modification d'une actualité</p>
+                            <h4>Modifier une Promotion</h4>
+                            <p>Faire la modification d'une promotion</p>
                         </div>
                     </div>
                 </div>
@@ -118,7 +118,7 @@ Vue.component('news-shop',{
                         <form class="col-md-8 text-light" enctype="multipart/form-data"
                             action="index.php?action=sendNewNews" method="POST">
                             <div class="form-group">
-                                <label for="title"> Titre de l'news :
+                                <label for="title"> Titre de la promotion :
                                 </label>
                                 <input type="text" name="title" id="title" required>
                             </div>
@@ -129,7 +129,7 @@ Vue.component('news-shop',{
                             </div>
                             
                             <div class="form-group">
-                                <label> Voulez vous publier cet news ?</label>
+                                <label> Voulez vous publier cette promotion ?</label>
                                 <label for="statusNews"> Oui
                                     <input type="radio" name="statusNews" id="statusNews" value="1">
                                 </label>
@@ -165,19 +165,19 @@ Vue.component('news-shop',{
                             action="index.php?action=updateNews" method="POST">
                             
                             <div class="form-group">
-                                <label for="title"> Titre de l'article :
+                                <label for="title"> Titre de la promotion :
                                 </label>
                                 <input :value="newsprops.news[newsprops.liveUpdateNews].title" type="text" name="title" id="title" required>
                             </div>
                             <div class="form-group">
-                                <label for="description"> Décrivez le produit :
+                                <label for="description"> Décrivez la promotion :
                                 </label>
                                 <input :value="newsprops.news[newsprops.liveUpdateNews].description" type="text" name="description" id="description" required>
                             </div>
                             
                             
                             <div class="form-group">
-                                <label> Voulez vous publier cet news ?</label>
+                                <label> Voulez vous publier cette promotion ?</label>
                                 <label for="statusNews"> Oui
                                     <input type="radio" name="statusNews" id="statusNews" value="1">
                                 </label>

@@ -246,7 +246,7 @@
         el: "#app",
         data() {
             return {
-               
+                
                 /////////////////////////////////////////////////////////////////////////////                
                 //data de l'utilsateur et des infos récupéré lors de la commande
                 order: [],
@@ -368,6 +368,7 @@
             window.addEventListener('scroll', this.handleScroll);
         },
         mounted: function() {
+            
             //integration en php du pseudo de l'user
             this.name = "<?php echo $_SESSION['name']; ?>";
             console.log(this.name);
@@ -425,7 +426,7 @@
                 } else {
 
                     console.log("large");
-                    console.log(this.scroll.cartConfirm)
+                    
                 }
             },
             //evenement au scroll

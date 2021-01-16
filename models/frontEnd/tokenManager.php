@@ -25,11 +25,9 @@ class TokenManager
         $result=[];
         for($i=0;$i<count($data);$i++){
             array_push($result,$data[$i]['token']);
-            //var_dump($data[0]['token']);
+            
         }
-       // var_dump($result);
-      
-        //$data[0]['token'];
+
         return $result;
     }
 }

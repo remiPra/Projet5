@@ -17,8 +17,8 @@ Vue.component('slider-new-mobile', {
             </div>
         </div>
         <div class="buttoncontainer">
-            <button v-on:click="previous()"><i class="fas fa-chevron-circle-left"></i>News</button>
-            <button v-on:click="next()"><i class="fas fa-chevron-circle-right"></i>News</button>
+            <button v-on:click="previous()"><i class="fas fa-chevron-circle-left"></i></button>
+            <button v-on:click="next()"><i class="fas fa-chevron-circle-right"></i></button>
         </div>
     </div>`,
     methods: {

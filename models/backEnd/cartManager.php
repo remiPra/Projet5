@@ -59,8 +59,8 @@ class CartManagerBack
     }
 
     public function numberCommandPaiement($numberCommand){
-        var_dump('numberCommandPaiement');
-        var_dump($numberCommand);
+        //var_dump('numberCommandPaiement');
+        //var_dump($numberCommand);
         global $bdd;
         $req = $bdd->prepare('UPDATE command SET statusCommand = :statusCommand WHERE numberCommand =:numberCommand');
         $req->execute(array(
@@ -117,7 +117,7 @@ class CartManagerBack
     }
 
     public function updateStatusCollectReady($data){
-        var_dump("function");
+        //var_dump("function");
         global $bdd;
         $req = $bdd->prepare('UPDATE command SET status = :status
         WHERE numberCommand =:numberCommand');
@@ -127,7 +127,7 @@ class CartManagerBack
         ));        
     }
     public function updateStatusLivraisonReady($data){
-        var_dump("function");
+        //var_dump("function");
         global $bdd;
         $req = $bdd->prepare('UPDATE command SET status = :status
         WHERE numberCommand =:numberCommand');
@@ -138,7 +138,7 @@ class CartManagerBack
     }
 
     public function updateStatusCheckCommand($data){
-        var_dump("function");
+        //var_dump("function");
         global $bdd;
         $req = $bdd->prepare('UPDATE command SET statusCommand = :statusCommand, status = :status
         WHERE numberCommand =:numberCommand');
@@ -150,7 +150,7 @@ class CartManagerBack
     }
 
     public function updateStatusProblemCommand($data){
-        var_dump("function");
+        //var_dump("function");
         global $bdd;
         $req = $bdd->prepare('UPDATE command SET statusCommand = :statusCommand
         WHERE numberCommand =:numberCommand');

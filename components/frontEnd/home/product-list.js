@@ -3,9 +3,9 @@ Vue.component('shop-products-details', {
     data() {
         return {
             keyChange:true,
-            category: [{ name: "all" }, { name: "legumes" }, { name: "fruits" }],
+            category: [{ name: "Toutes catégories" }, { name: "legumes" }, { name: "fruits" }],
             h2: "Selection des produits",
-            text: "Retrouvez la selection de nos plus beaux produits disponible dans notre magasin",
+            text: "Retrouvez la sélection de nos plus beaux produits disponible dans notre magasin",
             searchProduct: "",
             productsListShow: true,
             liveCategory: 0,
@@ -20,7 +20,7 @@ Vue.component('shop-products-details', {
 <div data-aos="zoom-in" class="introduction col-lg-8 col-xm-10 text-center m-auto">
     <h2 id="scrollingProducts"class="p-2">{{h2}}</h2>
     <h3>{{text}}</h3>   
-    <p>Parourez les categories</p>    
+    <p>Parcourez les categories</p>    
    <div class="pb-3">
         <button @click="liveCategoryPrevious"><i class="fas fa-chevron-circle-left"></i></button>            
         <button class="buttonBrown w-50" >{{category[liveCategory].name}}</button>
@@ -48,7 +48,7 @@ Vue.component('shop-products-details', {
                 
                 </p>
                 
-                <p class=" cardColor"> cliquez pour selectionner</p>
+                <p class="cardColor"> cliquez pour selectionner</p>
                 
                 <div class="d-flex m-auto buttonShop">
                         <button   @click="onAddCart(product)" class="buttonAdd">+</button>

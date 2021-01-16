@@ -2,8 +2,7 @@ Vue.component('shop-products', {
     data() {
         return {
             h2: "Faites vos courses en ligne",
-            IntroTextShop: "Deux choix s'offrent à vous: vous pouvez selectionner vos propres produits ou choisir le panier garni de la semaine choisi par votre magasin preféré",
-          
+            IntroTextShop: "Deux choix s'offrent à vous : vous pouvez sélectionner vos propres produits ou choisir le panier garni de la semaine choisie par votre magasin préfèré",          
         }
     },
     template: `
@@ -14,7 +13,7 @@ Vue.component('shop-products', {
 </div>
 <div class="col-lg-10 col-md-12 m-auto categoryContainer row">
     <div>
-        <h3 class="text-center mt-5">Acceder aux produits</h3>
+        <h3 class="text-center mt-5">Accedez aux produits</h3>
     <div  data-aos="zoom-in" class="box box-shadow">
       
         <div class="imgBx">
@@ -31,14 +30,14 @@ Vue.component('shop-products', {
     </div>
 
     <div>
-        <h3 class="text-center mt-5">Acceder aux produits</h3>
+        <h3 class="text-center mt-5">Accedez aux produits</h3>
     <div data-aos="zoom-in" class="box box-shadow">
         <div class="imgBx">
             <img src="assets/images/category/vertical-citrus-fruit-pile.jpg">
         </div>
         <div class="content">
             <h2>Panier Garni</h2>
-            <p class="cardColor">Cliquez ici</p>
+            <p class="cardColor">Panier garni</p>
             <p class="contentShow">Votre magasin vous propose une selection de produits choisis dans ce panier garni.</p>
             <button class="buttonBrown" @click="onShowCartOfTheWeek()" href="#">Voir le panier</button>
         </div>

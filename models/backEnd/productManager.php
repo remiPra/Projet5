@@ -84,7 +84,7 @@ online
  
 
         )) or die(print_r($req->errorInfo(), TRUE));;
-        var_dump('info produit envoyé');
+        
         
     }
     //function pour adapteR  modifier  un produit dans l'administration
@@ -185,7 +185,7 @@ online
     }
     // ajouter dynamiquement en incrementation le nombre de produit en stock 
     public function addStockProduct($data,$stock){
-        var_dump("on y est");
+        //var_dump("on y est");
         global $bdd;
         $req = $bdd->prepare('UPDATE products SET quantityStock = :quantityStock
         WHERE title = :title');
@@ -197,7 +197,7 @@ online
 
 
     public function substrackStockProduct($data,$stock){
-        var_dump("on y est");
+        //var_dump("on y est");
         global $bdd;
         $req = $bdd->prepare('UPDATE products SET quantityStock = :quantityStock
         WHERE title = :title');
@@ -218,7 +218,7 @@ online
     // fonction qui modifie dans la liste des produits supprimés
     public function updateDeleteProduct($id){
         global $bdd;
-        var_dump($id);
+        //var_dump($id);
         $req = $bdd->prepare('UPDATE products SET online = :online
         WHERE id = :id');
         $req->execute(array(
@@ -229,7 +229,7 @@ online
 
     public function updateTestProduct($id){
         global $bdd;
-        var_dump($id);
+        //var_dump($id);
         $req = $bdd->prepare('UPDATE products SET online = :online
         WHERE id = :id');
         $req->execute(array(

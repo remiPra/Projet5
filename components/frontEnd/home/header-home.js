@@ -7,7 +7,7 @@ Vue.component('main-container', {
             header: {
                 h1Welcome: "Bienvenue",
                 h1Sentence: "chez ma ferme Bio",
-                h2: "Votre magasin de fruits et legumes avec la possibilité de commander en ligne",
+                h2: "Votre magasin de fruits et légumes avec la possibilité de commander en ligne",
 
             },
         }
@@ -38,7 +38,7 @@ Vue.component('main-container', {
                     </h1>
                     <h2>{{header.h2}} </h2>
                     
-                    <button class="box-shadow" id="headerButton" @click="scrolling('productsList')">Commencez vos courses</button>
+                    <button class="box-shadow hoverGreenEffect" id="headerButton" @click="scrolling('productsList')">Commencez vos courses</button>
                 </div>
             </div>`
 })
