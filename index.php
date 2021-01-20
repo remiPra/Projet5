@@ -104,7 +104,7 @@ if ($_SESSION == false and isset($_GET['action'])) {
             break;
     }
 } else if (
-    isset($_SESSION) and isset($_GET['action'])
+    isset($_SESSION) 
     and (($_SESSION['name'] == "administration") or ($_SESSION['name'] == "livreur") or ($_SESSION['name'] == "administrationPascal"))
 ) {
     switch (($_GET['action'])) {
@@ -118,7 +118,6 @@ if ($_SESSION == false and isset($_GET['action'])) {
         case 'updateProduct':
             updateProduct();
             break;
-        //création d'un nouveau produit 
         case 'newProduct':
             newProduct();
             break;

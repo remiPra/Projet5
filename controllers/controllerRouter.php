@@ -160,7 +160,7 @@ function cart()
     require "models/frontEnd/cartManager.php";
     $cartManager = new CartManager();
     $orderNumberCommand = $cartManager->cartAddList($userId);
-   
+
     require 'models/frontEnd/productsManager.php';
     $productsManager = new ProductsManager();
 
@@ -203,7 +203,7 @@ function curl()
 
     require 'models/frontEnd/curlManager.php';
     $curlManager = new CurlManager();
-    for ($i = 0; $i < count($Alltokens); $i++) {     
+    for ($i = 0; $i < count($Alltokens); $i++) {
         $curlPromotion = $curlManager->sendPromotionsAllTokens($Alltokens[$i], $articles);
     }
 }
@@ -276,9 +276,8 @@ function administrationPasswordForgotCheck()
 
             // ENVOYER UN EMAIL
 
-            $messageMail =  'votre mot de passe vous a été envoyé sur votre mail '.$to.'';
-            echo "<script type='text/javascript'>document.location.replace('index.php?action=connexion&mailPassword=".$messageMail."');</script>";
-            
+            $messageMail =  'votre mot de passe vous a été envoyé sur votre mail ' . $to . '';
+            echo "<script type='text/javascript'>document.location.replace('index.php?action=connexion&mailPassword=" . $messageMail . "');</script>";
         } else {
             $notificationError = "name invalid";
             //var_dump($notificationError);
@@ -314,7 +313,6 @@ function initializePassword()
 
         //var_dump("reinitilaisation link réussi");
         require 'view/frontEnd/newPasswordUser.php';
-       
     } else {
         echo "<script type='text/javascript'>document.location.replace('index.php?action=index.php');</script>";
     }
@@ -589,7 +587,7 @@ function updateProduct()
     $updateProduct = $productManagerBack->updateProduct();
 
     //notifications $_GET msg bien rajouté
-    $message = " votre produit a bien été modifié ";
+    $message = $imageUpload;
     echo "<script type='text/javascript'>document.location.replace('index.php?action=administrationHome&message=" . $message . "');</script>";
 }
 
@@ -636,13 +634,19 @@ function sendNewArticle()
 
     require 'models/frontEnd/curlManager.php';
     $curlManager = new CurlManager();
-    
+
+
+    require  'models/backEnd/imageManager.php';
+    $imagemanager =  new imageManager();
+    $imageUpload = $imagemanager->uploadImage();
+
+
     // //annulation car je ne comprends pourquoi il y a un var dump
     // for ($i = 0; $i < count($Alltokens); $i++) {
     //     $curlPromotion = $curlManager->sendPromotionsAllTokens($Alltokens[$i], $articles);
     // }
 
-    //$message = 'votre nouvel article a bien été créer';
+    $message =  $imageUpload;
     require 'view/backEnd/administrationHome.php';
 }
 
@@ -654,17 +658,17 @@ function deleteArticle()
     // $imagemanager =  new imageManager();
     // $imageUpload = $imagemanager->uploadImage();
     $id = $_POST['id'];
-  
+
 
     require 'models/backEnd/articlesManager.php';
     $articlesManagerBack = new ArticlesManager;
     $deleteArticle = $articlesManagerBack->deleteArticle($id);
-    $message = 'l\'article '.$id.' a bien été supprimé';
-   
+    $message = 'l\'article ' . $id . ' a bien été supprimé';
+
 
     require 'view/backEnd/administrationHome.php';
-    
-   // echo "<script type='text/javascript'>document.location.replace('index.php?action=administrationHome&message=" . $message . "');</script>";
+
+    // echo "<script type='text/javascript'>document.location.replace('index.php?action=administrationHome&message=" . $message . "');</script>";
 }
 
 
@@ -716,7 +720,6 @@ function deleteNews()
     $sendnews = $newsManager->deleteNewsModel($id);
     $message = "votre news a bien été supprimer";
     echo "<script type='text/javascript'>document.location.replace('index.php?action=administrationHome&message=" . $message . "');</script>";
-
 }
 
 function test()
@@ -768,6 +771,7 @@ function updateCommand()
 {
     $id = $_POST['id'];
     $data = basename($_FILES['avatar']['name']);
+
     if ($data != null) {
         require  'models/backEnd/imageManager.php';
         $imagemanager =  new imageManager();
@@ -776,12 +780,14 @@ function updateCommand()
 
     require 'models/backEnd/articlesManager.php';
     $articlesManager = new ArticlesManager;
-    $updateCommand = $articlesManager->updateCommand($id);
-    $message = "votre article a bien été modifié";
-    echo "<script type='text/javascript'>document.location.replace('index.php?action=administrationHome&message=" . $message . "');</script>";
+    $updateCommand = $articlesManager->updateArticle($id);
+    $message =  $imageUpload;
+    require 'view/backEnd/administrationHome.php';
+    //echo "<script type='text/javascript'>document.location.replace('index.php?action=administrationHome&message=" . $imageUpload . "');</script>";
 }
 //fonction pour effacer definitivement une commande 
-function deleteCommand(){
+function deleteCommand()
+{
     $id = $_POST['id'];
     require "models/backEnd/cartManager.php";
     $cartManager = new CartManagerBack();
@@ -849,7 +855,7 @@ function sendAnswer()
         color : white;
         padding: 20px">
         <h2>' . $subject . ' </h2>
-        <h3> Message d origine : '.$lastMessage.'  </h3>
+        <h3> Message d origine : ' . $lastMessage . '  </h3>
         <h3
             style="
                 margin-top: 37px;

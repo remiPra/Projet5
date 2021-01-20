@@ -8,50 +8,50 @@ Vue.component('command-user', {
                 <div v-if="commandsprops.name=='administration'" class="col-md-4">
                     <div class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
                         <h4>Commandes a Livrer</h4>
-                        <p>Commande a preparer a la livraison </p>
+                        <p>Commandes a preparer pour la livraison </p>
                         <button class="w-100" @click="routageCommandLivraison">Voir</button>
                     </div>
                 </div>
 
-                <div v-if="commandsprops.name=='administration'" class="col-md-4">
+                <div v-if="commandsprops.name!='livreur'" class="col-md-4">
                     <div  class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
                         <h4>Commandes en magasin</h4>
-                        <p>Commandes qui doit etre prete a etre retirer</p>
+                        <p>Commandes qui doivent être prêtes à être retirer</p>
                         <button class="w-100" @click="routageCommandCollect">Voir</button>
                     </div>
                 </div>
 
-                <div v-if="commandsprops.name=='administration'" class="col-md-4">
+                <div v-if="commandsprops.name!='livreur'" class="col-md-4">
                     <div 
                         class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
                         <h4>Retraits prêts</h4>
-                        <p>Commande faite pour le retrait</p>
+                        <p>Commandes pretes pour le retrait</p>
                         <button class="w-100" @click="routageCommandCollectLast">Voir</button>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div 
                         class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
-                        <h4>Livraisons pretes</h4>
-                        <p>Commande où la livraison est prête </p>
+                        <h4>Livraisons prêtes</h4>
+                        <p>Commandes ou la livraison est prête à être effectuer </p>
                         <button class="w-100" @click="routageCommandLivraisonLast">Voir</button>
                     </div>
                 </div>
 
-                <div v-if="commandsprops.name=='administration'" class="col-md-4">
+                <div v-if="commandsprops.name!='livreur'" class="col-md-4">
                     <div 
                         class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
-                        <h4>Commande effectué </h4>
-                        <p>Commande terminé avec succées</p>
+                        <h4>Commandes effectuées </h4>
+                        <p>Commandes terminées avec succés</p>
                         <button  class="w-100" @click="routageCommandCheck">Voir</button>
                     </div>
                 </div>
                 
-                <div v-if="commandsprops.name=='administration'" class="col-md-4">
+                <div v-if="commandsprops.name!='livreur'" class="col-md-4">
                     <div 
                         class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
-                        <h4>Commande problemes </h4>
-                        <p>Commande problemes</p>
+                        <h4>Commandes problèmes </h4>
+                        <p>Commandes où il y a eu un problème</p>
                         <button class="w-100" @click="routageCommandProblem">Voir</button>
                     </div>
                 </div>
@@ -73,7 +73,7 @@ Vue.component('command-user', {
 
                 <template v-if="router.commandLivraison">
 
-                    <h2>Commandes qui doivent etre préparer pour la livraison en 
+                    <h2>Commandes qui doivent être préparer pour la livraison en 
                      magasin </h2>
                     <div class="col-lg-12 col-md-12 m-auto">
                         <table class="table table-bordere">
@@ -117,7 +117,7 @@ Vue.component('command-user', {
                                 <th>N° commande</th>
                                 <th>Nom</th>
                                 <th>Email</th>
-                                <th>Phone</th>
+                                <th>Téléphone</th>
                                 <th>Date</th>
                                 <th>Action</th>
                             </thead>
@@ -154,7 +154,7 @@ Vue.component('command-user', {
                                 <th>N° commande</th>
                                 <th>Nom</th>
                                 <th>Jour</th>
-                                <th>Phone</th>
+                                <th>Téléphone</th>
                                 <th>Date</th>
                                 <th>Action</th>
                             </thead>
@@ -190,7 +190,7 @@ Vue.component('command-user', {
                                 <th>N° commande</th>
                                 <th>Nom</th>
                                 <th>Email</th>
-                                <th>Phone</th>
+                                <th>Téléphone</th>
                                 <th>Date</th>
                                 <th>Action</th>
                             </thead>
@@ -225,7 +225,7 @@ Vue.component('command-user', {
                                 <th>N° commande</th>
                                 <th>Nom</th>
                                 <th>Email</th>
-                                <th>Phone</th>
+                                <th>Téléphone</th>
                                 <th>Date</th>
                                 <th>Action</th>
                             </thead>
@@ -265,7 +265,7 @@ Vue.component('command-user', {
                                 <th>N° commande</th>
                                 <th>Nom</th>
                                 <th>Email</th>
-                                <th>Phone</th>
+                                <th>Téléphone</th>
                                 <th>Date</th>
                                 <th>Action</th>
                             </thead>
@@ -347,7 +347,7 @@ Vue.component('command-user', {
                         <form class="formWithNoBorder" method="POST" action="proceed.php?action=checkCommand">
                         <input hidden :value="adminDetailCollect[0].numberCommand" name="numberCommand" required>
                         <button type="submit">
-                            Commande Récupéré
+                            Commande Récupérée
                         </button>
                         </form>
                         <button @click="onProblemCommand(adminDetailCollect[0].numberCommand)">Probleme Commande</button>

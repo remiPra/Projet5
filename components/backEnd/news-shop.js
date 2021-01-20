@@ -4,24 +4,24 @@ Vue.component('news-shop',{
     <section id="routageMenu">
             <div>
                 <div class="container-fluid row ">
-                    <div @click="onGetAllNews();routageNewsList()" class="col-md-4">
+                    <div @click="routageNewsList()" class="col-md-4">
                         <div class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
                             <h4>Promotions publiées</h4>
-                            <p>Liste des promotions publiés sur le site</p>
+                            <p>Liste des promotions publiées sur le site</p>
                             <button class="w-100" @click="routageNewsList">Voir</button>
                         </div>
                     </div>
     
                     <div class="col-md-4">
-                        <div @click="onGetAllNews(),routageNewsTest()" class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
+                        <div @click="routageNewsTest()" class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
                             <h4>Promotions en Brouillon</h4>
-                            <p>Liste des promotions publiés sur le site</p>
+                            <p>Liste des promotions non publiées sur le site</p>
                             <button class="w-100" @click="routageNewsTest">Voir</button>
                         </div>
                     </div>
     
                     <div class="col-md-4">
-                        <div @click="onGetAllNews(),routageNewsNew()" class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
+                        <div @click="routageNewsNew()" class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
                             <h4>Nouvelle promotion</h4>
                             <p>Ajouter une nouvelle promotion</p>
                             <button class="w-100" @click="routageNewsNew">Voir</button>
@@ -29,7 +29,7 @@ Vue.component('news-shop',{
                     </div>
     
                     <div class="col-md-4">
-                        <div @click="onGetAllNews(),routageNewsUpdate()" class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
+                        <div @click="routageNewsUpdate()" class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
                             <h4>Modifier une Promotion</h4>
                             <p>Faire la modification d'une promotion</p>
                             <button class="w-100" @click="routageNewsUpdate">Voir</button>
@@ -40,7 +40,7 @@ Vue.component('news-shop',{
             <div id="routerCommandAction"
             class="marginTopAdmin col-md-10 marginAuto text-center text-light tableAdministration">
             <div>
-                <h2>Listes des différents Produits </h2>
+                <h2>Listes des différents produits </h2>
                 <button @click="routageMenu"> Menu </button>
                 <h3 class="text-alert">{{messageError}}</h3>
 
@@ -57,10 +57,11 @@ Vue.component('news-shop',{
                                     <th>Date</th>
                                     <th>Action</th>
                                 </thead>
-                                <!-- tableau des Chapters brouillon -->
+                                <!-- tableau des promotions publiées su le site -->
                                 <tbody>
 
                                     <tr v-for="(data,index) in newsprops.news">
+                                        <template v-show="data.statusNews == 1">
                                         <td>{{data.title}}</td>
                                         <td>{{data.description}}</td>
                                         <td>{{data.date}}</td>
@@ -71,6 +72,7 @@ Vue.component('news-shop',{
                                                 
                                             </div>
                                         </td>
+                                        </template>
                                     </tr>
                                 </tbody>
                             </table>
@@ -95,7 +97,7 @@ Vue.component('news-shop',{
                                 <tbody>
 
                                 <tr v-for="(data,index) in newsprops.news">
-                                <template v-if="data.statusNews == 1">
+                                <template v-if="data.statusNews == 0">
                                 <td>{{data.title}}</td>
                                 <td>{{data.description}}</td>
                                 <td>{{data.date}}</td>
@@ -181,7 +183,7 @@ Vue.component('news-shop',{
                             
                             
                             <div class="form-group">
-                                <label> Voulez vous publier cette promotion ?</label>
+                                <label> Voulez-vous publier cette promotion ?</label>
                                 <label for="statusNews"> Oui
                                     <input type="radio" name="statusNews" id="statusNews" value="1">
                                 </label>
@@ -214,6 +216,9 @@ Vue.component('news-shop',{
         },
         messageError: "",
     }
+},
+mounted(){
+    this.changeMonth(this.newsprops.news)
 },
 methods: {
     routageNewsList(){
@@ -275,7 +280,93 @@ methods: {
     onGetAllNews(){
         console.log('onGetAllNews')
         this.$emit('ongetallnews')
-    }
+    },
+    changeMonth(props){
+        console.log(props)
+        console.log('charged changemontharticle')
+        props.forEach( (article) => {
+            //trasformation en chaine de caracteres    
+            let articleString = article.date.split(" ")
+                console.log(articleString)
+            
+
+            //changement du mois
+            switch(articleString[2]){
+                case "January":
+                    articleString[2] = "Janvier"
+                    break;
+                case "February":
+                    articleString[2] = "Février"
+                    break;
+                case "March":
+                    articleString[2] = "Mars"
+                    break;
+                case "April":
+                    articleString[2] = "Avril"
+                    break;
+                case "May":
+                    articleString[2] = "Mai"
+                    break;
+                case "June":
+                    articleString[2] = "Juin"
+                    break;
+                case "July":
+                    articleString[2] = "Juillet"
+                    break;
+                case "August":
+                    articleString[2] = "Aout"
+                    break;
+                case "September":
+                    articleString[2] = "Septembre"
+                    break;
+                case "October":
+                    articleString[2] = "Octobre"
+                    break;
+                case "November":
+                    articleString[2] = "Novembre"
+                    break;
+                case "December":
+                    articleString[2] = "Decembre"
+                    break;
+                default : 
+                    console.log(article.date);
+                    break;
+            }
+
+            // changement du jour
+            switch(articleString[0]){
+                case "Monday":
+                    articleString[0] = "Lundi"
+                    break;
+                case "Tuesday":
+                    articleString[0] = "Mardi"
+                    break;
+                case "Wednesday":
+                    articleString[0] = "Mercredi"
+                    break;
+                case "Thurday":
+                    articleString[0] = "Jeudi"
+                    break;
+                case "Friday":
+                    articleString[0] = "Vendredi"
+                    break;
+                case "Saturday":
+                    articleString[0] = "Samedi"
+                    break;
+                case "Sunday":
+                    articleString[0] = "Dimanche"
+                    break;
+                default : 
+                    console.log(article.date);
+                    break;
+            }
+            //on retransforme en string 
+            article.date = articleString[0] + " " + articleString[1] + " " + articleString[2] + " " + articleString[3] + " " ;
+            console.log(article.date)
+
+        })
+
+    },
 
     
 }

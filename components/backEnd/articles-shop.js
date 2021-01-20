@@ -150,6 +150,7 @@ Vue.component('articles-shop', {
 
                             <div class="form-group">
                                 <label>Uploader le fichier image:</label>
+                                <input type="hidden" name="MAX_FILE_SIZE" value="1048576">
                                 <input name="avatar" type="file" />
                             </div>
 
@@ -217,6 +218,7 @@ Vue.component('articles-shop', {
 
                             <div class="form-group">
                                 <label>Uploader le fichier image:</label>
+                                <input type="hidden" name="MAX_FILE_SIZE" value="1048576">
                                 <input name="avatar" type="file" />
                             </div>
 
@@ -253,6 +255,9 @@ Vue.component('articles-shop', {
             },
             messageError: "",
         }
+    },
+    mounted(){
+        this.changeMonth(this.articlesprops.articles)
     },
     methods: {
         routageArticleList() {
@@ -350,6 +355,92 @@ Vue.component('articles-shop', {
             tinymce.get('textareaUpdateArticle').setContent(this.articlesprops.articles[this.articlesprops.liveUpdateArticles].content);
         },1000);
             this.$emit('onnextupdatearticle')
-        }
+        },
+        changeMonth(props){
+            console.log(props)
+            console.log('charged changemontharticle')
+            props.forEach( (article) => {
+                //trasformation en chaine de caracteres    
+                let articleString = article.date.split(" ")
+                    console.log(articleString)
+                
+
+                //changement du mois
+                switch(articleString[2]){
+                    case "January":
+                        articleString[2] = "Janvier"
+                        break;
+                    case "February":
+                        articleString[2] = "Février"
+                        break;
+                    case "March":
+                        articleString[2] = "Mars"
+                        break;
+                    case "April":
+                        articleString[2] = "Avril"
+                        break;
+                    case "May":
+                        articleString[2] = "Mai"
+                        break;
+                    case "June":
+                        articleString[2] = "Juin"
+                        break;
+                    case "July":
+                        articleString[2] = "Juillet"
+                        break;
+                    case "August":
+                        articleString[2] = "Aout"
+                        break;
+                    case "September":
+                        articleString[2] = "Septembre"
+                        break;
+                    case "October":
+                        articleString[2] = "Octobre"
+                        break;
+                    case "November":
+                        articleString[2] = "Novembre"
+                        break;
+                    case "December":
+                        articleString[2] = "Decembre"
+                        break;
+                    default : 
+                        console.log(article.date);
+                        break;
+                }
+
+                // changement du jour
+                switch(articleString[0]){
+                    case "Monday":
+                        articleString[0] = "Lundi"
+                        break;
+                    case "Tuesday":
+                        articleString[0] = "Mardi"
+                        break;
+                    case "Wednesday":
+                        articleString[0] = "Mercredi"
+                        break;
+                    case "Thurday":
+                        articleString[0] = "Jeudi"
+                        break;
+                    case "Friday":
+                        articleString[0] = "Vendredi"
+                        break;
+                    case "Saturday":
+                        articleString[0] = "Samedi"
+                        break;
+                    case "Sunday":
+                        articleString[0] = "Dimanche"
+                        break;
+                    default : 
+                        console.log(article.date);
+                        break;
+                }
+                //on retransforme en string 
+                article.date = articleString[0] + " " + articleString[1] + " " + articleString[2] + " " + articleString[3] + " " ;
+
+
+            })
+
+        },
     }
 })

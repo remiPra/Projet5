@@ -35,7 +35,7 @@ class ArticlesManager{
         $req->execute(array($id));
     }
     //modifié un article 
-    public function updateCommand($id){
+    public function updateArticle($id){
         $title = htmlspecialchars($_POST['title']);
         $description = htmlspecialchars($_POST['description']);
         $content = $_POST['content'];
@@ -49,7 +49,7 @@ class ArticlesManager{
         }
         
         $src= $GLOBALS['src'];
-        //var_dump("on y est dans articlesmanager update");
+       
         $date = date("l j F Y");       
       
 

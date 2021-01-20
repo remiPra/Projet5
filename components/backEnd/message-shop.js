@@ -63,7 +63,7 @@ Vue.component('message-shop', {
                 <div class="container-fluid row ">
                     <div @click="getAllMessages();routageMessageNoReadList()" class="col-md-4">
                         <div class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
-                            <h4>Messages Non Lu</h4>
+                            <h4>Messages Non Lus</h4>
                             <p>Voici la liste des messages non lu</p>
                             <button class="w-100" @click="routageMessageNoReadList">Voir</button>
                         </div>
@@ -71,8 +71,8 @@ Vue.component('message-shop', {
     
                     <div class="col-md-4">
                         <div @click="getAllMessages(),routageMessageReadList()" class="contentCategory buttonMain1 col-md-10 ml-auto mr-auto">
-                            <h4>Messages Lus</h4>
-                            <p>Voici la liste des messages lu</p>
+                            <h4>Messages Lus et non répondus</h4>
+                            <p>Voici la liste des messages lu non répondus </p>
                             <button class="w-100" @click="routageMessageReadList">Voir</button>
                         </div>
                     </div>
@@ -110,6 +110,7 @@ Vue.component('message-shop', {
 
                                 <td>
                                     <div class="actionTableau">
+                                    
                                     <button @click="liveMessageContainer(index,data.id)"  class="buttonAdmin"> Lire </button>
                                        
                                     </div>

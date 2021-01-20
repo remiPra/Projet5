@@ -33,6 +33,17 @@
 <body>
 
     <div id="app">
+
+        <!-- modal -->
+        <template v-if="modal">
+            <div id="modal">
+                <h1 class="text-light">Ma ferme Bio</h1>
+                <img src="../../assets/icons/icon-256x256.png" alt="">
+            </div>
+        </template>
+
+
+
         <header class="d-flex fixed-top justify-content-between">
             <a id="logo" class="pl-4 ">
                 Ma Ferme bio
@@ -104,6 +115,11 @@
                         <h3 class="text-success">
                             <?php if (isset($_GET['message'])) {
                                 echo htmlspecialchars($_GET['message']);
+                            } else {
+                                echo "";
+                            }
+                            if ($message!="") {
+                                echo htmlspecialchars($message);
                             } else {
                                 echo "";
                             }
@@ -274,6 +290,7 @@
                         "Action"
                     ]
                 },
+                modal:true,
                 //passage de post avec axios
                 post: "",
                 //data des commandes
@@ -321,7 +338,14 @@
                 this.getAllArticles();
                 this.getAllNews();
                 this.getAllMessages();
-
+               
+                setTimeout(() => {
+                    window.scrollTo(0, 0);
+                    
+                }, 500);
+                setTimeout(() => {
+                    this.modal = false
+                }, 600);
             },
             methods: {
                 //methode pour recuperer les produits
@@ -406,6 +430,7 @@
                         }
                     });
                 },
+               
                 //router
                 routageReset() {
                     this.router.product = false

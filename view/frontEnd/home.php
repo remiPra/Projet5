@@ -136,6 +136,7 @@
             <div v-if="router.main">
                 <!-- partie principale de presentation du shop -->
                 <section id="main">
+                    <!-- selection d'image selon la résolution de l'ecran -->
                     <picture id="imageParrallax">
                         <source srcset="assets/images/basket-for-apple-picking-in-fruit-orchard.mobile.jpg" media="(max-width: 480px)">
                         <source srcset="assets/images/basket-for-apple-picking-in-fruit-orchard.Ipad.jpg" media="(max-width: 800px)">
@@ -154,7 +155,7 @@
                 <section class="row">
                     <text-shop></text-shop>
                 </section>
-                <!-- separation -->
+                <!-- separation utilisant un svg -->
                 <section class="separation">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
                         <path fill="#26802e" fill-opacity="1" d="M0,224L48,240C96,256,192,288,288,261.3C384,235,480,149,576,112C672,75,768,85,864,101.3C960,117,1056,139,1152,138.7C1248,139,1344,117,1392,106.7L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z">
@@ -177,8 +178,8 @@
                     </shop-products-details-mobile>
                 </section>
             </div>
+            <!-- section du cart lorsque l'on clique sur l'icone cart -->
             <div id="cartDirection">
-
                 <section id="overlay" title="Cliquez deux fois" v-if="router.showModal">
                     <div>
                         <button id="closeModal" @click="closeModal">fermer</button>
@@ -188,7 +189,7 @@
             </div>
 
 
-            <!-- package du product detail -->
+            <!-- section faisant apparaitre les details de l'un des produits -->
             <transition name="fade">
                 <template v-if="router.productDetail">
                     <div id="productDetailModal">
@@ -197,7 +198,7 @@
                     </div>
                 </template>
             </transition>
-            
+            <!-- section de la partie des informations de l'user -->
             <div id="infoCommandUser">
             <transition name="fade">
                 <template v-if="router.userInfo">
@@ -215,66 +216,9 @@
 
             
 
+            <footer-component></footer-component>
 
-
-            <footer>
-                <div class="row introduction">
-                    <div class="col-md-4">
-                        <h3 class="text-center ">Contactez-Nous</h3>
-                        <div>
-                            <div>
-                                <div>
-                                    <i class="fas fa-home"></i>
-                                </div>
-                                <p>
-                                    La ferme Bio <br>
-
-                                    17 rue Alphonse Daudet <br>
-                                    82100 OOOOO
-                                </p>
-                            </div>
-                            <i class="fas fa-phone"></i>
-                        </div>
-                        <p>
-                            00000000000
-                        </p>
-                        <div>
-                            <i class="fas fa-phone"></i>
-                        </div>
-                        <p>
-                            xxxxxxxxx@gmail.com
-                        </p>
-                        
-
-                    </div>
-                    <div class="col-md-4">
-                        <h3>Horaires d'ouverture</h3>
-                        <div>
-                            <ul>
-                                <li>Lundi: 9h à 18h </li>
-                                <li>Mardi: 9h à 18h</li>
-                                <li>Mercredi: 9h à 18h</li>
-                                <li>Jeudi: 9h à 18h</li>
-                                <li>Vendredi: 9h à 18h</li>
-                                <li>Samedi: 9h à 18h</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <h3>Réseaux Sociaux</h3>
-                        <div class="shopTitle">
-                            <a href=""><i class="fab fa-facebook"></i></a>
-                            <a href=""><i class="fab fa-instagram"></i></a>
-                            <a href=""><i class="fab fa-pinterest"></i></a>
-                        </div>
-                        <div>
-                            <a class="box-shadow  buttonBrown " href="index.php?action=administration">Administration</a>
-                        </div>
-                    </div>
-
-
-                </div>
-            </footer>
+           
 
         </template>
     </div>
@@ -297,7 +241,8 @@
     <script src="./components/frontEnd/home/product-detail.js"></script>
     <!-- vue composant des différents produits en version mobiles  -->
     <script src="./components/frontEnd/home/product-list-mobile.js"></script>
-
+    <!-- vue composant du footer -->
+    <script src="./components/frontEnd/footer-component.js"></script>
                                         
     <script>
         Vue.component('info-user-command',{
