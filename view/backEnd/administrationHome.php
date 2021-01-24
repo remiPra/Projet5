@@ -445,7 +445,7 @@
                 },
                 routageProduct(data) {
                     //condition data pour eviter que le toggle ne se declenche sans arret
-                    if(data!=null){
+                    if(data==="toggle"){
                     setTimeout(() => {
                         document.getElementById('buttonToggle').click()
                     }, 200);
@@ -459,7 +459,7 @@
                     this.scrolling("routerProduct")      
                 },
                 routageCommand(data) {
-                    if(data!=null){
+                    if(data==="toggle"){
                     setTimeout(() => {
                         document.getElementById('buttonToggle').click()
                     }, 200);
@@ -472,7 +472,7 @@
                     this.scrolling("routerCommand")      
                 },
                 routageArticles(data) {
-                    if(data!=null){
+                    if(data==="toggle"){
                     setTimeout(() => {
                         document.getElementById('buttonToggle').click()
                     }, 200);
@@ -485,7 +485,7 @@
                     this.scrolling("routerArticles")
                 },
                 routageNews(data) {
-                    if(data!=null){
+                    if(data==="toggle"){
                     setTimeout(() => {
                         document.getElementById('buttonToggle').click()
                     }, 200);
@@ -499,9 +499,10 @@
                     this.scrolling("routerArticles")
                 },
                 routageMessage(data) {
-                    if(data!=null){
+                    if(data==="toggle"){
                     setTimeout(() => {
                         document.getElementById('buttonToggle').click()
+                        console.log('toggleclose')
                     }, 200);
                     }
                     this.router.product = false

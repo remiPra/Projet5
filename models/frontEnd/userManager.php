@@ -9,7 +9,7 @@ class userManager
 
         //on recupere l'id
         global $bdd;
-        $req = $bdd->prepare('SELECT * FROM user WHERE name=?');
+        $req = $bdd->prepare('SELECT adress,email,nameUser,phone,postalCode,surnameuser,townuser WHERE name=?');
         $req->execute(array($namePost));
         $data = $req->fetch();
         //var_dump($data['id']);
