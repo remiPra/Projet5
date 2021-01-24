@@ -300,6 +300,10 @@ Vue.component('command-user', {
                 <div v-if="router.detailCommandCollect" class="buttonBrown text-center">
                     <h3>Commande N° {{adminDetailCollect[0].numberCommand}} </h3>
                     <h4>{{adminDetailCollect[0].deliveryDay}}</h4>
+                    <!-- condition si c est un retrait , on met l'heure -->
+                    <template>
+                    <h5>{{adminDetailCollect[0].collectTime}}</h5>
+                    </template>
                     <button @click="ClosedetailCommandCollect" class="ButtonGreen"> Fermer </button>
 
                     <p>Cette commande N° {{adminDetailCollect[0].numberCommand}} a été faite par

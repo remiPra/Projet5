@@ -675,7 +675,7 @@ footer i {
             bottom: 0;
             background-color:green;
             z-index: 111111111111111111111111111111;
-  animation: modalClose 1.2s forwards;
+  animation: modalClose 1.2s forwards; 
 }
 
 #modal h1{

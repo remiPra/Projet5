@@ -64,7 +64,7 @@ Vue.component('articles-shop', {
                                 <!-- tableau des articles publiés -->
                                 <tbody>
 
-                                    <tr v-for="(data,index) in articlesprops.articles">
+                                    <tr v-for="(data,index) in articlesprops.articles" :key="index">
                                         <td>{{data.title}}</td>
                                         <td>{{data.description}}</td>
                                         <td>{{data.date}}</td>

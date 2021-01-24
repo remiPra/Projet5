@@ -38,11 +38,9 @@
         <template v-if="modal">
             <div id="modal">
                 <h1 class="text-light">Ma ferme Bio</h1>
-                <img src="../../assets/icons/icon-256x256.png" alt="">
+                <!-- <img src="./assets/icons/icon-256x256.png" alt=""> -->
             </div>
         </template>
-
-
 
         <header class="d-flex fixed-top justify-content-between">
             <a id="logo" class="pl-4 ">
@@ -77,18 +75,18 @@
                     </ul>
                 </div>
                 <div id="togglecontainer">
-                    <button class="navbar-toggler navbar-light" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                        <span class="navbar-toggler-icon text-light"></span>
+                    <button  id="buttonToggle" class="navbar-toggler navbar-light" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    <i class="fas fa-bars text-light"></i>
                     </button>
                     <div id="collapseExample" class="collapse">
-                        <div>
-                            <a href="#routerCommand" @click="routageCommand" class="nav-link text-light">Commandes</a>
-                            <a href="#routerProduct" @click="routageProduct" class="nav-link text-light">Produits</a>
-                            <a href="#routerArticles" @click="routageArticles" class="nav-link text-light">Articles</a>
-                            <a @click="routageNews" class="nav-link text-light">Promotions</a>
-                            <a @click="routageMessage" class="nav-link text-light">Messages</a>
+                     
+                            <a href="#routerCommand" @click="routageCommand('toggle')" class="nav-link text-light">Commandes</a>
+                            <a href="#routerProduct" @click="routageProduct('toggle')" class="nav-link text-light">Produits</a>
+                            <a href="#routerArticles" @click="routageArticles('toggle')" class="nav-link text-light">Articles</a>
+                            <a @click="routageNews('toggle')" class="nav-link text-light">Promotions</a>
+                            <a @click="routageMessage('toggle')" class="nav-link text-light">Messages</a>
                             <a href="index.php?action=deconnexion"><i class="fas fa-sign-out-alt"></i></a>
-                        </div>
+                 
                     </div>
                 </div>
 
@@ -103,13 +101,14 @@
                 </picture>
             </section>
 
-
+         
             <section>
                 <div class="col-md-6 container text-center text-light" id="presentationShopAdministration">
                     <!-- section de routing de la single page -->
                     <div class="container px-md-3 headerOrder">
                         <h1 class="text-light">Ma ferme Bio</h1>
                         <h2>Administration</h2>
+                       
                         <h3 id="Message" class="text-danger">{{messageError}}</h3>
                         <h3 id="Message" class="text-success">{{messageSuccess}}</h3>
                         <h3 class="text-success">
@@ -282,6 +281,7 @@
         let vm = new Vue({
             el: "#app",
             data: {
+                
                 form: {
                     head: ["N° Commande",
                         "Nom",
@@ -348,6 +348,10 @@
                 }, 600);
             },
             methods: {
+              
+             
+
+                
                 //methode pour recuperer les produits
                 getAllCommands() {
                     console.log("users")
@@ -432,22 +436,34 @@
                 },
                
                 //router
-                routageReset() {
+                routageReset(data) {
                     this.router.product = false
                     this.router.command = false
                     this.router.articles = false
                     this.router.news = false
                     this.router.message = false
                 },
-                routageProduct() {
+                routageProduct(data) {
+                    //condition data pour eviter que le toggle ne se declenche sans arret
+                    if(data!=null){
+                    setTimeout(() => {
+                        document.getElementById('buttonToggle').click()
+                    }, 200);
+                    }
                     this.router.product = true
                     this.router.command = false
                     this.router.articles = false
                     this.router.news = false
                     this.router.message = false
+
                     this.scrolling("routerProduct")      
                 },
-                routageCommand() {
+                routageCommand(data) {
+                    if(data!=null){
+                    setTimeout(() => {
+                        document.getElementById('buttonToggle').click()
+                    }, 200);
+                    }
                     this.router.product = false
                     this.router.command = true
                     this.router.articles = false
@@ -455,7 +471,12 @@
                     this.router.message = false
                     this.scrolling("routerCommand")      
                 },
-                routageArticles() {
+                routageArticles(data) {
+                    if(data!=null){
+                    setTimeout(() => {
+                        document.getElementById('buttonToggle').click()
+                    }, 200);
+                    }
                     this.router.product = false
                     this.router.command = false
                     this.router.articles = true
@@ -463,7 +484,12 @@
                     this.router.message = false
                     this.scrolling("routerArticles")
                 },
-                routageNews() {
+                routageNews(data) {
+                    if(data!=null){
+                    setTimeout(() => {
+                        document.getElementById('buttonToggle').click()
+                    }, 200);
+                    }
                     this.router.product = false
                     this.router.command = false
                     this.router.articles = false
@@ -472,7 +498,12 @@
 
                     this.scrolling("routerArticles")
                 },
-                routageMessage() {
+                routageMessage(data) {
+                    if(data!=null){
+                    setTimeout(() => {
+                        document.getElementById('buttonToggle').click()
+                    }, 200);
+                    }
                     this.router.product = false
                     this.router.command = false
                     this.router.articles = false
