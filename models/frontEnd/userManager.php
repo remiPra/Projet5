@@ -6,10 +6,11 @@ class userManager
     public function findUserId(){
         //différentes variables a rentrer
         $namePost=$_SESSION['name'];
-
+        echo '<br/>'; echo '<br/>'; echo '<br/>'; echo '<br/>'; echo '<br/>';
+        var_dump($namePost);
         //on recupere l'id
         global $bdd;
-        $req = $bdd->prepare('SELECT adress,email,nameUser,phone,postalCode,surnameuser,townuser WHERE name=?');
+        $req = $bdd->prepare('SELECT id,adress,email,nameUser,phone,postalCode,surnameuser,town FROM user WHERE name=?');
         $req->execute(array($namePost));
         $data = $req->fetch();
         //var_dump($data['id']);

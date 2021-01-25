@@ -91,7 +91,7 @@ class CartManagerBack
 
     public function getAllCommands(){
         global $bdd;
-        $req = $bdd->prepare('SELECT command.dateDeliveryOrder,command.* ,user.* 
+        $req = $bdd->prepare('SELECT command.dateDeliveryOrder,command.* ,user.name,user.nameUser,user.surnameuser,user.email,user.adress,user.postalCode,user.town,user.phone 
         FROM command 
         INNER JOIN user ON user.name = command.name
         ORDER BY command.dateDeliveryOrder

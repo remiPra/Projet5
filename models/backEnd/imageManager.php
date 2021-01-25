@@ -45,16 +45,16 @@ class imageManager
 				$envoie = move_uploaded_file($_FILES['avatar']['tmp_name'], $dossier . $fichier);
 				
                 
-				if (move_uploaded_file($_FILES['avatar']['tmp_name'], $dossier . $fichier)) //Si la fonction renvoie TRUE, c'est que ça a fonctionné...
-				{
+				// if (move_uploaded_file($_FILES['avatar']['tmp_name'], $dossier . $fichier)) //Si la fonction renvoie TRUE, c'est que ça a fonctionné...
+				// {
                     return 'l\'image a bien été envoyé';
                    
-				} 
-				else //Sinon (la fonction renvoie FALSE).
-				{
-					return 'une erreur est survenu mais le fichier a été envoyé, veuillez verifier si l\'image a bien été uploader';
+				// } 
+				// else //Sinon (la fonction renvoie FALSE).
+				// {
+				// 	return 'une erreur est survenu mais le fichier a été envoyé, veuillez verifier si l\'image a bien été uploader';
                     
-                }
+                // }
 			
 			} 
 		}
@@ -67,12 +67,12 @@ class imageManager
 	public function deleteImageSrc($id)
 	{
 		global $bdd;
-		$req = $bdd->prepare('SELECT imageChapter FROM Chapters  WHERE id = ?');
+		$req = $bdd->prepare('SELECT src FROM products  WHERE id = ?');
 		$req->execute(array($id));
 		$data = $req->fetch();
 
-		$repertoire = 'images/' . $data[0] . '';
-
+		$repertoire = $data[0];
+		var_dump($repertoire);
 		unlink($repertoire);
 	}
 }

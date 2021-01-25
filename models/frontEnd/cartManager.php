@@ -19,29 +19,11 @@ class CartManager
         $collectTime = "00 : 00";
         $deliveryDay= "unknow";
         $collectTimeAndDay="unknow";
-
-        echo '<br/>';
-        echo '<br/>';
-        //var_dump($date);
-        //var_dump($name);
-        //var_dump($totalPrice);
-        //var_dump($idUser);
-        //var_dump($numberCommand);
-        //var_dump($dateDeliveryOrder);
-        //var_dump($statusCommand);
-        echo '<br/>';
-        echo '<br/>';
-
-        
-
-
         //inserer les infos de la commande
         global $bdd;
         $req = $bdd->prepare('INSERT INTO command (status,collectTime,deliveryDay,collectTimeAndDay,idClient ,name,dateCommand,numberCommand,dateDeliveryOrder,statusCommand,totalPrice)
          VALUES(?,?,?,?,?,?,?,?,?,?,?)');
         $req->execute(array($status,$collectTime,$deliveryDay,$collectTimeAndDay,$idUser,$name,$date,$numberCommand,$dateDeliveryOrder,$statusCommand,$totalPrice)) or die(print_r($req ->errorInfo(), TRUE));    
-        //var_dump($numberCommand);
-        
         return $numberCommand;
     }
     
@@ -51,8 +33,7 @@ class CartManager
         //var_dump($_POST);
        
         for($i=0;$i < count($_POST['productName']);$i++){
-            //différentes variables a rentrer
-            //var_dump($_POST['productName'][$i]);
+           
             
             $namePost=$_SESSION['name'];
            

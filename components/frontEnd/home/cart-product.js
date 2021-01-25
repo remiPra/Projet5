@@ -15,7 +15,7 @@ Vue.component('cart-product', {
         </div>
     </div>
     
-    <template v-if='this.carts==""''>
+    <template v-if='this.carts==""'>
     <div class="d-flex" >
         <div id="formCart" class="form-group">
         Vous n'avez pas d'articles dans votre panier
@@ -62,7 +62,9 @@ Vue.component('cart-product', {
 
 
 <div class="form-group">
-    <input class="formButton" @click="confirmationShow" type="button" value="Passez la commande" name="btnContact">
+    <template v-if='totalPriceCart > 0'>
+        <input class="formButton" @click="confirmationShow" type="button" value="Passez la commande" name="btnContact">
+    </template>
 </div>
 <div id="confirmationModal" v-if="confirmationModal">
     <div class="form-group">

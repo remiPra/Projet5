@@ -631,12 +631,7 @@
                         console.log(this.scroll.cartConfirm)
                     }
                 },
-                //etudions le scroll
-                handleScroll(event) {
-                    //console.log(window.scrollY)
-                    // Any code to be executed when the window is scrolled
-
-                },
+                
                 //voir le panier garni des produits
                 showCartOfTheWeek() {
                     this.carts = [];
@@ -692,15 +687,27 @@
                 },
 
                 searchProduct(data) {
+                    if(data!=""){
+                        document.getElementById("previousProduct").style.display = "none";
+                        document.getElementById("nextProduct").style.display = "none";
+                
+                    } else {
+                        document.getElementById("previousProduct").style.display = "block";
+                        document.getElementById("nextProduct").style.display = "block";
+                
+                    }
+
 
                     // on cré un tableau avec tous les noms des produits
                     let products = this.products.productList;
                     let Word = data
                     //passage en minuscule
                     let word = Word.toLowerCase()
+                    console.log(word)
                     this.productsSelected.productList.forEach(element => {
+                        let nomProduit = element.title.toLowerCase()
                         // si la chaine inclut un des mots
-                        if (element.title.includes(word)) {
+                        if (nomProduit.includes(word)) {
                             element.visible = "displayFlex"
                             console.log(element)
                             //this.$emit("onsearchproductchange",element)
@@ -864,7 +871,7 @@
                         element.visible = "displayFlex"
                     )
                     this.productsSelected.liveSlideProductItem = 0
-                    console.log("resetproduct")
+                    console.log("resetproduct") 
                 },
                 changeProductSelected(data) {
                     console.log(data)

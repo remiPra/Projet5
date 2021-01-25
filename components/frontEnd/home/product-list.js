@@ -98,6 +98,7 @@ Vue.component('shop-products-details', {
             // } else {
             // this.searchClass = "displayNone"
             // }
+            console.log(this.category[this.liveCategory].name)
             this.onSelectedCategory(this.category[this.liveCategory].name)
 
         },
@@ -126,9 +127,10 @@ Vue.component('shop-products-details', {
 
         onSelectedCategory(category) {
             this.searchProduct = "";
-            this.elements.productList.forEach(element => {
-                document.getElementById(element.title).style.display = "block"
-            })
+            // this.elements.productList.forEach(element => {
+            //     console.log(element.title)
+            //     document.getElementById(element.title).style.display = "block"
+            // })
             console.log(this.category[this.liveCategory].name)
             this.$emit("onselectedcategory", category);
             console.log(category)

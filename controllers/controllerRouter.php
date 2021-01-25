@@ -145,15 +145,15 @@ function cart()
 {
     //var_dump($_POST);
     $dataReceive = $_POST;
-    //var_dump($dataReceive);
-    //var_dump($_SESSION['name']);
+    var_dump($dataReceive);
+    var_dump($_SESSION['name']);
 
     //recherche de l'id de l'user
     require "models/frontEnd/userManager.php";
     $userManager = new userManager();
     $userId = $userManager->findUserId();
     echo '<br/>';
-    //var_dump($userId);
+    var_dump($userId);
     echo '<br/>';
 
     //enregistrement  de toutes les infos du cart
@@ -588,7 +588,7 @@ function updateProduct()
 
     //notifications $_GET msg bien rajouté
     $message = $imageUpload;
-    echo "<script type='text/javascript'>document.location.replace('index.php?action=administrationHome&message=" . $message . "');</script>";
+    require 'view/backEnd/administrationHome.php';
 }
 
 function deleteProduct()
@@ -601,6 +601,10 @@ function deleteProduct()
     require 'models/backEnd/productManager.php';
     $productManagerBack = new productManagerBack;
     $deleteProduct = $productManagerBack->deleteProduct($id);
+
+    require 'models/backEnd/imageManager.php';
+    $imagemanager = new imageManager;
+    $deleteImage = $imagemanager->deleteImageSrc($id);
 }
 
 function updateDeleteProduct()

@@ -212,9 +212,9 @@
                     },
                     methods: {
                         regexPassword() {
-                            var password = this.password.Regex;
+                            let password = this.password.Regex;
                             
-                            var count = 0;
+                            let count = 0;
                             if(/[a-z]/.test(password)){
                                 count++;
                                 this.sentenceMin=false 
@@ -250,7 +250,7 @@
                                 this.sentenceLength=true
                                 
                             }
-
+                            // condition pour pouvoir cliquer sur le bouton submit
                             if (count > 4) {
                                 this.password.bool = true;
                                 this.password.errorPassword= false;
@@ -413,9 +413,7 @@
                         <template v-if="password.bool">
                             <input class="formButton" type="submit" value="Envoyer" name="btnContact">
                        </template>
-                       <template v-if="password.bool == false" > 
-                            <input class="formButton" type="button" value="Envoyer" name="btnContact">
-                        </template>    
+                      
                         </div>
                 </form>
             </template>
